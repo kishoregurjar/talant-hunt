@@ -9,6 +9,8 @@ const page = () => {
   )
 }
 
+export default page
+
 // "use client";
 
 // import Image from "next/image";

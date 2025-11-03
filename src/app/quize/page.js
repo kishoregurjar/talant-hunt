@@ -1,4 +1,3 @@
-
 "use client";
 import { useSelector, useDispatch } from "react-redux";
 import { markQuizCompleted } from "../../store/PlayerSlice";
@@ -24,7 +23,7 @@ const questions = [
 ];
 
 export default function QuizPage() {
-  const { formFilled, videoWatched } = useSelector((s) => s.playerReducer);
+  const { formFilled, videoWatched, formData } = useSelector((s) => s.playerReducer);
   const dispatch = useDispatch();
   const router = useRouter();
   const [selected, setSelected] = useState({});
@@ -34,6 +33,44 @@ export default function QuizPage() {
     if (!formFilled) router.push("/");
     else if (!videoWatched) router.push("/video");
   }, [formFilled, videoWatched]);
+
+  // Save quiz completion status to localStorage
+  useEffect(() => {
+    if (submitted && formFilled && formData && formData.id) {
+      const existingPlayers = JSON.parse(localStorage.getItem("players")) || [];
+      
+      // Find and update the player with quiz completion status
+      const playerIndex = existingPlayers.findIndex(player => player.id === formData.id);
+      
+      if (playerIndex !== -1) {
+        const updatedPlayers = [...existingPlayers];
+        // Completely replace player data with updated data
+        updatedPlayers[playerIndex] = {
+          ...formData,
+          quizCompleted: true
+        };
+        
+        localStorage.setItem("players", JSON.stringify(updatedPlayers));
+      }
+    }
+  }, [submitted, formFilled, formData]);
+
+  // Warn user before leaving the page during quiz
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      // Warn if user has started the quiz but not submitted
+      if (Object.keys(selected).length > 0 && !submitted) {
+        e.preventDefault();
+        e.returnValue = ""; // Required for Chrome
+        return ""; // Required for other browsers
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [selected, submitted]);
 
   const handleOptionChange = (i, opt) => {
     if (!submitted) setSelected({ ...selected, [i]: opt });

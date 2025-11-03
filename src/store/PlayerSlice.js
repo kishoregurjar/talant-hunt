@@ -25,9 +25,23 @@ const playerSlice = createSlice({
     resetAll: (state) => {
       return initialState;
     },
+    // New action to restore form data from localStorage
+    restoreFormData: (state, action) => {
+      state.formData = action.payload;
+      state.formFilled = true;
+    },
+    // Action to update existing form data
+    updateFormData: (state, action) => {
+      if (state.formData) {
+        state.formData = { ...state.formData, ...action.payload };
+      } else {
+        state.formData = action.payload;
+        state.formFilled = true;
+      }
+    }
   },
 });
 
-export const { saveFormData, markVideoWatched, markQuizCompleted, resetAll } =
+export const { saveFormData, markVideoWatched, markQuizCompleted, resetAll, restoreFormData, updateFormData } =
   playerSlice.actions;
 export default playerSlice.reducer;

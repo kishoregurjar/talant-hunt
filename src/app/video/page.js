@@ -7,14 +7,52 @@ import { useRouter } from "next/navigation";
 export default function VideoPage() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { formFilled } = useSelector((state) => state.playerReducer);
+  const { formFilled, formData } = useSelector((state) => state.playerReducer);
   const [ended, setEnded] = useState(false);
   const videoRef = useRef(null);
 
-  // agar user form bhare bina video pe aaye to redirect
+  // Redirect if user hasn't filled the form
   useEffect(() => {
     if (!formFilled) router.push("/");
   }, [formFilled]);
+
+  // Save form data to localStorage when component mounts
+  // This ensures that even if user refreshes the page during video, form data is preserved
+  useEffect(() => {
+    if (formFilled && formData && formData.id) {
+      const existingPlayers = JSON.parse(localStorage.getItem("players")) || [];
+      
+      // Find and update the player with video watched status
+      const playerIndex = existingPlayers.findIndex(player => player.id === formData.id);
+      
+      if (playerIndex !== -1) {
+        const updatedPlayers = [...existingPlayers];
+        // Completely replace player data with updated data
+        updatedPlayers[playerIndex] = {
+          ...formData,
+          videoWatched: true
+        };
+        
+        localStorage.setItem("players", JSON.stringify(updatedPlayers));
+      }
+    }
+  }, [formFilled, formData]);
+
+  // Warn user before leaving the page during video watching
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (!ended) {
+        e.preventDefault();
+        e.returnValue = ""; // Required for Chrome
+        return ""; // Required for other browsers
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [ended]);
 
   const onEnded = () => {
     setEnded(true);
@@ -41,7 +79,8 @@ export default function VideoPage() {
           {/* Overlay message when video not ended */}
           {!ended && (
             <p className="text-gray-500 text-sm mt-3">
-              Watch the complete video to unlock the next section.
+              Watch the complete video to unlock the next section. 
+              Please do not close this tab.
             </p>
           )}
         </div>
