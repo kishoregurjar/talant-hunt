@@ -6,7 +6,8 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db": "json-server --watch backend/db.json --port 3001"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.9.2",
