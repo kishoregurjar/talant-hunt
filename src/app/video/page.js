@@ -8,7 +8,7 @@ import { asyncUserVideoWatched } from "../../store/actions/userAction";
 export default function VideoPage() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { formFilled, formData } = useSelector((state) => state.playerReducer);
+  const { formFilled, formData , id } = useSelector((state) => state.playerReducer);
   const [ended, setEnded] = useState(false);
   const [loading, setLoading] = useState(true);
   const videoRef = useRef(null);
@@ -67,7 +67,8 @@ export default function VideoPage() {
   const onEnded = () => {
     setEnded(true);
     // Pass the formData.id to the async action
-    dispatch(asyncUserVideoWatched(formData.id));
+    dispatch(asyncUserVideoWatched(id));
+    // dispatch(asyncUserVideoWatched(formData.id));
   };
 
   if (loading) {

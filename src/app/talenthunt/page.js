@@ -1,42 +1,73 @@
 "use client";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { asyncUserPersonalInfo } from "../../store/actions/userAction";
-import {z} from "zod";
-import {zodResolver} from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { personalInfoSchema } from "../../components/validation/formvalidation";
 
-
-
 export default function Home() {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const { formData } = useSelector((state) => state.playerReducer);
+  const [loading, setLoading] = useState(true);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
-    setValue,
+    reset,
   } = useForm(
     {
       resolver: zodResolver(personalInfoSchema),
+      defaultValues: formData || {},
     }
   );
-  const dispatch = useDispatch();
-  const router = useRouter();
 
+  const formWatchData = watch();
 
-  const formData = watch();
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, []);
 
 
   useEffect(() => {
+    if (formData && Object.keys(formData).length > 0) {
+
+      const formValues = { ...formData };
+
+      if (formValues.id) {
+        delete formValues.id;
+      }
+
+
+      const hasFormValues = Object.values(formValues).some(
+        value => value !== null && value !== undefined && value !== ''
+      );
+
+      if (hasFormValues) {
+
+        reset(formValues, {
+          keepDefaultValues: false
+        });
+      }
+    }
+  }, [formData, reset]);
+
+  useEffect(() => {
     const handleBeforeUnload = (e) => {
-      
-      const hasData = Object.values(formData).some(value => value !== undefined && value !== "");
+      const hasData = Object.values(formWatchData).some(value => value !== undefined && value !== "");
       if (hasData) {
         e.preventDefault();
-        e.returnValue = ""; // Required for Chrome
-        return ""; // Required for other browsers
+        e.returnValue = "";
+        return "";
       }
     };
 
@@ -44,64 +75,26 @@ export default function Home() {
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [formData]);
+  }, [formWatchData]);
 
   const onSubmit = async (data) => {
-    // Get existing players from localStorage (fallback)
-    // const existingPlayers = JSON.parse(localStorage.getItem("players")) || [];
 
-    // Check if we have temporary form data with an existing ID
-    // let playerId = data.id;
-    // const tempFormData = localStorage.getItem("tempFormData");
-
-    // // If no ID in current data but we have temp data with an ID, use that ID
-    // if (!playerId && tempFormData) {
-    //   try {
-    //     const parsedTempData = JSON.parse(tempFormData);
-    //     if (parsedTempData.id) {
-    //       playerId = parsedTempData.id;
-    //       data.id = playerId;
-    //     }
-    //   } catch (e) {
-    //     console.error("Failed to parse temp form data", e);
-    //   }
-    // }
-
-    // // If still no ID, generate one
-    // if (!playerId) {
-    //   playerId = nanoid();
-    //   data.id = playerId;
-    // }
-
-    // // Check if player with this ID already exists in localStorage
-    // const playerExists = existingPlayers.some(player => player.id === playerId);
-
-    // // Update existing player or add new one in localStorage (fallback)
-    // let updatedPlayers = [];
-    // if (playerExists) {
-    //   // Update existing player data
-    //   updatedPlayers = existingPlayers.map(player => 
-    //     player.id === playerId ? {...data} : player
-    //   );
-    // } else {
-    //   // Add new player
-    //   updatedPlayers = [...existingPlayers, data];
-    // }
-
-    // // Save back to localStorage (fallback)
-    // localStorage.setItem("players", JSON.stringify(updatedPlayers));
-
-    // // Clear temporary form data
-    // localStorage.removeItem("tempFormData");
-
-    // Dispatch to redux store and save to database
-    // The async action will handle duplicate prevention
     await dispatch(asyncUserPersonalInfo(data));
 
 
-    // Redirect
     router.push("/video");
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-100 to-gray-200 p-6 ">
@@ -115,7 +108,7 @@ export default function Home() {
           <div className="col-span-1">
             <label className="block mb-1 font-medium text-gray-700">Full Name</label>
             <input
-              {...register("name", { required: "Name is required" })}
+              {...register("name")}
               placeholder="Enter your full name"
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
             />
@@ -126,10 +119,7 @@ export default function Home() {
           <div className="col-span-1">
             <label className="block mb-1 font-medium text-gray-700">Email</label>
             <input
-              {...register("email", {
-                required: "Email is required",
-                pattern: { value: /^\S+@\S+$/i, message: "Invalid email address" },
-              })}
+              {...register("email")}
               type="email"
               placeholder="Enter your email"
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
@@ -141,11 +131,7 @@ export default function Home() {
           <div>
             <label className="block mb-1 font-medium text-gray-700">Phone Number</label>
             <input
-              {...register("phone", {
-                required: "Phone number is required",
-                minLength: { value: 10, message: "Must be 10 digits" },
-                maxLength: { value: 10, message: "Must be 10 digits" },
-              })}
+              {...register("phone")}
               type="tel"
               placeholder="Enter your phone number"
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
@@ -157,7 +143,7 @@ export default function Home() {
           <div>
             <label className="block mb-1 font-medium text-gray-700">Gender</label>
             <select
-              {...register("gender", { required: "Gender is required" })}
+              {...register("gender")}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
             >
               <option value="">Select Gender</option>
@@ -172,7 +158,7 @@ export default function Home() {
           <div>
             <label className="block mb-1 font-medium text-gray-700">Date of Birth</label>
             <input
-              {...register("dob", { required: "Date of Birth is required" })}
+              {...register("dob")}
               type="date"
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
             />
@@ -183,7 +169,7 @@ export default function Home() {
           <div className="md:col-span-2">
             <label className="block mb-1 font-medium text-gray-700">Permanent Address</label>
             <textarea
-              {...register("permanentAddress", { required: "Permanent address is required" })}
+              {...register("permanentAddress")}
               placeholder="Enter your permanent address"
               rows="2"
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none resize-none"
@@ -197,7 +183,7 @@ export default function Home() {
           <div className="md:col-span-2">
             <label className="block mb-1 font-medium text-gray-700">Current Address</label>
             <textarea
-              {...register("currentAddress", { required: "Current address is required" })}
+              {...register("currentAddress")}
               placeholder="Enter your current address"
               rows="2"
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none resize-none"
@@ -218,8 +204,6 @@ export default function Home() {
           </div>
         </form>
       </div>
-
-
     </main>
   );
 }

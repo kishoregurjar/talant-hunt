@@ -11,10 +11,10 @@ import { useEffect } from "react";
 
 const TalentFormPage = () => {
   const dispatch = useDispatch();
-  const { register, handleSubmit, reset, watch } = useForm();
+  const { formData , formFilled,   id} = useSelector((s) => s.playerReducer);
   const [step, setStep] = useState(1);
   const router = useRouter();
-  const { formFilled,  id} = useSelector((s) => s.playerReducer);
+  const { register, handleSubmit, reset, watch } = useForm();
 
     useEffect(() => {
       if (!formFilled) router.push("/talenthunt");
@@ -23,9 +23,10 @@ const TalentFormPage = () => {
   const Submithandler = (data) => {
     console.log(data);
     const newPlayer = { ...data, id: nanoid() };
+    console.log(newPlayer)
   dispatch(asyncTalentForm(id, newPlayer))
-    const existingPlayers = JSON.parse(localStorage.getItem("players") || "[]");
-    localStorage.setItem("players", JSON.stringify([...existingPlayers, newPlayer]));
+    // const existingPlayers = JSON.parse(localStorage.getItem("players") || "[]");
+    // localStorage.setItem("players", JSON.stringify([...existingPlayers, newPlayer]));
     alert("✅ Form Submitted Successfully!");
     reset();
     router.push("/");
