@@ -130,7 +130,6 @@ videoLink: z.preprocess(
     .nullable() // allow null values
 ),
 
-  // consent: z.boolean(),
 
   consent: z.boolean({
     required_error: "You must agree to the consent to proceed",

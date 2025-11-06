@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { asyncUserPersonalInfo } from "../../store/actions/userAction";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { personalInfoSchema } from "../../components/validation/formvalidation";
+
 import {personalInfoValidator} from "../../components/validation/personalInfoValidator"
 import { State, City } from "country-state-city";
 

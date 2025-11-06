@@ -10,8 +10,6 @@ import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {skillInfoValidator} from "../../components/validation/skillInfoValidator"
 
-// import { saveFormData } from "../../store/PlayerSlice";
-
 const TalentFormPage = () => {
   const dispatch = useDispatch();
   const {
