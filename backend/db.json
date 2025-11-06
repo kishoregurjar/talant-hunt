@@ -1,80 +1,28 @@
 {
   "users": [
     {
-      "id": "gCtl_z__0bV7XcGvsVTlm",
+      "id": "O7Ntg_tGksaNjUja_DbIJ",
       "formData": {
-        "name": "Gaurav",
-        "email": "ayushshivde7@gmail.com",
-        "phone": "7999823026",
+        "name": "Ayush shivde",
+        "email": "shivdeayush09@gmail.com",
+        "phone": "8103729181",
         "gender": "Male",
-        "dob": "2019-11-03",
-        "permanentAddress": "Prajapat Nagar",
-        "currentAddress": "hjbjj"
+        "dob": {
+          "day": "23",
+          "month": "October",
+          "year": "2003"
+        },
+        "address": {
+          "address": "ayushi nagar",
+          "city": "indore",
+          "state": "Chandigarh",
+          "zip": "450000"
+        }
       },
       "formFilled": true,
       "videoWatched": true,
       "quizCompleted": true,
       "talentForm": {}
-    },
-    {
-      "id": "9Ufhwo88ITtkVvSObbRwf",
-      "formData": {
-        "name": "guatam maurya",
-        "email": "shivam@gmail.com",
-        "phone": "7489744424",
-        "gender": "Male",
-        "dob": "2008-07-05",
-        "permanentAddress": "asdfghjldfghj",
-        "currentAddress": "sdfghjsdfgh"
-      },
-      "formFilled": true,
-      "videoWatched": false,
-      "quizCompleted": false,
-      "talentForm": {
-        "role": "Batsman",
-        "battingStyle": "Right-hand Bat",
-        "bowlingStyle": "Right Arm Fast",
-        "level": "School",
-        "experience": 88,
-        "teamName": "88",
-        "highestScore": 23,
-        "bestBowling": "3/32",
-        "tournaments": "sdfgh",
-        "achievements": "dfgd",
-        "videoLink": "https://youtu.be/1m0_zpiqQ18?si=kILJtWE-yDjJcLYM",
-        "consent": true,
-        "id": "l2RmgpxyAFyudE0elCey9"
-      }
-    },
-    {
-      "id": "Ag6haNBtB-tJvLDvZDX0b",
-      "formData": {
-        "name": "guatam maurya",
-        "email": "gautam@gmail.com",
-        "phone": "3233232323",
-        "gender": "Male",
-        "dob": "1862-06-05",
-        "permanentAddress": "q23232",
-        "currentAddress": "323232"
-      },
-      "formFilled": true,
-      "videoWatched": false,
-      "quizCompleted": false,
-      "talentForm": {
-        "role": "Batsman",
-        "battingStyle": "Right-hand Bat",
-        "bowlingStyle": "Right Arm Fast",
-        "level": "School",
-        "experience": 5,
-        "teamName": "SKCC",
-        "highestScore": 123,
-        "bestBowling": "6/55",
-        "tournaments": 12,
-        "achievements": "555",
-        "videoLink": "https://youtu.be/1m0_zpiqQ18?si=kILJtWE-yDjJcLYM",
-        "consent": true,
-        "id": "ThR1yHnTDJru2KyUOl_ig"
-      }
     }
   ]
 }

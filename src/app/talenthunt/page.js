@@ -7,12 +7,15 @@ import { asyncUserPersonalInfo } from "../../store/actions/userAction";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { personalInfoSchema } from "../../components/validation/formvalidation";
+import { State, City } from "country-state-city";
 
 export default function Home() {
   const dispatch = useDispatch();
   const router = useRouter();
   const { formData } = useSelector((state) => state.playerReducer);
   const [loading, setLoading] = useState(true);
+const statesList = State.getStatesOfCountry("IN");
+
 
   const {
     register,
@@ -78,7 +81,7 @@ export default function Home() {
   }, [formWatchData]);
 
   const onSubmit = async (data) => {
-
+console.log(data)
     await dispatch(asyncUserPersonalInfo(data));
 
 
@@ -154,44 +157,125 @@ export default function Home() {
             {errors.gender && <p className="text-red-500 text-sm">{errors.gender.message}</p>}
           </div>
 
-          {/* Date of Birth */}
-          <div>
-            <label className="block mb-1 font-medium text-gray-700">Date of Birth</label>
-            <input
-              {...register("dob")}
-              type="date"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-            />
-            {errors.dob && <p className="text-red-500 text-sm">{errors.dob.message}</p>}
-          </div>
+     
+<div>
+  <label className="block mb-1 font-medium text-gray-700">Date of Birth</label>
+  <div className="grid grid-cols-3 gap-3">
+    {/* Month */}
+    <select
+      {...register("dob.month")}
+      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+      defaultValue=""
+    >
+      <option value="">Month</option>
+      <option value="January">January</option>
+      <option value="February">February</option>
+      <option value="March">March</option>
+      <option value="April">April</option>
+      <option value="May">May</option>
+      <option value="June">June</option>
+      <option value="July">July</option>
+      <option value="August">August</option>
+      <option value="September">September</option>
+      <option value="October">October</option>
+      <option value="November">November</option>
+      <option value="December">December</option>
+    </select>
 
-          {/* Permanent Address */}
-          <div className="md:col-span-2">
-            <label className="block mb-1 font-medium text-gray-700">Permanent Address</label>
-            <textarea
-              {...register("permanentAddress")}
-              placeholder="Enter your permanent address"
-              rows="2"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none resize-none"
-            ></textarea>
-            {errors.permanentAddress && (
-              <p className="text-red-500 text-sm">{errors.permanentAddress.message}</p>
-            )}
-          </div>
+    {/* Day */}
+    <input
+      {...register("dob.day")}
+      type="number"
+      placeholder="Day"
+      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+      min="1"
+      max="31"
+    />
 
-          {/* Current Address */}
-          <div className="md:col-span-2">
-            <label className="block mb-1 font-medium text-gray-700">Current Address</label>
-            <textarea
-              {...register("currentAddress")}
-              placeholder="Enter your current address"
-              rows="2"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none resize-none"
-            ></textarea>
-            {errors.currentAddress && (
-              <p className="text-red-500 text-sm">{errors.currentAddress.message}</p>
-            )}
-          </div>
+    {/* Year */}
+    <input
+      {...register("dob.year")}
+      type="number"
+      placeholder="Year"
+      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+      min="1900"
+      max={new Date().getFullYear()}
+    />
+  </div>
+  {errors.dob && (
+    <p className="text-red-500 text-sm mt-1">
+      {errors.dob.message ||
+        errors.dob?.month?.message ||
+        errors.dob?.day?.message ||
+        errors.dob?.year?.message}
+    </p>
+  )}
+</div>
+
+
+    
+
+
+{/* Permanent Address (object) */}
+<div className="md:col-span-2">
+  <label className="block mb-1 font-medium text-gray-700">Permanent Address</label>
+  <input
+    {...register("address.address")}
+    placeholder="Apartment, suite, etc."
+    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+  />
+  {errors.address?.address && (
+    <p className="text-red-500 text-sm">{errors.address.address.message}</p>
+  )}
+</div>
+
+{/* City / State / Zip - same row */}
+<div className="md:col-span-2 grid grid-cols-3 gap-3">
+  <div>
+    <label className="block mb-1 font-medium text-gray-700">City</label>
+    <input
+      {...register("address.city")}
+      placeholder="City"
+      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+    />
+    {errors.address?.city && (
+      <p className="text-red-500 text-sm">{errors.address.city.message}</p>
+    )}
+  </div>
+
+  <div>
+    <label className="block mb-1 font-medium text-gray-700">State</label>
+    <select
+      {...register("address.state")}
+      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+      defaultValue=""
+    >
+      <option value="">Select state</option>
+      {statesList.map((s) => (
+        <option key={s.code || s.name} value={s.name}>
+          {s.name}
+        </option>
+      ))}
+    </select>
+    {errors.address?.state && (
+      <p className="text-red-500 text-sm">{errors.address.state.message}</p>
+    )}
+  </div>
+
+  <div>
+    <label className="block mb-1 font-medium text-gray-700">Zip</label>
+    <input
+      {...register("address.zip")}
+      placeholder="Zip code"
+      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+    />
+    {errors.address?.zip && (
+      <p className="text-red-500 text-sm">{errors.address.zip.message}</p>
+    )}
+  </div>
+</div>
+
+
 
           {/* Submit Button */}
           <div className="md:col-span-2 flex justify-center mt-4">
