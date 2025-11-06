@@ -6,13 +6,15 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db": "json-server --watch backend/db.json --port 3001"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@reduxjs/toolkit": "^2.9.2",
     "@studio-freight/lenis": "^1.0.42",
     "axios": "^1.13.1",
+    "country-state-city": "^3.2.1",
     "framer-motion": "^12.23.24",
     "json-server": "^1.0.0-beta.3",
     "lucide-react": "^0.548.0",

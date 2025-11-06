@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Club Website with Redux Persistence
+
+This is a Next.js application with Redux state persistence. The Redux store is automatically rehydrated from the database after a page refresh.
+
+## Features
+
+- Redux state persistence across page refreshes
+- Automatic rehydration of user data from db.json
+- Integration with json-server for backend simulation
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. Start the database server:
+   ```bash
+   npm run db
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. In a new terminal, start the development server:
+   ```bash
+   npm run dev
+   ```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## How Redux Persistence Works
 
-## Learn More
+1. When a user fills out a form, the data is saved to both:
+   - The Redux store
+   - The db.json database via API calls
 
-To learn more about Next.js, take a look at the following resources:
+2. User identifiers (user ID and form ID) are stored in both sessionStorage and localStorage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. On page load, the application automatically:
+   - Checks for stored user identifiers
+   - Fetches user data from db.json
+   - Rehydrates the Redux store with the fetched data
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Available Scripts
 
-## Deploy on Vercel
+- `npm run dev` - Starts the Next.js development server
+- `npm run db` - Starts the json-server database
+- `npm run build` - Builds the application for production
+- `npm run start` - Starts the production server
+- `npm run lint` - Runs ESLint
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Implementation Details
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The Redux persistence is implemented through:
+
+1. `src/utils/reduxRehydration.js` - Utility functions for rehydrating the store
+2. `src/store/actions/userAction.js` - Enhanced actions that save user identifiers
+3. `src/store/PlayerSlice.js` - Added rehydrateState reducer
+4. `src/app/providers.jsx` - Automatic rehydration on app initialization

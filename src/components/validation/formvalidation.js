@@ -11,44 +11,69 @@ export const personalInfoSchema = z.object({
     .min(5, "Email must be at least 5 characters long"),
     
   phone: z.string()
-    .regex(/^[1-9]\d{9}$/, "Phone number must be 10 digits and cannot start with 0"),
+    .regex(/^[6-9]\d{9}$/, "Invalid Phone number"),
+
     
   gender: z.string()
     .min(1, "Please select your gender"),
     
-  dob: z.string()
-    .min(10, "Please select your date of birth")
-    .refine((dob) => {
-      const today = new Date();
-      const birthDate = new Date(dob);
-      const age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
-      
-      // Check if user is at least 13 years old
-      if (age > 5) return true;
-      if (age === 5 && monthDiff >= 0) return true;
-      return false;
-    }, "You must be at least 5 years old"),
+   dob: z.object({
+    day: z
+      .string()
+      .min(1, "Day is required")
+      .refine((val) => Number(val) >= 1 && Number(val) <= 31, "Invalid day"),
+    month: z
+      .string()
+      .min(1, "Month is required"),
+    year: z
+      .string()
+      .min(4, "Year is required")
+      .refine((val) => Number(val) >= 1900, "Invalid year"),
+  })
+  .refine((dob) => {
+    // Convert month name to number (January = 0, February = 1, ...)
+    const monthIndex = new Date(`${dob.month} 1, ${dob.year}`).getMonth();
+    const birthDate = new Date(Number(dob.year), monthIndex, Number(dob.day));
+    const today = new Date();
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    return age >= 5; // at least 5 years old
+  }, { message: "You must be at least 5 years old" }),
     
-  permanentAddress: z.string()
-    .min(5, "Permanent address must be at least 5 characters long")
-    .max(200, "Permanent address must be less than 200 characters"),
-    
-  currentAddress: z.string()
-    .min(5, "Current address must be at least 5 characters long")
-    .max(200, "Current address must be less than 200 characters"),
-}).refine((data) => data.permanentAddress !== data.currentAddress, {
-  message: "Current address cannot be the same as permanent address",
-  path: ["currentAddress"],
+  address: z.object({
+    address: z.string()
+      .min(5, "Permanent address must be at least 5 characters long")
+      .max(200, "Permanent address must be less than 200 characters"),
+    city: z.string()
+      .min(2, "City must be at least 2 characters long")
+      .max(50, "City must be less than 50 characters"),
+    state: z.string()
+      .min(1, "Please select a state"),
+    zip: z
+  .string()
+  .regex(/^[1-9][0-9]{5}$/, "Enter Valid Zip code")
+  })
+}).refine((data) => {
+  // Ensure all address fields are provided if any are filled
+  const { address, city, state, zip } = data.address;
+  const addressFields = [address, city, state, zip];
+  const filledFields = addressFields.filter(field => field && field.trim() !== "");
+  return filledFields.length === 0 || filledFields.length === addressFields.length;
+}, {
+  message: "Please fill all address fields or leave them all empty",
+  path: ["address"]
 });
-
-
 
 export const skillInfoSchema = z.object({
   /* ✅ Step 1: Cricket Profile */
   role: z.string().min(1, "Please select playing role"),
-  battingStyle: z.string().min(1, "Please select batting style"),
-  bowlingStyle: z.string().min(1, "Please select bowling style"),
+  battingStyle: z.string().optional(),
+  bowlingStyle: z.string().optional(),
   level: z.string().min(1, "Please select current level"),
   experience: z
     .preprocess((val) => {
@@ -89,40 +114,54 @@ export const skillInfoSchema = z.object({
       return r >= 0 && r <= 999;
     }, "Runs must be between 0–999"),
 
-  /* ✅ Tournaments → Number (0–500) OR Text (min 3 chars) */
-  tournaments: z.union([
-    z.preprocess(
+  /* ✅ Tournaments → Number (0–50) OR Text (min 3 chars), optional when empty */
+  tournaments: z
+    .preprocess(
       (val) => {
-        if (val === "" || val === null || val === undefined) return undefined;
-        if (typeof val === "number") return val;
-        const trimmed = String(val).trim();
-        if (/^\d+$/.test(trimmed)) return Number(trimmed);
+        if (val === "" || val === null || val === undefined) return ""; // make empty optional
         return val;
       },
-      z
-        .number({
-          invalid_type_error: "Enter tournaments count or names",
-        })
-        .min(0, "Tournaments cannot be negative")
-        .max(500, "Too many tournaments (max 500)")
-    ),
-    z
-      .string()
-      .min(3, "Write tournament names or number (min 3 chars)")
-  ]),
+      z.union([
+        z.preprocess(
+          (val) => {
+            if (typeof val === "number") return val;
+            const trimmed = String(val).trim();
+            if (/^\d+$/.test(trimmed)) return Number(trimmed);
+            return val;
+          },
+          z
+            .number({
+              invalid_type_error: "Enter tournaments count or names",
+            })
+            .min(0, "Tournaments cannot be negative")
+            .max(50, "Too many tournaments")
+        ),
+        z
+          .string()
+          .min(3, "Write tournament names or number (min 3 chars)")
+      ])
+    )
+    .optional(),
 
   /* ✅ Achievements → text or "None" allowed */
-  achievements: z
-    .string({
-      required_error: "Please enter achievements or 'None'",
-    })
-    .trim()
+ achievements: z.preprocess(
+  (val) => {
+    if (val === "" || val === null || val === undefined) return ""; // makes it optional
+    return String(val).trim();
+  },
+  z
+    .string()
     .min(3, "Write at least 3 characters")
     .max(300, "Too long (max 300 characters)")
     .refine(
-      (val) => /^[a-zA-Z0-9 ,.'()\-/&]+$/.test(val) || val.toLowerCase() === "none",
+      (val) =>
+        /^[a-zA-Z0-9 ,.'()\-/&]+$/.test(val) || val.toLowerCase() === "none",
       "Enter valid achievements text or type 'None'"
-    ),
+    )
+).optional(),
+
+
+
 
   /* ✅ Step 3: Media & Verification (optional) */
   videoLink: z
@@ -131,6 +170,72 @@ export const skillInfoSchema = z.object({
     .url("Enter a valid URL")
     .optional()
     .or(z.literal("")).optional(),
-  consent: z.boolean().optional(),
+  // consent: z.boolean(),
+
+  consent: z.boolean({
+    required_error: "You must agree to the consent to proceed",
+  }).refine((val) => val === true, {
+    message: "You must agree to the consent to proceed",
+  }),
+
+
+}).superRefine((obj, ctx) => {
+  const role = (obj.role || "").trim();
+
+  // For batsman, battingStyle is required
+  if (role === "Batsman" && (!obj.battingStyle || obj.battingStyle.trim() === "")) {
+    ctx.addIssue({
+      path: ["battingStyle"],
+      code: "custom",
+      message: "Please select batting style",
+    });
+  }
+
+  // For bowler, both required
+  if (role === "Bowler") {
+    if (!obj.battingStyle || obj.battingStyle.trim() === "") {
+      ctx.addIssue({
+        path: ["battingStyle"],
+        code: "custom",
+        message: "Please select batting style",
+      });
+    }
+    if (!obj.bowlingStyle || obj.bowlingStyle.trim() === "") {
+      ctx.addIssue({
+        path: ["bowlingStyle"],
+        code: "custom",
+        message: "Please select bowling style",
+      });
+    }
+  }
+
+  // For all-rounder, both required
+  if (role === "All-Rounder") {
+    if (!obj.battingStyle || obj.battingStyle.trim() === "") {
+      ctx.addIssue({
+        path: ["battingStyle"],
+        code: "custom",
+        message: "Please select batting style",
+      });
+    }
+    if (!obj.bowlingStyle || obj.bowlingStyle.trim() === "") {
+      ctx.addIssue({
+        path: ["bowlingStyle"],
+        code: "custom",
+        message: "Please select bowling style",
+      });
+    }
+  }
+
+  // For wicket keeper, batting required but bowling not allowed
+  if (role === "Wicket Keeper") {
+    if (!obj.battingStyle || obj.battingStyle.trim() === "") {
+      ctx.addIssue({
+        path: ["battingStyle"],
+        code: "custom",
+        message: "Please select batting style",
+      });
+    }
+  }
 });
 
