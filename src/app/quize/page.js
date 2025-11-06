@@ -49,10 +49,10 @@ export default function QuizPage() {
   useEffect(() => {
     if (!loading && submitted && formFilled && formData && formData.id) {
       const existingPlayers = JSON.parse(localStorage.getItem("players")) || [];
-      
+
       // Find and update the player with quiz completion status
       const playerIndex = existingPlayers.findIndex(player => player.id === formData.id);
-      
+
       if (playerIndex !== -1) {
         const updatedPlayers = [...existingPlayers];
         // Completely replace player data with updated data
@@ -60,7 +60,7 @@ export default function QuizPage() {
           ...formData,
           quizCompleted: true
         };
-        
+
         localStorage.setItem("players", JSON.stringify(updatedPlayers));
       }
     }
@@ -107,9 +107,10 @@ export default function QuizPage() {
   }
 
   return (
+
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 p-6">
-      <div className="w-full max-w-2xl bg-white shadow-xl rounded-2xl p-8 border border-gray-100">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+      <div className="w-full max-w-2xl bg-white shadow-xl rounded-2xl mt-30 p-8 border border-gray-100">
+        <h2 className="text-3xl font-bold text-center text-blue-700 mb-8">
           Cricket Knowledge Quiz
         </h2>
 
@@ -126,11 +127,10 @@ export default function QuizPage() {
                 {q.options.map((opt) => (
                   <label
                     key={opt}
-                    className={`p-3 text-sm rounded-lg cursor-pointer border transition-all ${
-                      selected[i] === opt
+                    className={`p-3 text-sm rounded-lg cursor-pointer border transition-all ${selected[i] === opt
                         ? "bg-blue-50 border-blue-500 text-blue-700 font-medium"
                         : "bg-white border-gray-300 hover:border-blue-400 hover:bg-gray-100"
-                    }`}
+                      }`}
                   >
                     <input
                       type="radio"
@@ -152,41 +152,39 @@ export default function QuizPage() {
           <button
             onClick={handleSubmit}
             disabled={Object.keys(selected).length < questions.length}
-            className={`mt-8 w-full py-3 rounded-lg font-semibold text-white shadow-md transition-all ${
-              Object.keys(selected).length < questions.length
+            className={`mt-8 w-full py-3 rounded-lg font-semibold text-white shadow-md transition-all ${Object.keys(selected).length < questions.length
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-blue-600 hover:bg-blue-700"
-            }`}
+              }`}
           >
             Submit Answers
           </button>
         ) : (
-          <div className="mt-10 text-center bg-gray-50 border border-gray-200 rounded-xl p-6">
+          <div className="mt-10 text-center bg-gray-50 border border-gray-200 rounded-xl p-8 shadow-sm">
             <h3 className="text-2xl font-semibold text-gray-800 mb-3">
               Quiz Completed
             </h3>
-            <p className="text-gray-700 mb-4 text-lg">
+
+            <p className="text-gray-700 mb-6 text-lg">
               You scored{" "}
               <span className="font-bold text-blue-600">{score}</span> out of{" "}
               <span className="font-bold">{questions.length}</span>
             </p>
-            <div className="h-3 w-full bg-gray-200 rounded-full overflow-hidden mb-4">
-              <div
-                className="bg-blue-600 h-full transition-all"
-                style={{
-                  width: `${(score / questions.length) * 100}%`,
-                }}
-              ></div>
-            </div>
+
             <button
               onClick={() => router.push("/payment")}
-              className="bg-green-600 text-white px-8 py-2 rounded-lg font-semibold hover:bg-green-700 transition-all"
+              className="bg-blue-600 text-white px-10 py-3 rounded-lg font-semibold 
+             shadow-md hover:bg-blue-700 hover:shadow-lg 
+             active:scale-95 active:bg-blue-800 
+             transition-transform transition-colors duration-200 ease-in-out"
             >
               Finish
             </button>
+
           </div>
         )}
       </div>
     </div>
+
   );
 }

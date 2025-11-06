@@ -8,7 +8,7 @@ import { asyncUserVideoWatched } from "../../store/actions/userAction";
 export default function VideoPage() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { formFilled, formData , id } = useSelector((state) => state.playerReducer);
+  const { formFilled, formData, id } = useSelector((state) => state.playerReducer);
   const [ended, setEnded] = useState(false);
   const [loading, setLoading] = useState(true);
   const videoRef = useRef(null);
@@ -31,10 +31,10 @@ export default function VideoPage() {
   useEffect(() => {
     if (!loading && formFilled && formData && formData.id) {
       const existingPlayers = JSON.parse(localStorage.getItem("players")) || [];
-      
+
       // Find and update the player with video watched status
       const playerIndex = existingPlayers.findIndex(player => player.id === formData.id);
-      
+
       if (playerIndex !== -1) {
         const updatedPlayers = [...existingPlayers];
         // Completely replace player data with updated data
@@ -42,7 +42,7 @@ export default function VideoPage() {
           ...formData,
           videoWatched: true
         };
-        
+
         localStorage.setItem("players", JSON.stringify(updatedPlayers));
       }
     }
@@ -83,43 +83,52 @@ export default function VideoPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50 p-6">
-      <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-3xl text-center transform transition-all duration-500 hover:-translate-y-1 hover:shadow-blue-200 mt-30">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6">
-           Watch Training Video
+  
+
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br bg-gray-100 p-6">
+      <div className="relative bg-white shadow-xl rounded-2xl p-8 sm:p-10 w-full max-w-3xl text-center 
+      border border-gray-100 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-100 mt-16">
+
+        {/* Title */}
+        <h2 className="text-3xl sm:text-4xl font-bold text-blue-700 mb-4 tracking-tight">
+          Watch Trial Video
         </h2>
 
-        <div className="relative">
+        <p className="text-gray-600 text-sm sm:text-base mb-6 leading-relaxed">
+          Watch the full video carefully to unlock your quiz. Stay focused till the end
+        </p>
+
+        {/* Video Section — untouched */}
+        <div className="relative overflow-hidden rounded-2xl shadow-lg border border-gray-200 bg-gray-50">
           <video
             ref={videoRef}
             src="/video/video.mp4"
             autoPlay
             controls={false}
             onEnded={onEnded}
-            className="w-full max-w-2xl rounded-xl shadow-md border border-gray-200"
+            className="w-full h-auto rounded-2xl object-cover"
           />
-
-          {/* Overlay message when video not ended */}
-          {!ended && (
-            <p className="text-gray-500 text-sm mt-3">
-              Watch the complete video to unlock the next section. 
-              Please do not close this tab.
-            </p>
-          )}
         </div>
 
+        {/* Action Button */}
         <button
           disabled={!ended}
           onClick={() => router.push("/quize")}
-          className={`mt-8 px-8 py-3 rounded-lg font-semibold transition-all duration-300 shadow-md ${
-            ended
-              ? "bg-blue-600 text-white hover:bg-blue-700 hover:shadow-lg"
+          className={`mt-8 px-10 py-3 rounded-lg font-semibold shadow-md transform transition-all duration-300 ease-in-out ${ended
+              ? "bg-blue-600 text-white hover:bg-blue-700 hover:shadow-lg active:scale-95 active:bg-blue-800"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
-          }`}
+            }`}
         >
-          {ended ? "Proceed to Quiz ➡️" : "Video Incomplete"}
+          {ended ? "Proceed to Quiz ➡️" : "Watch Complete Video"}
         </button>
+
+
+        {/* Footer */}
+        <p className="text-xs text-gray-500 mt-6 italic">
+          Powered by <span className="text-blue-600 font-medium">ICC</span> • Learn. Play. Excel.
+        </p>
       </div>
     </div>
+
   );
 }
