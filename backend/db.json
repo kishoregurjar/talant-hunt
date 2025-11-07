@@ -1,42 +1,5 @@
 {
   "users": [
-    {
-      "id": "eT29ak1CvoeaGG5XlpdHK",
-      "formData": {
-        "name": "nitin tirole",
-        "email": "nitintirole@yopmail.com",
-        "phone": 8823016374,
-        "gender": "Male",
-        "dob": {
-          "day": "19",
-          "month": "January",
-          "year": "2001"
-        },
-        "address": {
-          "address": "ayushi nagarkbgyfdxcgvh",
-          "city": "indore",
-          "state": "Madhya Pradesh",
-          "zip": "452009"
-        }
-      },
-      "formFilled": true,
-      "videoWatched": true,
-      "quizCompleted": true,
-      "talentForm": {
-        "role": "Batsman",
-        "battingStyle": "Left-hand Bat",
-        "bowlingStyle": "Right Arm Fast",
-        "level": "School",
-        "experience": 5,
-        "teamName": "ram",
-        "highestScore": 105,
-        "bestBowling": "5/10",
-        "tournaments": "2hjhjhjhj",
-        "achievements": null,
-        "videoLink": "https://youtu.be/xwEp0i9b3UM?si=6BSe6fx1rxzVty8F",
-        "consent": true,
-        "id": "0yGD8C6HFUdfm4vSHaHWw"
-      }
-    }
+   
   ]
 }
