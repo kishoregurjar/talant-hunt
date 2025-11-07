@@ -1,80 +1,28 @@
 {
   "users": [
     {
-      "id": "kJErchl04M3_U0Et3e45n",
-      "formData": {
-        "name": "Ayush shivde",
-        "email": "shivdeayush09@gmail.com",
-        "phone": 7489744424,
-        "gender": "Female",
-        "dob": {
-          "day": "02",
-          "month": "January",
-          "year": "2003"
-        },
-        "address": {
-          "address": "ayushi nagar",
-          "city": "indore",
-          "state": "Himachal Pradesh",
-          "zip": "250000"
-        }
-      },
-      "formFilled": true,
-      "videoWatched": true,
-      "quizCompleted": true,
-      "talentForm": {
-        "role": "Batsman",
-        "battingStyle": "Right-hand Bat",
-        "bowlingStyle": "Right Arm Fast",
-        "level": "School",
-        "experience": 2,
-        "teamName": "55",
-        "highestScore": 55,
-        "bestBowling": "5/55",
-        "tournaments": null,
-        "achievements": null,
-        "videoLink": null,
-        "consent": true,
-        "id": "qf_HQDBvj-_jBKoZVvlmi"
-      }
-    },
-    {
-      "id": "Ptq4j4NE0A47c-y5g-93c",
+      "id": "S-8jDlJnaJnzqcn9MPd2Y",
       "formData": {
         "name": "guatam maurya",
         "email": "gautama1512@gmail.com",
         "phone": 8103729181,
         "gender": "Male",
         "dob": {
-          "day": "12",
-          "month": "August",
+          "day": "5",
+          "month": "September",
           "year": "2018"
         },
         "address": {
           "address": "hvhgvhh",
-          "city": "869645463",
-          "state": "Bihar",
+          "city": "indore",
+          "state": "Jharkhand",
           "zip": "452009"
         }
       },
       "formFilled": true,
       "videoWatched": true,
-      "quizCompleted": false,
-      "talentForm": {
-        "role": "Batsman",
-        "battingStyle": "Right-hand Bat",
-        "bowlingStyle": "",
-        "level": "Club",
-        "experience": null,
-        "teamName": null,
-        "highestScore": 50,
-        "bestBowling": "6/55",
-        "tournaments": null,
-        "achievements": null,
-        "videoLink": null,
-        "consent": true,
-        "id": "u-bvUSkj-c9NOCgcSGexZ"
-      }
+      "quizCompleted": true,
+      "talentForm": {}
     }
   ]
 }

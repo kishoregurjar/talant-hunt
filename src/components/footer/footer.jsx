@@ -3,25 +3,25 @@ import Link from 'next/link'
 
 const footer = () => {
   return (
-    <footer className="bg-black border-t border-gray-800 py-8 text-center text-gray-400 text-xs sm:text-sm">
-        <p className="mb-3 text-red-500 font-semibold text-base sm:text-lg">
-          The Cricket verse
+    <footer className=" bg-white py-8 text-center text-gray-400 text-xs sm:text-sm">
+        <p className="mb-3  text-blue-700 font-semibold text-base sm:text-lg">
+          ICC
         </p>
         <div className="flex flex-wrap justify-center gap-4 sm:space-x-6 mb-4">
-          <Link href="/about" className="hover:text-white">
+          <Link href="/about" className="hover:text-black">
             About
           </Link>
-          <Link href="/service" className="hover:text-white">
+          <Link href="/service" className="hover:text-black">
             services
           </Link>
-          <Link href="/player" className="hover:text-white">
+          <Link href="/player" className="hover:text-black">
             players
           </Link>
-          <Link href="/contact" className="hover:text-white">
+          <Link href="/contact" className="hover:text-black ">
             Contact
           </Link>
         </div>
-        <p>© {new Date().getFullYear()} The Cricket verse. All Rights Reserved.</p>
+        <p>© {new Date().getFullYear()} ICC. All Rights Reserved.</p>
       </footer>
   )
 }

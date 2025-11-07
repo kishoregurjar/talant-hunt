@@ -27,14 +27,14 @@ phone: z.preprocess(
    dob: z.object({
     day: z
       .string()
-      .min(1, "Day is required")
+      .min(1, "Enter Complete Date of Birth")
       .refine((val) => Number(val) >= 1 && Number(val) <= 31, "Invalid day"),
     month: z
       .string()
-      .min(1, "Month is required"),
+      .min(1, "Enter Complete Date of Birth"),
     year: z
       .string()
-      .min(4, "Year is required")
+      .min(4, "Enter Complete Date of Birth")
       .refine((val) => Number(val) >= 1900, "Invalid year"),
   })
   .refine((dob) => {
@@ -58,7 +58,8 @@ phone: z.preprocess(
       .max(200, "Permanent address must be less than 200 characters"),
     city: z.string()
       .min(2, "City must be at least 2 characters long")
-      .max(50, "City must be less than 50 characters"),
+      .max(50, "City must be less than 50 characters")
+     .regex(/^[A-Za-z\s]+$/, "City name cannot contain numbers or special characters"),
     state: z.string()
       .min(1, "Please select a state"),
     zip: z
