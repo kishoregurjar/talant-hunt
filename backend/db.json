@@ -1,42 +1,5 @@
 {
   "users": [
-    {
-      "id": "kJErchl04M3_U0Et3e45n",
-      "formData": {
-        "name": "Ayush shivde",
-        "email": "shivdeayush09@gmail.com",
-        "phone": 7489744424,
-        "gender": "Female",
-        "dob": {
-          "day": "02",
-          "month": "January",
-          "year": "2003"
-        },
-        "address": {
-          "address": "ayushi nagar",
-          "city": "indore",
-          "state": "Himachal Pradesh",
-          "zip": "250000"
-        }
-      },
-      "formFilled": true,
-      "videoWatched": true,
-      "quizCompleted": true,
-      "talentForm": {
-        "role": "Batsman",
-        "battingStyle": "Right-hand Bat",
-        "bowlingStyle": "Right Arm Fast",
-        "level": "School",
-        "experience": 2,
-        "teamName": "55",
-        "highestScore": 55,
-        "bestBowling": "5/55",
-        "tournaments": null,
-        "achievements": null,
-        "videoLink": null,
-        "consent": true,
-        "id": "qf_HQDBvj-_jBKoZVvlmi"
-      }
-    }
+   
   ]
 }

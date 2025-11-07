@@ -111,9 +111,7 @@ export const asyncUserPersonalInfo = (user) => async (dispatch, getState) => {
         return updateRes.data;
       }
     } else {
-      // User doesn't exist, create a new entry
-      // The user object is the actual form data
-      // We need to wrap it in the proper structure for the database
+   
       const newUser = {
         id: nanoid(), // Generate ID if not present
         formData: user, 
@@ -126,9 +124,11 @@ export const asyncUserPersonalInfo = (user) => async (dispatch, getState) => {
       const res = await axios.post("/users", newUser);
 
       if (res.status >= 200 && res.status < 300) {
+
+
         console.log("User successfully added:", res.data);
-        // Use comprehensive rehydration
-        dispatch(rehydrateState({
+
+const savedInRedux = await dispatch(rehydrateState({
           id: res.data.id,
           formData: res.data.formData,
           formFilled: res.data.formFilled,
@@ -136,16 +136,34 @@ export const asyncUserPersonalInfo = (user) => async (dispatch, getState) => {
           quizCompleted: res.data.quizCompleted,
           talentForm: res.data.talentForm
         }));
-        
-        // Save user ID to localStorage for rehydration
-        localStorage.setItem('userId', res.data.id);
-        if (res.data.formData?.id) {
-          localStorage.setItem('formId', res.data.formData.id);
+        // console.log(savedInRedux.payload.formFilled);
+
+localStorage.setItem('userId', savedInRedux.payload.id);
+        if (savedInRedux.payload.formData?.id) {
+          localStorage.setItem('formId', savedInRedux.payload.formData.id);
         }
         
-        return res.data;
+
+        // if (savedInRedux.payload.formFilled == true) {
+        //   router.push("/video");
+        // } else {
+        //   router.push("/talenthunt");
+        // }
+
+        // dispatch(rehydrateState({
+        //   id: res.data.id,
+        //   formData: res.data.formData,
+        //   formFilled: res.data.formFilled,
+        //   videoWatched: res.data.videoWatched,
+        //   quizCompleted: res.data.quizCompleted,
+        //   talentForm: res.data.talentForm
+        // }));
+        
+        // Save user ID to localStorage for rehydration
+
+        return savedInRedux;
       } else {
-        console.error("Unexpected response:", res);
+        console.error("Unexpected response:", savedInRedux);
       }
     }
   } catch (error) {

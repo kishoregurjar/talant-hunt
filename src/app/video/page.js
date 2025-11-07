@@ -13,7 +13,7 @@ export default function VideoPage() {
   const [loading, setLoading] = useState(true);
   const videoRef = useRef(null);
 
-  // Redirect if user hasn't filled the form
+
   useEffect(() => {
     // Wait a bit to ensure rehydration is complete
     const timer = setTimeout(() => {
@@ -26,8 +26,7 @@ export default function VideoPage() {
     return () => clearTimeout(timer);
   }, [formFilled]);
 
-  // Save form data to localStorage when component mounts
-  // This ensures that even if user refreshes the page during video, form data is preserved
+  
   useEffect(() => {
     if (!loading && formFilled && formData && formData.id) {
       const existingPlayers = JSON.parse(localStorage.getItem("players")) || [];
@@ -48,13 +47,13 @@ export default function VideoPage() {
     }
   }, [formFilled, formData, loading]);
 
-  // Warn user before leaving the page during video watching
+ 
   useEffect(() => {
     const handleBeforeUnload = (e) => {
       if (!ended) {
         e.preventDefault();
-        e.returnValue = ""; // Required for Chrome
-        return ""; // Required for other browsers
+        e.returnValue = ""; 
+        return "";
       }
     };
 
@@ -66,9 +65,9 @@ export default function VideoPage() {
 
   const onEnded = () => {
     setEnded(true);
-    // Pass the formData.id to the async action
+    
     dispatch(asyncUserVideoWatched(id));
-    // dispatch(asyncUserVideoWatched(formData.id));
+
   };
 
   if (loading) {
@@ -119,7 +118,7 @@ export default function VideoPage() {
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }`}
         >
-          {ended ? "Proceed to Quiz ➡️" : "Watch Complete Video"}
+          {ended ? "Proceed to Quiz →" : "Watch Complete Video"}
         </button>
 
 

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { asyncUserPersonalInfo } from "../../store/actions/userAction";
+import { Camera } from 'lucide-react';
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -83,10 +84,14 @@ export default function Home() {
 
   const onSubmit = async (data) => {
     console.log(data)
-    await dispatch(asyncUserPersonalInfo(data));
-
-
-    router.push("/video");
+    const res = await dispatch(asyncUserPersonalInfo(data));
+router.push("/video");
+// console.log(res)
+//  if( res.payload.formFilled == true){
+//       router.push("/video");
+//     } else {
+//       router.push("/talenthunt");
+//   }
   };
 
   if (loading) {
@@ -111,11 +116,11 @@ export default function Home() {
         <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Full Name */}
           <div className="col-span-1">
-            <label className="block mb-1 font-medium text-gray-700">Full Name</label>
+            <label className="block mb-1 text-sm font-medium text-gray-700">Full Name</label>
             <input
               {...register("name")}
               type="text"
-              placeholder="Enter your full name"
+              placeholder="Virat Kohli"
               className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
             />
             {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
@@ -123,11 +128,11 @@ export default function Home() {
 
           {/* Email */}
           <div className="col-span-1">
-            <label className="block mb-1 font-medium text-gray-700">Email</label>
+            <label className="block mb-1 text-sm  font-medium text-gray-700">Email</label>
             <input
               {...register("email")}
               // type="email"
-              placeholder="Enter your email"
+              placeholder="virat.kohli18@example.com"
               className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
             />
             {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
@@ -135,11 +140,11 @@ export default function Home() {
 
           {/* Phone */}
           <div>
-            <label className="block mb-1 font-medium text-gray-700">Phone Number</label>
+            <label className="block mb-1 text-sm font-medium text-gray-700">Phone Number</label>
             <input
-              {...register("phone")}
+              {...register("phone")} 
               type="number"
-              placeholder="Enter your phone number"
+              placeholder="9876543210"
               className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
             />
             {errors.phone && <p className="text-red-500 text-sm">{errors.phone.message}</p>}
@@ -147,7 +152,7 @@ export default function Home() {
 
           {/* Gender */}
           <div>
-            <label className="block mb-1 font-medium text-gray-700">Gender</label>
+            <label className="block mb-1 text-sm  font-medium text-gray-700">Gender</label>
             <select
               {...register("gender")}
               className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
@@ -162,9 +167,19 @@ export default function Home() {
 
           {/* Date of Birth */}
           <div>
-            <label className="block mb-1 font-medium text-gray-700">Date of Birth</label>
+            <label className="block mb-1 text-sm font-medium text-gray-700">Date of Birth</label>
             <div className="grid grid-cols-3 gap-3">
+ {/* Day */}
+               <input
+                {...register("dob.day")}
+                type="number"
+                placeholder="Day"
+                className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
+                min="1"
+                max="31"
+              />
               {/* Month */}
+
               <select
                 {...register("dob.month")}
                 className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
@@ -185,15 +200,8 @@ export default function Home() {
                 <option value="December">December</option>
               </select>
 
-              {/* Day */}
-              <input
-                {...register("dob.day")}
-                type="number"
-                placeholder="Day"
-                className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
-                min="1"
-                max="31"
-              />
+             
+             
 
               {/* Year */}
               <input
@@ -217,7 +225,7 @@ export default function Home() {
 
           {/* Permanent Address */}
           <div className="md:col-span-2">
-            <label className="block mb-1 font-medium text-gray-700">Permanent Address</label>
+            <label className="block mb-1 text-sm  font-medium text-gray-700">Permanent Address</label>
             <input
               {...register("address.address")}
               placeholder="Apartment, suite, etc."
@@ -231,9 +239,10 @@ export default function Home() {
           {/* City / State / Zip */}
           <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label className="block mb-1 font-medium text-gray-700">City</label>
+              <label className="block mb-1 text-sm font-medium text-gray-700">City</label>
               <input
                 {...register("address.city")}
+                type="text"
                 placeholder="City"
                 className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
               />
@@ -243,7 +252,7 @@ export default function Home() {
             </div>
 
             <div className="relative overflow-visible">
-              <label className="block mb-1 font-medium text-gray-700">State</label>
+              <label className="block mb-1 text-sm font-medium text-gray-700">State</label>
               <select
                 {...register("address.state")}
                 className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none relative z-50"
@@ -262,7 +271,7 @@ export default function Home() {
             </div>
 
             <div>
-              <label className="block mb-1 font-medium text-gray-700">Zip</label>
+              <label className="block mb-1 text-sm font-medium text-gray-700">Zip</label>
               <input
                 {...register("address.zip")}
                 placeholder="Zip code"

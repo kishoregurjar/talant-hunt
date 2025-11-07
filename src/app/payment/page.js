@@ -209,7 +209,7 @@ export default function PaymentForm() {
           </p>
         </div>
 
-        {/* Payment Method Tabs */}
+      
         <div className="flex justify-center gap-3 mb-6">
           {["UPI", "Card", "Bank Transfer"].map((method) => (
             <button
