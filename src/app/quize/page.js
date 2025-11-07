@@ -45,7 +45,7 @@ export default function QuizPage() {
     return () => clearTimeout(timer);
   }, [formFilled, videoWatched]);
 
-  // Save quiz completion status to localStorage
+
   useEffect(() => {
     if (!loading && submitted && formFilled && formData && formData.id) {
       const existingPlayers = JSON.parse(localStorage.getItem("players")) || [];
@@ -66,10 +66,10 @@ export default function QuizPage() {
     }
   }, [submitted, formFilled, formData, loading]);
 
-  // Warn user before leaving the page during quiz
+
   useEffect(() => {
     const handleBeforeUnload = (e) => {
-      // Warn if user has started the quiz but not submitted
+      
       if (Object.keys(selected).length > 0 && !submitted) {
         e.preventDefault();
         e.returnValue = ""; // Required for Chrome
