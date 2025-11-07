@@ -21,6 +21,16 @@ const questions = [
     options: ["Shane Warne", "James Anderson", "Muttiah Muralitharan", "Anil Kumble"],
     ans: "Muttiah Muralitharan",
   },
+  {
+    q: "Which bowler has taken the most wickets in Test cricket?",
+    options: ["Shane Warne", "James Anderson", "Muttiah Muralitharan", "Anil Kumble"],
+    ans: "Muttiah Muralitharan",
+  },
+  {
+    q: "Which bowler has taken the most wickets in Test cricket?",
+    options: ["Shane Warne", "James Anderson", "Muttiah Muralitharan", "Anil Kumble"],
+    ans: "Muttiah Muralitharan",
+  },
 ];
 
 export default function QuizPage() {
