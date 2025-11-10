@@ -20,6 +20,11 @@ phone: z.preprocess(
     .transform((val) => Number(val)) // store as number
 ),
 
+terms: z
+    .boolean()
+    .refine((val) => val === true, {
+      message: "You must agree to the Terms & Conditions",
+    }),
     
   gender: z.string()
     .min(1, "Please select your gender"),

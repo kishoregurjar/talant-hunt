@@ -4,6 +4,7 @@ import { markVideoWatched } from "../../store/PlayerSlice";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { asyncUserVideoWatched } from "../../store/actions/userAction";
+import { motion } from "framer-motion";
 
 export default function VideoPage() {
   const dispatch = useDispatch();
@@ -82,23 +83,46 @@ export default function VideoPage() {
   }
 
   return (
-  
-
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br bg-gray-100 p-6">
-      <div className="relative bg-white shadow-xl rounded-2xl p-8 sm:p-10 w-full max-w-3xl text-center 
-      border border-gray-100 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-100 mt-16">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br bg-gray-100 p-4 md:p-6"
+    >
+      <motion.div 
+        initial={{ scale: 0.9, y: 20, opacity: 0 }}
+        animate={{ scale: 1, y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="relative bg-white shadow-xl rounded-2xl p-8 sm:p-10 w-full max-w-4xl text-center 
+        border border-gray-100 hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-100 mt-16"
+      >
 
         {/* Title */}
-        <h2 className="text-3xl sm:text-4xl font-bold text-blue-700 mb-4 tracking-tight">
+        <motion.h2 
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+          className="text-3xl sm:text-4xl font-bold text-blue-700 mb-4 tracking-tight"
+        >
           Watch Trial Video
-        </h2>
+        </motion.h2>
 
-        <p className="text-gray-600 text-sm sm:text-base mb-6 leading-relaxed">
+        <motion.p 
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.3 }}
+          className="text-gray-600 text-sm sm:text-base mb-6 leading-relaxed"
+        >
           Watch the full video carefully to unlock your quiz. Stay focused till the end
-        </p>
+        </motion.p>
 
         {/* Video Section — untouched */}
-        <div className="relative overflow-hidden rounded-2xl shadow-lg border border-gray-200 bg-gray-50">
+        <motion.div 
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="relative overflow-hidden rounded-2xl shadow-lg border border-gray-200 bg-gray-50"
+        >
           <video
             ref={videoRef}
             src="/video/video.mp4"
@@ -107,27 +131,36 @@ export default function VideoPage() {
             onEnded={onEnded}
             className="w-full h-auto rounded-2xl object-cover"
           />
-        </div>
+        </motion.div>
 
         {/* Action Button */}
-        <button
+        <motion.button
           disabled={!ended}
-          onClick={() => router.push("/quize")}
+          onClick={() => router.push("/quiz")}
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.5 }}
+          whileHover={ended ? { scale: 1.05, boxShadow: "0 10px 25px rgba(59, 130, 246, 0.3)" } : {}}
+          whileTap={ended ? { scale: 0.95 } : {}}
           className={`mt-8 px-10 py-3 rounded-lg font-semibold shadow-md transform transition-all duration-300 ease-in-out ${ended
               ? "bg-blue-600 text-white hover:bg-blue-700 hover:shadow-lg active:scale-95 active:bg-blue-800"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }`}
         >
           {ended ? "Proceed to Quiz →" : "Watch Complete Video"}
-        </button>
+        </motion.button>
 
 
         {/* Footer */}
-        <p className="text-xs text-gray-500 mt-6 italic">
+        <motion.p 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="text-xs text-gray-500 mt-6 italic"
+        >
           Powered by <span className="text-blue-600 font-medium">ICC</span> • Learn. Play. Excel.
-        </p>
-      </div>
-    </div>
-
+        </motion.p>
+      </motion.div>
+    </motion.div>
   );
 }
