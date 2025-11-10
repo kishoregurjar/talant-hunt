@@ -211,9 +211,7 @@ export const asyncUserVideoWatched = (userId) => async (dispatch, getState) => {
     if (res.status >= 200 && res.status < 300) {
       dispatch(markVideoWatched());
       console.log("Video watched updated successfully:", res.data);
-      // Update Redux state
-      
-      // Also update the full state to keep it consistent
+ 
       const currentState = getState().playerReducer;
       dispatch(rehydrateState({
         ...currentState,
