@@ -118,7 +118,7 @@ export default function talenthunt() {
 
     try {
       setSubmitting(true);
-      const r8 = await dispatch(asyncUserPersonalInfo(data));
+      const result = await dispatch(asyncUserPersonalInfo(data));
       console.log("Result:", result);
       if (result) {
         toast.success("Personal information saved successfully!");

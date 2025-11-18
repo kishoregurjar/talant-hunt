@@ -107,37 +107,7 @@ useEffect(() => {
   fetchQuestions();
 }, [formFilled, videoWatched, dispatch ,id]);
 
-// useEffect(() => {
-//     const timer = setTimeout(() => {
-//         //     setLoading(false);
-//       if (formFilled === false) {
-//         router.push("/talenthunt");
-//       } else if (formFilled === true && videoWatched === false) {
-//         router.push("/video");
-//       } else if (formFilled === true && videoWatched === true) {
-//         router.push("/quiz");
-//       }
-//     }, 100);
-//     return () => clearTimeout(timer);
-//   }, [formFilled, videoWatched, router]);
 
-
-
-// useEffect(() => {
-//   console.log(answers);  // Ab updated state dikhega
-// }, [answers]);
-
-  // useEffect(() => {
-  //   if (!loading && submitted && formFilled && formData && formData.id) {
-  //     const existingPlayers = JSON.parse(localStorage.getItem("players")) || [];
-  //     const playerIndex = existingPlayers.findIndex((p) => p.id === formData.id);
-  //     if (playerIndex !== -1) {
-  //       const updatedPlayers = [...existingPlayers];
-  //       updatedPlayers[playerIndex] = { ...formData, quizCompleted: true };
-  //       localStorage.setItem("players", JSON.stringify(updatedPlayers));
-  //     }
-  //   }
-  // }, [submitted, formFilled, formData, loading]);
 
   useEffect(() => {
     const handleBeforeUnload = (e) => {
