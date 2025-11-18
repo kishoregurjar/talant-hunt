@@ -2,71 +2,80 @@
 "use client";
 import { useSelector, useDispatch } from "react-redux";
 import { markQuizCompleted } from "../../store/PlayerSlice";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { asyncUserQuizWatched } from "../../store/actions/userAction";
+import { asyncUserQuizWatched ,asyncRenderQuiz  } from "../../store/actions/userAction";
 import { motion } from "framer-motion";
+import { asyncSubmitQuiz } from "../../store/actions/userAction";
 
-const questions = [
-  {
-    q: "Who holds the record for the highest individual score in an ODI match? (किस खिलाड़ी के नाम एकदिवसीय मैच में सर्वाधिक व्यक्तिगत स्कोर का रिकॉर्ड है?)",
-    options: [
-      "Virat Kohli (विराट कोहली)",
-      "Rohit Sharma (रोहित शर्मा)",
-      "Chris Gayle (क्रिस गेल)",
-      "Sachin Tendulkar (सचिन तेंदुलकर)",
-    ],
-    ans: "Rohit Sharma (रोहित शर्मा)",
-  },
-  {
-    q: "In which year did India win its first T20 World Cup? (भारत ने अपना पहला टी20 विश्व कप किस वर्ष जीता था?)",
-    options: [
-      "2007 (२००७)",
-      "2011 (२०११)",
-      "2015 (२०१५)",
-      "2003 (२००३)",
-    ],
-    ans: "2007 (२००७)",
-  },
-  {
-    q: "Which bowler has taken the most wickets in Test cricket? (टेस्ट क्रिकेट में सबसे अधिक विकेट किस गेंदबाज़ ने लिए हैं?)",
-    options: [
-      "Shane Warne (शेन वॉर्न)",
-      "James Anderson (जेम्स एंडरसन)",
-      "Muttiah Muralitharan (मुथैया मुरलीधरन)",
-      "Anil Kumble (अनिल कुंबले)",
-    ],
-    ans: "Muttiah Muralitharan (मुथैया मुरलीधरन)",
-  },
-  {
-    q: "Which Indian cricketer is known as the 'Captain Cool'? (कौन सा भारतीय क्रिकेटर 'कैप्टन कूल' के नाम से प्रसिद्ध है?)",
-    options: [
-      "Virat Kohli (विराट कोहली)",
-      "Rohit Sharma (रोहित शर्मा)",
-      "MS Dhoni (एम. एस. धोनी)",
-      "Rahul Dravid (राहुल द्रविड़)",
-    ],
-    ans: "MS Dhoni (एम. एस. धोनी)",
-  },
-  {
-    q: "Which country won the 2019 ICC Cricket World Cup? (किस देश ने 2019 आईसीसी क्रिकेट विश्व कप जीता था?)",
-    options: [
-      "India (भारत)",
-      "England (इंग्लैंड)",
-      "Australia (ऑस्ट्रेलिया)",
-      "New Zealand (न्यूज़ीलैंड)",
-    ],
-    ans: "England (इंग्लैंड)",
-  },
-];
+import {
+  ArrowRight
+} from "lucide-react";
+
+
+// const questions = [
+//   {
+//     q: "Who holds the record for the highest individual score in an ODI match? (किस खिलाड़ी के नाम एकदिवसीय मैच में सर्वाधिक व्यक्तिगत स्कोर का रिकॉर्ड है?)",
+//     options: [
+//       "Virat Kohli (विराट कोहली)",
+//       "Rohit Sharma (रोहित शर्मा)",
+//       "Chris Gayle (क्रिस गेल)",
+//       "Sachin Tendulkar (सचिन तेंदुलकर)",
+//     ],
+//     ans: "Rohit Sharma (रोहित शर्मा)",
+//   },
+//   {
+//     q: "In which year did India win its first T20 World Cup? (भारत ने अपना पहला टी20 विश्व कप किस वर्ष जीता था?)",
+//     options: [
+//       "2007 (२००७)",
+//       "2011 (२०११)",
+//       "2015 (२०१५)",
+//       "2003 (२००३)",
+//     ],
+//     ans: "2007 (२००७)",
+//   },
+//   {
+//     q: "Which bowler has taken the most wickets in Test cricket? (टेस्ट क्रिकेट में सबसे अधिक विकेट किस गेंदबाज़ ने लिए हैं?)",
+//     options: [
+//       "Shane Warne (शेन वॉर्न)",
+//       "James Anderson (जेम्स एंडरसन)",
+//       "Muttiah Muralitharan (मुथैया मुरलीधरन)",
+//       "Anil Kumble (अनिल कुंबले)",
+//     ],
+//     ans: "Muttiah Muralitharan (मुथैया मुरलीधरन)",
+//   },
+//   {
+//     q: "Which Indian cricketer is known as the 'Captain Cool'? (कौन सा भारतीय क्रिकेटर 'कैप्टन कूल' के नाम से प्रसिद्ध है?)",
+//     options: [
+//       "Virat Kohli (विराट कोहली)",
+//       "Rohit Sharma (रोहित शर्मा)",
+//       "MS Dhoni (एम. एस. धोनी)",
+//       "Rahul Dravid (राहुल द्रविड़)",
+//     ],
+//     ans: "MS Dhoni (एम. एस. धोनी)",
+//   },
+//   {
+//     q: "Which country won the 2019 ICC Cricket World Cup? (किस देश ने 2019 आईसीसी क्रिकेट विश्व कप जीता था?)",
+//     options: [
+//       "India (भारत)",
+//       "England (इंग्लैंड)",
+//       "Australia (ऑस्ट्रेलिया)",
+//       "New Zealand (न्यूज़ीलैंड)",
+//     ],
+//     ans: "England (इंग्लैंड)",
+//   },
+// ];
 
 export default function QuizPage() {
-  const { formFilled, videoWatched, formData } = useSelector((s) => s.playerReducer);
+  const { formFilled, videoWatched, id , quizAttemptId , quizCompleted , StudentScore} = useSelector((s) => s.playerReducer);
   const dispatch = useDispatch();
   const router = useRouter();
   const [selected, setSelected] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [questions, setQuestions] = useState();
+  const [answers, setAnswers] = useState([]); 
+  const [score , setScore]= useState()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -80,17 +89,55 @@ export default function QuizPage() {
     return () => clearTimeout(timer);
   }, [formFilled, videoWatched]);
 
-  useEffect(() => {
-    if (!loading && submitted && formFilled && formData && formData.id) {
-      const existingPlayers = JSON.parse(localStorage.getItem("players")) || [];
-      const playerIndex = existingPlayers.findIndex((p) => p.id === formData.id);
-      if (playerIndex !== -1) {
-        const updatedPlayers = [...existingPlayers];
-        updatedPlayers[playerIndex] = { ...formData, quizCompleted: true };
-        localStorage.setItem("players", JSON.stringify(updatedPlayers));
+
+useEffect(() => {
+  const fetchQuestions = async () => {
+    if ( formFilled && videoWatched) {
+      try {
+        const fiveQuestions = await dispatch(asyncRenderQuiz(id));
+        setQuestions(fiveQuestions); 
+           setLoading(false);
+       
+      } catch (error) {
+        console.error("Error fetching quiz:", error);
       }
     }
-  }, [submitted, formFilled, formData, loading]);
+  };
+
+  fetchQuestions();
+}, [formFilled, videoWatched, dispatch ,id]);
+
+// useEffect(() => {
+//     const timer = setTimeout(() => {
+//         //     setLoading(false);
+//       if (formFilled === false) {
+//         router.push("/talenthunt");
+//       } else if (formFilled === true && videoWatched === false) {
+//         router.push("/video");
+//       } else if (formFilled === true && videoWatched === true) {
+//         router.push("/quiz");
+//       }
+//     }, 100);
+//     return () => clearTimeout(timer);
+//   }, [formFilled, videoWatched, router]);
+
+
+
+// useEffect(() => {
+//   console.log(answers);  // Ab updated state dikhega
+// }, [answers]);
+
+  // useEffect(() => {
+  //   if (!loading && submitted && formFilled && formData && formData.id) {
+  //     const existingPlayers = JSON.parse(localStorage.getItem("players")) || [];
+  //     const playerIndex = existingPlayers.findIndex((p) => p.id === formData.id);
+  //     if (playerIndex !== -1) {
+  //       const updatedPlayers = [...existingPlayers];
+  //       updatedPlayers[playerIndex] = { ...formData, quizCompleted: true };
+  //       localStorage.setItem("players", JSON.stringify(updatedPlayers));
+  //     }
+  //   }
+  // }, [submitted, formFilled, formData, loading]);
 
   useEffect(() => {
     const handleBeforeUnload = (e) => {
@@ -104,16 +151,44 @@ export default function QuizPage() {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [selected, submitted]);
 
-  const handleOptionChange = (i, opt) => {
-    if (!submitted) setSelected({ ...selected, [i]: opt });
+ 
+
+
+
+  const handleOptionChange = (index, selectedOption) => {
+    if (submitted) return;
+  
+    const updatedSelected = { ...selected, [index]: selectedOption };
+    setSelected(updatedSelected);
+  
+    const questionId = questions[index].id;
+  
+    // Check if the question already exists in the answers array
+    setAnswers((prevAnswers) => {
+      const existingIndex = prevAnswers.findIndex((ans) => ans.questionId === questionId);
+  
+      if (existingIndex !== -1) {
+        // If it exists → update the selectedOption
+        const updated = [...prevAnswers];
+        updated[existingIndex].selectedOption = selectedOption;
+        return updated;
+      } else {
+        // If not → add new entry
+        return [...prevAnswers, { questionId, selectedOption }];
+      }
+    });
   };
+
+
 
   const handleSubmit = () => {
+    const score = dispatch(asyncSubmitQuiz(quizAttemptId, id,answers));
+    setScore(score)
     setSubmitted(true);
-    dispatch(asyncUserQuizWatched(formData.id));
+    // router.push("/payment");
   };
 
-  const score = questions.filter((q, i) => selected[i] === q.ans).length;
+  // const score = questions.filter((q, i) => selected[i] === q.ans).length;
 
   if (loading) {
     return (
@@ -149,7 +224,7 @@ export default function QuizPage() {
         </motion.h2>
 
         <div className="space-y-8">
-          {questions.map((q, i) => (
+          { questions && questions.length > 0 ? (  questions.map((q, i) => (
             <motion.div
               key={i}
               initial={{ x: -20, opacity: 0 }}
@@ -161,45 +236,67 @@ export default function QuizPage() {
                 {i + 1}. {q.q}
               </p>
 
-              <div className="grid grid-cols-2 gap-3">
-                {q.options.map((opt) => (
-                  <label
-                    key={opt}
-                    className={`p-3 text-sm rounded-lg cursor-pointer border transition-all 
-                      ${
-                        submitted
-                          ? q.ans === opt
-                            ? "bg-blue-50 border-blue-600 text-blue-700 font-medium" // ✅ Correct
-                            : selected[i] === opt
-                            ? "bg-red-50 border-red-500 text-red-700 font-medium" // ❌ Wrong
-                            : "bg-white border-gray-300"
-                          : selected[i] === opt
-                          ? "bg-blue-50 border-blue-500 text-blue-700 font-medium"
-                          : "bg-white border-gray-300 hover:border-blue-400 hover:bg-gray-100"
-                      }`}
-                  >
-                    <input
-                      type="radio"
-                      name={`q-${i}`}
-                      checked={selected[i] === opt}
-                      onChange={() => handleOptionChange(i, opt)}
-                      disabled={submitted}
-                      className="mr-2 accent-blue-600"
-                    />
-                    {opt}
+       
 
-                 
-                  </label>
-                ))}
-              </div>
+
+<div className="grid grid-cols-2 gap-3">
+  {q.options.map((opt) => (
+    <label
+      key={opt}
+      className={`p-3 text-sm rounded-lg cursor-pointer border transition-all 
+        ${
+          selected[i] === opt
+            ? "bg-blue-50 border-blue-600 text-blue-700 font-medium" // selected state
+            : "bg-white border-gray-300 hover:border-blue-400 hover:bg-gray-100"
+        }`}
+    >
+      <input
+        type="radio"
+        name={`q-${i}`}
+        checked={selected[i] === opt}
+        onChange={() => handleOptionChange(i, opt)}
+        disabled={submitted} // disables input after submit
+        className="mr-2 accent-blue-600"
+      />
+      {opt}
+    </label>
+  ))}
+</div>
             </motion.div>
-          ))}
+          ))):( 
+            
+
+quizCompleted == true ? (
+  <h1 className="text-center text-gray-600">
+    You have already completed the quiz.
+  </h1>
+) : (
+  <h1 className="text-center text-gray-600">
+    Loading quiz questions...
+  </h1>
+)
+       
+
+)}
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
 
-        {!submitted ? (
+        {questions && questions.length > 0 && !submitted ? (
           <motion.button
             onClick={handleSubmit}
-            disabled={Object.keys(selected).length < questions.length}
+            // disabled={Object.keys(selected).length < questions.length}
             whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(59, 130, 246, 0.3)" }}
             whileTap={{ scale: 0.95 }}
             initial={{ opacity: 0, y: 20 }}
@@ -225,19 +322,17 @@ export default function QuizPage() {
             </h3>
             <p className="text-gray-700 mb-6 text-lg">
               You scored{" "}
-              <span className="font-bold text-blue-600">{score}</span> out of{" "}
-              <span className="font-bold">{questions.length}</span>
+              <span className="font-bold text-blue-600">{StudentScore}</span> out of{" "}
+              <span className="font-bold">5</span>
             </p>
             <motion.button
               onClick={() => router.push("/payment")}
               whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(59, 130, 246, 0.3)" }}
               whileTap={{ scale: 0.95 }}
-              className="bg-blue-600 text-white px-10 py-3 rounded-lg font-semibold 
-                shadow-md hover:bg-blue-700 hover:shadow-lg 
-                active:scale-95 active:bg-blue-800 
-                transition-transform transition-colors duration-200 ease-in-out"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              Finish
+
+             {quizCompleted ? <>Next <ArrowRight size={14} /></> : "Finish"}
             </motion.button>
           </motion.div>
         )}

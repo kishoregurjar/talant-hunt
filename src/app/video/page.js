@@ -3,18 +3,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { markVideoWatched } from "../../store/PlayerSlice";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { asyncUserVideoWatched } from "../../store/actions/userAction";
+import { asyncUserVideoWatched ,asyncRenderQuiz} from "../../store/actions/userAction";
 import { motion } from "framer-motion";
+import { Volume2, VolumeX, ArrowRight} from "lucide-react";
 
 export default function VideoPage() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { formFilled, formData, id } = useSelector((state) => state.playerReducer);
+  const { formFilled, formData, id, videoWatched } = useSelector((state) => state.playerReducer);
   const [ended, setEnded] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef(null);
 
-
+console.log("Form Filled Status:", formFilled);
   useEffect(() => {
     // Wait a bit to ensure rehydration is complete
     const timer = setTimeout(() => {
@@ -27,26 +29,20 @@ export default function VideoPage() {
     return () => clearTimeout(timer);
   }, [formFilled]);
 
-  
-  useEffect(() => {
-    if (!loading && formFilled && formData && formData.id) {
-      const existingPlayers = JSON.parse(localStorage.getItem("players")) || [];
-
-      // Find and update the player with video watched status
-      const playerIndex = existingPlayers.findIndex(player => player.id === formData.id);
-
-      if (playerIndex !== -1) {
-        const updatedPlayers = [...existingPlayers];
-        // Completely replace player data with updated data
-        updatedPlayers[playerIndex] = {
-          ...formData,
-          videoWatched: true
-        };
-
-        localStorage.setItem("players", JSON.stringify(updatedPlayers));
-      }
-    }
-  }, [formFilled, formData, loading]);
+  // useEffect(() => {
+  //     const timer = setTimeout(() => {
+  //         //     setLoading(false);
+  //       if (formFilled === false) {
+  //         router.push("/talenthunt");
+  //       } else if (formFilled === true && videoWatched === false) {
+  //         router.push("/video");
+  //       } else if (formFilled === true && videoWatched === true) {
+  //         router.push("/quiz");
+  //       }
+  //     }, 100);
+  //     return () => clearTimeout(timer);
+  //   }, [formFilled, videoWatched, router]);
+ 
 
  
   useEffect(() => {
@@ -71,6 +67,13 @@ export default function VideoPage() {
 
   };
 
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -82,6 +85,12 @@ export default function VideoPage() {
     );
   }
 
+const onSubmit = ()=>{
+  router.push("/quiz");
+}
+
+
+
   return (
     <motion.div 
       initial={{ opacity: 0 }}
@@ -90,18 +99,21 @@ export default function VideoPage() {
       className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br bg-gray-100 p-4 md:p-6"
     >
       <motion.div 
-        initial={{ scale: 0.9, y: 20, opacity: 0 }}
-        animate={{ scale: 1, y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        className="relative bg-white shadow-xl rounded-2xl p-8 sm:p-10 w-full max-w-4xl text-center 
-        border border-gray-100 hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-100 mt-16"
+        // initial={{ scale: 0.9, y: 20, opacity: 0 }}
+        initial={{  opacity: 0 }}
+
+        // animate={{ scale: 1, y: 0, opacity: 1 }}
+        animate={{  opacity: 1 }}
+        transition={{ duration: 1, delay: 0.1 }}
+        className="relative bg-white border-2 rounded-2xl p-8 sm:p-10 w-full max-w-4xl text-center 
+        border border-gray-100  mt-16"
       >
 
         {/* Title */}
         <motion.h2 
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.2 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="text-3xl sm:text-4xl font-bold text-blue-700 mb-4 tracking-tight"
         >
           Watch Trial Video
@@ -110,13 +122,13 @@ export default function VideoPage() {
         <motion.p 
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
           className="text-gray-600 text-sm sm:text-base mb-6 leading-relaxed"
         >
           Watch the full video carefully to unlock your quiz. Stay focused till the end
         </motion.p>
 
-        {/* Video Section — untouched */}
+        {/* Video Section */}
         <motion.div 
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -127,27 +139,45 @@ export default function VideoPage() {
             ref={videoRef}
             src="/video/video.mp4"
             autoPlay
+            muted
+            playsInline
             controls={false}
             onEnded={onEnded}
             className="w-full h-auto rounded-2xl object-cover"
           />
+          
+          {/* Custom Mute/Unmute Button */}
+          <motion.button
+            onClick={toggleMute}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="absolute top-4 right-4 bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-1 rounded-full shadow-lg transition-all duration-200"
+            aria-label={isMuted ? "Unmute" : "Mute"}
+          >
+            {isMuted ? (
+              <VolumeX size={20} />
+            ) : (
+              <Volume2 size={20} />
+            )}
+          </motion.button>
         </motion.div>
 
         {/* Action Button */}
         <motion.button
           disabled={!ended}
-          onClick={() => router.push("/quiz")}
+          onClick={onSubmit}
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
           whileHover={ended ? { scale: 1.05, boxShadow: "0 10px 25px rgba(59, 130, 246, 0.3)" } : {}}
           whileTap={ended ? { scale: 0.95 } : {}}
-          className={`mt-8 px-10 py-3 rounded-lg font-semibold shadow-md transform transition-all duration-300 ease-in-out ${ended
+          className={` inline-flex items-center gap-2 mt-8 px-6 py-3 rounded-lg font-semibold shadow-md transform transition-all duration-300 ease-in-out ${ended
               ? "bg-blue-600 text-white hover:bg-blue-700 hover:shadow-lg active:scale-95 active:bg-blue-800"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }`}
         >
-          {ended ? "Proceed to Quiz →" : "Watch Complete Video"}
+          {/* {ended ? "Proceed to Quiz →" : "Watch Complete Video"} */}
+           {ended ? <>Proceed to Quiz <ArrowRight size={14} /></> : "Watch Complete Video"}
         </motion.button>
 
 
@@ -164,3 +194,5 @@ export default function VideoPage() {
     </motion.div>
   );
 }
+
+//  className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
