@@ -1,16 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
 // "use client";
 // import { useForm } from "react-hook-form";
 // import { useDispatch, useSelector } from "react-redux";
@@ -203,7 +190,7 @@
 //                                       { value: "male", label: "Male" },
 //                                       { value: "female", label: "Female" },
 //                                       { value: "other", label: "Other" },
-                                   
+
 //                                     ]}
 //                                     value={field.value}
 //                                     onChange={field.onChange}
@@ -449,7 +436,7 @@
 
 
 "use client";
-import { useForm,Controller } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -466,7 +453,6 @@ import {
   Calendar,
   VenusAndMars,
   Home,
-  Building,
   Navigation,
   ChevronDown,
   Landmark,
@@ -487,7 +473,7 @@ export default function talenthunt() {
     handleSubmit,
     formState: { errors },
     watch,
-control,
+    control,
 
     reset,
   } = useForm({
@@ -549,19 +535,19 @@ control,
   }
 
   return (
-    <motion.main 
+    <motion.main
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       className="min-h-screen flex items-center justify-center bg-gray-100 p-4 sm:p-6"
     >
-      <motion.div 
+      <motion.div
         initial={{ scale: 0.9, y: 20, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.1 }}
         className="bg-white md:rounded-2xl rounded-xl shadow-md w-full max-w-4xl border border-gray-200 mt-15 p-4 sm:p-10 transition duration-300 hover:shadow-lg"
       >
-        <motion.h1 
+        <motion.h1
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.2 }}
@@ -635,26 +621,26 @@ control,
             <label className="block mb-1 text-m font-medium text-gray-700">
               Gender
             </label>
-          <Controller
-                  name="gender"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <CustomSelect
-                      options={[
-                        { value: "male", label: "Male" },
-                        { value: "female", label: "Female" },
-                        { value: "other", label: "  Other" },
-              
-                      ]}
-                      value={field.value || ""}
-                      onChange={field.onChange}
-                      placeholder="Select your Gender"
-                      icon={VenusAndMars}
-                      error={errors.level?.message}
-                    />
-                  )}
+            <Controller
+              name="gender"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <CustomSelect
+                  options={[
+                    { value: "male", label: "Male" },
+                    { value: "female", label: "Female" },
+                    { value: "other", label: "  Other" },
+
+                  ]}
+                  value={field.value || ""}
+                  onChange={field.onChange}
+                  placeholder="Select your Gender"
+                  icon={VenusAndMars}
+                  error={errors.level?.message}
                 />
+              )}
+            />
             {errors.gender && (
               <p className="text-red-500 text-sm">{errors.gender.message}</p>
             )}
@@ -754,7 +740,7 @@ control,
           {/* City, State, Zip */}
           <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="relative">
-              <Building
+              <MapPin
                 className="absolute left-3 top-3 text-gray-400"
                 size={18}
               />
@@ -775,7 +761,7 @@ control,
                 className="absolute left-3 top-3 text-gray-400"
                 size={18}
               />
-                                <ChevronDown className="absolute right-3 top-3 text-gray-400 pointer-events-none" size={18} />
+              <ChevronDown className="absolute right-3 top-3 text-gray-400 pointer-events-none" size={18} />
 
               {/* <select
                 {...register("address.state")}
@@ -789,28 +775,29 @@ control,
                   </option>
                 ))}
               </select> */}
-               <Controller
-    name="address.state"
-    control={control}
-    render={({ field }) => (
-      <CustomSelect
-        options={statesList.map((s) => ({
-          value: s.name,
-          label: s.name,
-        }))}
-        value={field.value}
-        onChange={field.onChange}
-        placeholder="Select State"
-        icon={Navigation}
-        error={errors.address?.state?.message}
-      />
-    )}
-  />
-              {errors.address?.state && (
+              <Controller
+                name="address.state"
+                control={control}
+                defaultValue = ""
+                render={({ field }) => (
+                  <CustomSelect
+                    options={statesList.map((s) => ({
+                      value: s.name,
+                      label: s.name,
+                    }))}
+                    value={field.value || ""}
+                    onChange={field.onChange}
+                    placeholder="Select State"
+                    icon={Navigation}
+                    error={errors.address?.state?.message}
+                  />
+                )}
+              />
+              {/* {errors.address?.state && (
                 <p className="text-red-500 text-sm">
                   {errors.address.state.message}
                 </p>
-              )}
+              )} */}
             </div>
 
             <div className="relative">
