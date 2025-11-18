@@ -17,7 +17,7 @@ phone: z.preprocess(
   z
     .string()
     .regex(/^[6-9]\d{9}$/, "Invalid Phone number")
-    .transform((val) => Number(val)) // store as number
+    // .transform((val) => Number(val)) // store as number
 ),
 
 terms: z

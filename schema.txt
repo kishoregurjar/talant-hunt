@@ -1,41 +1,38 @@
 {
   "users": [
     {
-      "id": "nBDAoai4D2Wd5acR0tCuC",
+      "id": "OgeCFHeAdyRXjLyVxfsSf",
       "formData": {
         "name": "Ayush shivde",
-        "email": "ayushshivde7@gmail.com",
-        "phone": 7489744424,
-        "gender": "Female",
+        "email": "shivdeayush09@gmail.com",
+        "phone": 6260550107,
+        "terms": true,
+        "gender": "male",
         "dob": {
-          "day": "31",
-          "month": "December",
-          "year": "2005"
+          "day": "4",
+          "month": "July",
+          "year": "2003"
         },
         "address": {
-          "address": "ayushi nagar",
+          "address": "ayusgii",
           "city": "indore",
-          "state": "madhya pradesh",
-          "zip": "453441"
+          "state": "Assam",
+          "zip": "452200"
         }
       },
       "formFilled": true,
       "videoWatched": true,
       "quizCompleted": true,
       "talentForm": {
-        "role": "Batsman",
-        "battingStyle": "Left-hand Bat",
+        "role": "Bowler",
+        "battingStyle": "Right-hand Bat",
         "bowlingStyle": "Right Arm Fast",
         "level": "College",
-        "experience": 2,
-        "teamName": "ram",
-        "highestScore": 105,
-        "bestBowling": "5/55",
-        "tournaments": 5,
-        "achievements": "man of the match in intercollege tournament",
+        "experience": null,
+        "teamName": null,
         "videoLink": "https://youtu.be/xwEp0i9b3UM?si=6BSe6fx1rxzVty8F",
         "consent": true,
-        "id": "azXcWbRnvx2CewPMWhBhp"
+        "id": "EkJNEYl4-99r0yIvWZl5_"
       }
     }
   ]

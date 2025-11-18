@@ -1,440 +1,3 @@
-// "use client";
-// import { useForm } from "react-hook-form";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useRouter } from "next/navigation";
-// import { useEffect, useState } from "react";
-// import { asyncUserPersonalInfo } from "../../store/actions/userAction";
-// import CustomSelect from "../../components/CustomSelect";
-
-// import {
-//   Camera,
-//   User,
-//   Mail,
-//   Phone,
-//   MapPin,
-//   Calendar,
-//   VenusAndMars,
-//   Home,
-//   Building,
-//   Navigation,
-//   Landmark,
-// } from "lucide-react";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import { personalInfoValidator } from "../../components/validation/personalInfoValidator";
-// import { State } from "country-state-city";
-
-// export default function talenthunt() {
-//   const dispatch = useDispatch();
-//   const router = useRouter();
-//   const { formData } = useSelector((state) => state.playerReducer);
-//   const [loading, setLoading] = useState(true);
-//   const statesList = State.getStatesOfCountry("IN");
-
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors },
-//     watch,
-//     control,
-//     reset,
-//   } = useForm({
-//     resolver: zodResolver(personalInfoValidator),
-//     defaultValues: formData || {},
-//   });
-
-//   const formWatchData = watch();
-
-//   useEffect(() => {
-//     const timer = setTimeout(() => {
-//       setLoading(false);
-//     }, 200);
-//     return () => clearTimeout(timer);
-//   }, []);
-
-//   useEffect(() => {
-//     if (formData && Object.keys(formData).length > 0) {
-//       const formValues = { ...formData };
-//       if (formValues.id) delete formValues.id;
-
-//       const hasFormValues = Object.values(formValues).some(
-//         (value) => value !== null && value !== undefined && value !== ""
-//       );
-//       if (hasFormValues) reset(formValues, { keepDefaultValues: false });
-//     }
-//   }, [formData, reset]);
-
-//   useEffect(() => {
-//     const handleBeforeUnload = (e) => {
-//       const hasData = Object.values(formWatchData).some(
-//         (value) => value !== undefined && value !== ""
-//       );
-//       if (hasData) {
-//         e.preventDefault();
-//         e.returnValue = "";
-//         return "";
-//       }
-//     };
-//     window.addEventListener("beforeunload", handleBeforeUnload);
-//     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-//   }, [formWatchData]);
-
-//   const onSubmit = async (data) => {
-//     console.log(data);
-//     await dispatch(asyncUserPersonalInfo(data));
-//     router.push("/video");
-//   };
-
-//   if (loading) {
-//     return (
-//       <div className="min-h-screen flex items-center justify-center">
-//         <div className="text-center">
-//           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
-//           <p className="mt-4 text-gray-600">Loading...</p>
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <main className="min-h-screen flex items-center justify-center bg-gray-100 p-4 sm:p-6">
-//       <div className="bg-white md:rounded-2xl rounded-xl shadow-md w-full max-w-4xl border border-gray-200 mt-15 p-4 sm:p-10 transition duration-300 hover:shadow-lg">
-//         <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center text-blue-700">
-//           Player Registration Form
-//         </h1>
-
-//         <form
-//           onSubmit={handleSubmit(onSubmit)}
-//           className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-5"
-//         >
-//           {/* Full Name */}
-//           <div>
-//             <label className="block mb-1 text-m font-medium text-gray-700">
-//               Full Name
-//             </label>
-//             <div className="relative">
-//               <User className="absolute left-3 top-3 text-gray-400" size={18} />
-//               <input
-//                 {...register("name")}
-//                 type="text"
-//                 placeholder="Virat Kohli"
-//                 className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
-//               />
-//             </div>
-//             {errors.name && (
-//               <p className="text-red-500 text-sm">{errors.name.message}</p>
-//             )}
-//           </div>
-
-//           {/* Email */}
-//           <div>
-//             <label className="block mb-1 text-m font-medium text-gray-700">
-//               Email
-//             </label>
-//             <div className="relative">
-//               <Mail className="absolute left-3 top-3 text-gray-400" size={18} />
-//               <input
-//                 {...register("email")}
-//                 placeholder="virat.kohli18@example.com"
-//                 className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
-//               />
-//             </div>
-//             {errors.email && (
-//               <p className="text-red-500 text-sm">{errors.email.message}</p>
-//             )}
-//           </div>
-
-//           {/* Phone */}
-//           <div>
-//             <label className="block mb-1 text-m font-medium text-gray-700">
-//               Phone Number
-//             </label>
-//             <div className="relative">
-//               <Phone className="absolute left-3 top-3 text-gray-400" size={18} />
-//               <input
-//                 {...register("phone")}
-//                 type="number"
-//                 placeholder="9876543210"
-//                 className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
-//               />
-//             </div>
-//             {errors.phone && (
-//               <p className="text-red-500 text-sm">{errors.phone.message}</p>
-//             )}
-//           </div>
-
-//           {/* Gender */}
-//           <div>
-//             <label className="block mb-1 text-m font-medium text-gray-700">
-//               Gender
-//             </label>
-//             <div className="relative">
-//               <VenusAndMars
-//                 className="absolute left-3 top-3 text-gray-400"
-//                 size={18}
-//               />
-//               {/* <select
-//                 {...register("gender")}
-//                 className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
-//               >
-//                 <option value="">Select Gender</option>
-//                 <option>Male</option>
-//                 <option>Female</option>
-//                 <option>Other</option>
-//               </select> */}
-//                <Controller
-//                                 name="Gender"
-//                                 control={control}
-//                                 render={({ field }) => (
-//                                   <CustomSelect
-//                                     options={[
-//                                       { value: "male", label: "Male" },
-//                                       { value: "female", label: "Female" },
-//                                       { value: "other", label: "Other" },
-
-//                                     ]}
-//                                     value={field.value}
-//                                     onChange={field.onChange}
-//                                     placeholder="Gender"
-//                                     icon={VenusAndMars}
-//                                     error={errors.level?.message}
-//                                   />
-//                                 )}
-//                               />
-//             </div>
-//             {errors.gender && (
-//               <p className="text-red-500 text-sm">{errors.gender.message}</p>
-//             )}
-//           </div>
-
-//           {/* Date of Birth */}
-//           <div className="md:col-span-2">
-//             <label className="block mb-1 text-m font-medium text-gray-700">
-//               Date of Birth
-//             </label>
-//             <div className="grid grid-cols-3 gap-3">
-//               <div className="relative">
-//                 <Calendar
-//                   className="absolute left-3 top-3 text-gray-400"
-//                   size={18}
-//                 />
-//                 <input
-//                   {...register("dob.day")}
-//                   type="number"
-//                   placeholder="Day"
-//                   min="1"
-//                   max="31"
-//                   className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
-//                 />
-//               </div>
-//               <div>
-//                 <select
-//                   {...register("dob.month")}
-//                   className="w-full pl-3 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
-//                 >
-//                   <option value="">Month</option>
-//                   {[
-//                     "January",
-//                     "February",
-//                     "March",
-//                     "April",
-//                     "May",
-//                     "June",
-//                     "July",
-//                     "August",
-//                     "September",
-//                     "October",
-//                     "November",
-//                     "December",
-//                   ].map((m) => (
-//                     <option key={m} value={m}>
-//                       {m}
-//                     </option>
-//                   ))}
-//                 </select>
-//               </div>
-//               <div className="relative">
-//                 <Calendar
-//                   className="absolute left-3 top-3 text-gray-400"
-//                   size={18}
-//                 />
-//                 <input
-//                   {...register("dob.year")}
-//                   type="number"
-//                   placeholder="Year"
-//                   min="1900"
-//                   max={new Date().getFullYear()}
-//                   className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
-//                 />
-//               </div>
-//             </div>
-//             {errors.dob && (
-//               <p className="text-red-500 text-sm mt-1">
-//                 {errors.dob.message ||
-//                   errors.dob?.day?.message ||
-//                   errors.dob?.month?.message ||
-//                   errors.dob?.year?.message}
-//               </p>
-//             )}
-//           </div>
-
-//           {/* Address */}
-//           <div className="md:col-span-2">
-//             <label className="block mb-1 text-m font-medium text-gray-700">
-//               Permanent Address
-//             </label>
-//             <div className="relative">
-//               <Home className="absolute left-3 top-3 text-gray-400" size={18} />
-//               <input
-//                 {...register("address.address")}
-//                 placeholder="House no., street, locality"
-//                 className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
-//               />
-//             </div>
-//             {errors.address?.address && (
-//               <p className="text-red-500 text-sm">
-//                 {errors.address.address.message}
-//               </p>
-//             )}
-//           </div>
-
-//           {/* City, State, Zip */}
-//           <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-3">
-//             <div className="relative">
-//               <Building
-//                 className="absolute left-3 top-3 text-gray-400"
-//                 size={18}
-//               />
-//               <input
-//                 {...register("address.city")}
-//                 placeholder="City"
-//                 className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
-//               />
-//               {errors.address?.city && (
-//                 <p className="text-red-500 text-sm">
-//                   {errors.address.city.message}
-//                 </p>
-//               )}
-//             </div>
-
-//             {/* <div className="relative">
-//               <Navigation
-//                 className="absolute left-3 top-3 text-gray-400"
-//                 size={18}
-//               />
-//               <select
-//                 {...register("address.state")}
-//                 defaultValue=""
-//                 className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
-//               >
-//                 <option value="">Select State</option>
-//                 {statesList.map((s) => (
-//                   <option key={s.code || s.name} value={s.name}>
-//                     {s.name}
-//                   </option>
-//                 ))}
-//               </select>
-//               {errors.address?.state && (
-//                 <p className="text-red-500 text-sm">
-//                   {errors.address.state.message}
-//                 </p>
-//               )}
-//             </div> */}
-//             <div className="relative">
-//   <Navigation className="absolute left-3 top-3 text-gray-400" size={18} />
-//   <Controller
-//     name="address.state"
-//     control={control}
-//     render={({ field }) => (
-//       <CustomSelect
-//         options={statesList.map((s) => ({
-//           value: s.name,
-//           label: s.name,
-//         }))}
-//         value={field.value}
-//         onChange={field.onChange}
-//         placeholder="Select State"
-//         icon={Navigation}
-//         error={errors.address?.state?.message}
-//       />
-//     )}
-//   />
-//   {errors.address?.state && (
-//     <p className="text-red-500 text-sm">{errors.address.state.message}</p>
-//   )}
-// </div>
-
-//             <div className="relative">
-//               <Landmark
-//                 className="absolute left-3 top-3 text-gray-400"
-//                 size={18}
-//               />
-//               <input
-//                 {...register("address.zip")}
-//                 placeholder="Zip code"
-//                 className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
-//               />
-//               {errors.address?.zip && (
-//                 <p className="text-red-500 text-sm">
-//                   {errors.address.zip.message}
-//                 </p>
-//               )}
-//             </div>
-//           </div>
-
-//           {/* Terms & Conditions */}
-//           <div className="md:col-span-2 bg-gray-50 border border-gray-200 p-4 rounded-lg mt-2">
-//             <h2 className="text-lg font-semibold text-gray-800 mb-2">
-//               Terms & Conditions
-//             </h2>
-//             <ul className="list-disc list-inside text-gray-700 space-y-1 text-sm mb-3">
-//               <li>
-//                 I confirm that all the details provided are accurate and true.
-//               </li>
-//               <li>
-//                 I understand that false information may lead to
-//                 disqualification.
-//               </li>
-//               <li>
-//                 I consent to the use of my data for registration and verification.
-//               </li>
-//             </ul>
-//             <div className="flex items-start">
-//               <input
-//                 type="checkbox"
-//                 {...register("terms", {
-//                   required: "You must agree to the Terms & Conditions",
-//                 })}
-//                 className="mt-1 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-//               />
-//               <label className="ml-2 text-sm text-gray-700">
-//                 I have read and agree to the Terms & Conditions.
-//               </label>
-//             </div>
-//             {errors.terms && (
-//               <p className="text-red-500 text-sm mt-1">
-//                 {errors.terms.message}
-//               </p>
-//             )}
-//           </div>
-
-//           {/* Submit */}
-//           <div className="md:col-span-2 flex justify-center mt-4">
-//             <button
-//               type="submit"
-//               className="px-10 py-3 bg-blue-600 text-white rounded-lg font-semibold shadow-md hover:bg-blue-700 hover:shadow-lg active:scale-95 transition-transform duration-200 ease-in-out"
-//             >
-//               Save & Continue
-//             </button>
-//           </div>
-//         </form>
-//       </div>
-//     </main>
-//   );
-// }
-
-
-
-
 "use client";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -453,6 +16,8 @@ import {
   Calendar,
   VenusAndMars,
   Home,
+  ArrowRight,
+  Building,
   Navigation,
   ChevronDown,
   Landmark,
@@ -460,12 +25,14 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { personalInfoValidator } from "../../components/validation/personalInfoValidator";
 import { State } from "country-state-city";
+import { toast } from "react-toastify";
 
 export default function talenthunt() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { formData } = useSelector((state) => state.playerReducer);
+  const { formData , formFilled , videoWatched ,quizCompleted } = useSelector((state) => state.playerReducer);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const statesList = State.getStatesOfCountry("IN");
 
   const {
@@ -474,7 +41,6 @@ export default function talenthunt() {
     formState: { errors },
     watch,
     control,
-
     reset,
   } = useForm({
     resolver: zodResolver(personalInfoValidator),
@@ -489,6 +55,22 @@ export default function talenthunt() {
     }, 200);
     return () => clearTimeout(timer);
   }, []);
+
+
+// useEffect(() => {
+//     const timer = setTimeout(() => {
+//       if (formFilled === false) {
+//         router.push("/talenthunt");
+//       } else if (formFilled === true && videoWatched === false) {
+//         router.push("/video");
+//       } else if (formFilled === true && videoWatched === true) {
+//         router.push("/quiz");
+//       }
+//     }, 100);
+//     return () => clearTimeout(timer);
+//   }, [formFilled, videoWatched, router]);
+
+
 
   useEffect(() => {
     if (formData && Object.keys(formData).length > 0) {
@@ -517,22 +99,52 @@ export default function talenthunt() {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [formWatchData]);
 
+
+  
+
   const onSubmit = async (data) => {
     console.log(data);
-    await dispatch(asyncUserPersonalInfo(data));
-    router.push("/video");
+
+    if (formFilled === true && videoWatched === false && quizCompleted === false) {
+      router.push("/video");
+      return;
+    } else if (formFilled === true && videoWatched === true && quizCompleted === false) {
+      router.push("/quiz");
+      return;
+    } else if (formFilled === true && videoWatched === true && quizCompleted === true) {
+      router.push("/payment");
+      return;
+    }
+
+    try {
+      setSubmitting(true);
+      const result = await dispatch(asyncUserPersonalInfo(data));
+      console.log("Result:", result);
+      if (result) {
+        toast.success("Personal information saved successfully!");
+        setLoading(false);
+        router.push("/video");
+      }
+    } catch (err) {
+      console.error("Save failed:", err);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
-        </div>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center">
+  //       <div className="text-center">
+  //         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
+  //         <p className="mt-4 text-gray-600">Loading...</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+
+
+
 
   return (
     <motion.main
@@ -763,29 +375,17 @@ export default function talenthunt() {
               />
               <ChevronDown className="absolute right-3 top-3 text-gray-400 pointer-events-none" size={18} />
 
-              {/* <select
-                {...register("address.state")}
-                defaultValue=""
-                className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none appearance-none"
-              >
-                <option value="">Select State</option>
-                {statesList.map((s) => (
-                  <option key={s.code || s.name} value={s.name}>
-                    {s.name}
-                  </option>
-                ))}
-              </select> */}
+            
               <Controller
                 name="address.state"
                 control={control}
-                defaultValue = ""
                 render={({ field }) => (
                   <CustomSelect
                     options={statesList.map((s) => ({
                       value: s.name,
                       label: s.name,
                     }))}
-                    value={field.value || ""}
+                    value={field.value}
                     onChange={field.onChange}
                     placeholder="Select State"
                     icon={Navigation}
@@ -793,11 +393,11 @@ export default function talenthunt() {
                   />
                 )}
               />
-              {/* {errors.address?.state && (
+              {errors.address?.state && (
                 <p className="text-red-500 text-sm">
                   {errors.address.state.message}
                 </p>
-              )} */}
+              )}
             </div>
 
             <div className="relative">
@@ -855,14 +455,27 @@ export default function talenthunt() {
           </div>
 
           {/* Submit */}
-          <div className="md:col-span-2 flex justify-center mt-4">
-            <button
+          <motion.div
+          initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1 }}
+          className="md:col-span-2 flex justify-center mt-4">
+            <motion.button
               type="submit"
-              className="px-10 py-3 bg-blue-600 text-white rounded-lg font-semibold shadow-md hover:bg-blue-700 hover:shadow-lg active:scale-95 transition-transform duration-200 ease-in-out"
+              disabled={submitting}
+              className={`inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold shadow-md active:scale-95 transition-transform duration-200 ease-in-out
+                ${submitting ? "opacity-60 cursor-not-allowed hover:bg-blue-600" : "hover:bg-blue-700 hover:shadow-lg active:scale-95"}`}
             >
-              Save & Continue
-            </button>
-          </div>
+              {submitting ? (
+                <span className="flex items-center justify-center">
+                  <span className="inline-block h-4 w-4 mr-2 rounded-full border-2 border-white border-t-transparent animate-spin"></span>
+                  Saving...
+                </span>
+              ) : (
+                formFilled ? <>Next <ArrowRight size={14} /></> : "Save and Continue"
+              )}
+            </motion.button>
+          </motion.div>
         </form>
       </motion.div>
     </motion.main>

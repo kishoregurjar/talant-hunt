@@ -157,17 +157,29 @@ export const skillInfoValidator = z
         .nullable()
     ),
 
-    /* ✅ Step 2: Media & Verification */
-    videoLink: z.preprocess(
-      (val) => {
-        if (val === "" || val === null || val === undefined) return null;
-        return String(val).trim();
-      },
-      z
-        .string()
-        .url("Enter a valid URL")
-        .nullable() // optional
-    ),
+    // /* ✅ Step 2: Media & Verification */
+    // videoLink: z.preprocess(
+    //   (val) => {
+    //     if (val === "" || val === null || val === undefined) return null;
+    //     return String(val).trim();
+    //   },
+    //   z
+    //     .string()
+    //     .url("Enter a valid URL")
+    //     .nullable() // optional
+    // ),
+
+    // videoLink: z.string().url("Enter a valid URL").min(1, "Video link is required"),
+
+
+    videoLink: z
+  .string({
+    required_error: "Video link is required",
+    invalid_type_error: "Video link must be a string",
+  })
+  .min(1, "Video link is required")
+  .url("Enter a valid URL"),
+
 
     consent: z
       .boolean({
