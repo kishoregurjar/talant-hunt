@@ -194,5 +194,3 @@ const onSubmit = ()=>{
     </motion.div>
   );
 }
-
-//  className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
