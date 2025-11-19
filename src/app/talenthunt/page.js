@@ -352,7 +352,7 @@ export default function talenthunt() {
           {/* City, State, Zip */}
           <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="relative">
-              <Building
+              <MapPin
                 className="absolute left-3 top-3 text-gray-400"
                 size={18}
               />
