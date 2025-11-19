@@ -10,6 +10,7 @@ import CustomSelect from "../../components/CustomSelect";
 import {
   Camera,
   User,
+  CircleCheckBig,
   Mail,
   Phone,
   MapPin,
@@ -100,8 +101,6 @@ export default function talenthunt() {
   }, [formWatchData]);
 
 
-  
-
   const onSubmit = async (data) => {
     console.log(data);
 
@@ -121,7 +120,22 @@ export default function talenthunt() {
       const result = await dispatch(asyncUserPersonalInfo(data));
       console.log("Result:", result);
       if (result) {
-        toast.success("Personal information saved successfully!");
+       toast.success("Personal information saved successfully!", {
+  autoClose: 5000,
+  hideProgressBar: true,
+  closeOnClick: true,
+  pauseOnHover: false,
+  draggable: true,
+  progress: undefined,
+
+  // ✔ BLUE TICK ICON (Tailwind color)
+  icon: (
+    <span className="text-blue-600 bg-gray-100 text-xl shadow-sm backdrop-blur-md font-bold">
+   <CircleCheckBig />
+    </span>
+  ),
+});
+
         setLoading(false);
         router.push("/video");
       }
@@ -142,8 +156,7 @@ export default function talenthunt() {
   //     </div>
   //   );
   // }
-
-
+  
 
 
   return (
