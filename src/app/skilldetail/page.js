@@ -77,7 +77,7 @@ const {
         initial={{ scale: 0.9, y: 20, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="bg-white md:rounded-2xl rounded-xl shadow-md w-full max-w-4xl mt-15 p-4 md:p-8 transition duration-300 hover:shadow-lg"
+        className="bg-white md:rounded-2xl rounded-xl shadow-xl w-full max-w-4xl mt-30 p-4 md:p-8 transition duration-300 hover:shadow-lg"
       >
         <form
           onSubmit={handleSubmit(Submithandler)}

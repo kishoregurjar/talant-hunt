@@ -105,8 +105,8 @@ const onSubmit = ()=>{
         // animate={{ scale: 1, y: 0, opacity: 1 }}
         animate={{  opacity: 1 }}
         transition={{ duration: 1, delay: 0.1 }}
-        className="relative bg-white border-2 rounded-2xl p-8 sm:p-10 w-full max-w-4xl text-center 
-        border border-gray-100  mt-16"
+        className="relative bg-white rounded-2xl p-8 sm:p-10 w-full max-w-4xl text-center 
+        border border-gray-100  mt-30 shadow-xl "
       >
 
         {/* Title */}

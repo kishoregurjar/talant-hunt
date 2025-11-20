@@ -182,7 +182,7 @@ useEffect(() => {
         initial={{ scale: 0.9, y: 20, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="w-full max-w-4xl bg-white shadow-xl rounded-2xl mt-15 p-4 md:p-8 border border-gray-100"
+        className="w-full max-w-4xl bg-white shadow-xl rounded-2xl mt-15 p-4 mt-30 md:p-8 border border-gray-100"
       >
         <motion.h2 
           initial={{ y: -20, opacity: 0 }}
