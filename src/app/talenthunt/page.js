@@ -130,7 +130,7 @@ export default function talenthunt() {
 
   // ✔ BLUE TICK ICON (Tailwind color)
   icon: (
-    <span className="text-blue-600 text-xl shadow-sm backdrop-blur-md font-bold">
+    <span className="text-blue-600 text-xl   font-bold">
    <CircleCheckBig />
     </span>
   ),
