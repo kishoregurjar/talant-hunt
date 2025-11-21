@@ -543,7 +543,7 @@ export default function Navbar() {
                 About Us
               </Link>
 
-              <ChevronDown size={14} className="mt-[2px]" />
+              <ChevronDown size={14} className="mt-0.5" />
             </div>
 
             <div className="hidden group-hover:block absolute top-6 left-0 w-48 bg-white text-gray-800 rounded shadow-lg py-2">
