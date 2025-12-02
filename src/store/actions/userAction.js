@@ -107,13 +107,12 @@ export const asyncSubmitQuiz =
 
 export const asynsQRScreeenShotUpload = (file) => async (dispatch) => {
   try {
-    console.log(file);
     const formData = new FormData();
 
     formData.append("image", file);
 
     const { data } = await axios.post(
-      `/users/upload-payment-scereenshot`,
+      `/student/upload-payment-scereenshot`,
       formData,
       {
         headers: {
@@ -121,6 +120,7 @@ export const asynsQRScreeenShotUpload = (file) => async (dispatch) => {
         },
       }
     );
+    return success
 
     console.log("✅ Upload response:", data);
   } catch (error) {

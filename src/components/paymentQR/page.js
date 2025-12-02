@@ -7,7 +7,7 @@ export function PaymentQR({ upiURL, canvasId = "payment-qr" }) {
     <QRCodeCanvas
       id={canvasId}          
       value={upiURL}
-      size={220}
+      size={180}
       bgColor="#ffffff"
       fgColor="#000000"
       level="H"
