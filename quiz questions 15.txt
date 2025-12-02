@@ -1,0 +1,134 @@
+
+
+
+cricket profile page;
+{
+  Playing Role : [ Batman , Bowler , All rounder , Wicket keeper ],
+  Batting Style : [Right-hand Bat , left-hand Bat]
+  Bowling Style : [Right Arm Fast , Left Arm Fast, Right Arm Spin , Left Arm Spin]
+  Playing Level : [School, college, Club, District, State]
+  Experience : Optional 
+  Team / Club Name : Optional
+  videoLink: "https://youtu.be/xwEp0i9b3UM?si=6BSe6fx1rxzVty8F",
+        consent: true
+}
+
+
+
+
+
+Q1. In which area of the ground is the ‘Long-on’ position located? (‘Long-on’ position ground के किस हिस्से में होता है?)
+A) Off-side deep boundary (ऑफ-साइड डीप बाउंड्री)
+B) Near the leg-side straight boundary (लेग-साइड स्ट्रेट बाउंड्री के पास)
+C) Close to point (पॉइंट के पास)
+D) Behind the wicketkeeper (विकेटकीपर के पीछे)
+Answer: B) Near the leg-side straight boundary (लेग-साइड स्ट्रेट बाउंड्री के पास)
+
+Q2. In Test cricket, when can the follow-on be enforced? (Test क्रिकेट में फॉलो-ऑन कब दिया जा सकता है?)
+A) Lead is 50 runs (लीड 50 रन हो)
+B) Opposition scores less than 200 (विपक्ष 200 रन से कम बनाए)
+C) Opposition trails by 200+ runs (विपक्ष 200+ रन से पीछे हो)
+D) Crowd demands (भीड़ की मांग पर)
+Answer: C) Opposition trails by 200+ runs (विपक्ष 200+ रन से पीछे हो)
+
+Q3. What is the full form of DRS? (DRS का पूरा नाम क्या है?)
+A) Direct Review System (डायरेक्ट रिव्यू सिस्टम)
+B) Decision Review System (डिसिजन रिव्यू सिस्टम)
+C) Decision Rating System (डिसिजन रेटिंग सिस्टम)
+D) Digital Replay System (डिजिटल रिप्ले सिस्टम)
+Answer: B) Decision Review System (डिसिजन रिव्यू सिस्टम)
+
+Q4. The DLS method is used for: (DLS प्रणाली किसके लिए उपयोग की जाती है?)
+A) Red-card decisions (रेड कार्ड निर्णय)
+B) Rain-affected matches (बारिश से प्रभावित मैच)
+C) Toss decisions (टॉस का निर्णय)
+D) Third-umpire reviews (थर्ड अंपायर रिव्यू)
+Answer: B) Rain-affected matches (बारिश से प्रभावित मैच)
+
+Q5. A striker plays a shot, ball hits his pad and rolls toward stumps, and the non-striker intentionally kicks it away. What is the decision? 
+(स्ट्राइकर ने शॉट खेला, गेंद पैड से टकराकर स्टंप की ओर जा रही है, नॉन-स्ट्राइकर उसे जानबूझकर लात मारकर हटा देता है—निर्णय क्या होगा?)
+A) Not out (नॉट आउट)
+B) Bowled (बोल्ड)
+C) Obstructing the field (ऑब्स्ट्रक्टिंग द फील्ड)
+D) Run-out (रन-आउट)
+Answer: C) Obstructing the field (ऑब्स्ट्रक्टिंग द फील्ड)
+
+Q6. When the bowler runs out the non-striker before delivering the ball, what is this called? 
+(जब बॉलर गेंद फेंकने से पहले नॉन-स्ट्राइकर को रन-आउट कर दे, उसे क्या कहते हैं?)
+A) Stumped (स्टंप्ड)
+B) Bowled (बोल्ड)
+C) Mankading (मांकडिंग)
+D) Hit-wicket (हिट-विकेट)
+Answer: C) Mankading (मांकडिंग)
+
+Q7. The ball hits the Spidercam wire and is later caught by a fielder. What is the decision? 
+(गेंद स्पाइडरकैम वायर से टकराती है और बाद में फील्डर कैच कर लेता है—निर्णय क्या होगा?)
+A) Out (आउट)
+B) Dead ball (डेड बॉल)
+C) Six (छक्का)
+D) Four (चौका)
+Answer: B) Dead ball (डेड बॉल)
+
+Q8. During stumping, if the wicketkeeper’s gloves move in front of the stumps before collecting the ball, what is the call? 
+(स्टंपिंग के दौरान यदि विकेटकीपर के ग्लव्स गेंद पकड़ने से पहले स्टंप्स से आगे आ जाएं, तो निर्णय क्या होगा?)
+A) Out (आउट)
+B) No-ball (नो-बॉल)
+C) Dead ball (डेड बॉल)
+D) Penalty runs (पेनल्टी रन)
+Answer: B) No-ball (नो-बॉल)
+
+Q9. The ball hits a fielder’s helmet placed on the ground. What happens? 
+(गेंद जमीन पर रखे फील्डर के हेलमेट से टकराती है—क्या होता है?)
+A) Out (आउट)
+B) Dead ball (डेड बॉल)
+C) Five penalty runs to batting side (बैटिंग टीम को 5 पेनल्टी रन)
+D) Five penalty runs to fielding side (फील्डिंग टीम को 5 पेनल्टी रन)
+Answer: C) Five penalty runs to batting side (बैटिंग टीम को 5 पेनल्टी रन)
+
+Q10. In T20 cricket, if a team fails to start the final over on time, what happens? 
+(T20 क्रिकेट में यदि टीम समय पर अंतिम ओवर शुरू नहीं कर पाती, तो क्या होता है?)
+A) 5 penalty runs (5 पेनल्टी रन)
+B) Bowler cannot bowl (बॉलर ओवर नहीं डाल सकता)
+C) One extra fielder must come inside the circle (एक अतिरिक्त फील्डर को सर्कल के अंदर आना पड़ेगा)
+D) Free hit (फ्री-हिट)
+Answer: C) One extra fielder must come inside the circle (एक अतिरिक्त फील्डर को सर्कल के अंदर लाना पड़ेगा)
+
+Q11. According to ICC rules, a concussion substitute must be: 
+(ICC नियम के अनुसार, कंकशन सब्स्टीट्यूट कैसा खिलाड़ी होना चाहिए?)
+A) A bowler only (केवल बॉलर)
+B) A batter only (केवल बैटर)
+C) A like-for-like player (समान प्रकार का खिलाड़ी)
+D) Any player chosen by captain (कोई भी खिलाड़ी)
+Answer: C) A like-for-like player (समान प्रकार का खिलाड़ी)
+
+Q12. The Ashes series is played between which two countries? 
+(एशेज सीरीज़ किन दो देशों के बीच खेली जाती है?)
+A) India & Pakistan (भारत और पाकिस्तान)
+B) England & Australia (इंग्लैंड और ऑस्ट्रेलिया)
+C) South Africa & New Zealand (साउथ अफ्रीका और न्यूज़ीलैंड)
+D) Sri Lanka & West Indies (श्रीलंका और वेस्टइंडीज)
+Answer: B) England & Australia (इंग्लैंड और ऑस्ट्रेलिया)
+
+Q13. Who holds the record for the highest individual score in T20 Internationals? 
+(T20 इंटरनेशनल में सबसे बड़ा व्यक्तिगत स्कोर किसके नाम है?)
+A) Chris Gayle (क्रिस गेल)
+B) Rohit Sharma (रोहित शर्मा)
+C) Aaron Finch (एरॉन फिंच)
+D) Virat Kohli (विराट कोहली)
+Answer: C) Aaron Finch (एरॉन फिंच)
+
+Q14. Who has taken the most wickets in a single Cricket World Cup tournament? 
+(एक ही क्रिकेट वर्ल्ड कप टूर्नामेंट में सबसे ज्यादा विकेट किसने लिए हैं?)
+A) Zaheer Khan (जहीर खान)
+B) Mitchell Starc (मिचेल स्टार्क)
+C) Trent Boult (ट्रेंट बोल्ट)
+D) Glenn McGrath (ग्लेन मैक्ग्रा)
+Answer: B) Mitchell Starc (मिचेल स्टार्क)
+
+Q15. Who has taken the most wickets in international cricket (all formats combined)? 
+(अंतरराष्ट्रीय क्रिकेट में सबसे ज्यादा विकेट किसने लिए हैं?)
+A) Shane Warne (शेन वॉर्न)
+B) Muttiah Muralitharan (मुथैया मुरलीधरन)
+C) Anil Kumble (अनिल कुंबले)
+D) Glenn McGrath (ग्लेन मैक्ग्रा)
+Answer: B) Muttiah Muralitharan (मुथैया मुरलीधरन)
