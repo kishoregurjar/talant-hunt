@@ -146,12 +146,7 @@ export default function PaymentForm() {
     router.push("/skilldetail");
   };
 
-  const getTransactionIdDisplay = () => {
-    if (id) {
-      return `TXN-${id.substring(0, 8)}`;
-    }
-    return "TXN-PENDING";
-  };
+ 
 
   const getFormattedDate = () => {
     return new Date().toLocaleDateString('en-IN', {
@@ -435,12 +430,7 @@ export default function PaymentForm() {
                 Payment Details
               </h4>
               <div className="space-y-2 text-sm">
-                <div className="flex justify-between items-start">
-                  <span className="text-gray-500">Transaction ID</span>
-                  <span className="font-mono font-medium text-gray-900 text-right break-all">
-                    {getTransactionIdDisplay()}
-                  </span>
-                </div>
+               
                 <div className="flex justify-between items-start">
                   <span className="text-gray-500">Date</span>
                   <span className="font-medium text-gray-900 text-right">

@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { skillInfoValidator } from "../../components/validation/skillInfoValidator";
 import { motion, AnimatePresence } from "framer-motion";
 import CustomSelect from "../../components/CustomSelect";
-
+import { toast } from "react-toastify";
 
 import {
   Medal,
@@ -88,7 +88,7 @@ const {
     const studentId = localStorage.getItem("userId") || id;
     
     if (!studentId) {
-      alert("❌ User ID not found. Please complete the registration first.");
+      toast.error("❌ User ID not found. Please complete the registration first.");
       router.push("/talenthunt");
       return;
     }
@@ -97,11 +97,11 @@ const {
     const success = await dispatch(asyncTalentForm(studentId, data));
 
     if (success) {
-      alert("✅ Form Submitted Successfully!");
+      toast.success(" Form Submitted Successfully!");
       reset();
       router.push("/");
     } else {
-      alert("❌ Failed to submit form. Please try again.");
+      toast.error(" Failed to submit form. Please try again.");
     }
   };
 
