@@ -1,4 +1,5 @@
 import { nanoid } from "@reduxjs/toolkit";
+import { ScreenShot } from "../PlayerSlice.js";
 import axios from "../utils/axiosConfig";
 import {
   saveFormData,
@@ -120,13 +121,28 @@ export const asynsQRScreeenShotUpload = (file) => async (dispatch) => {
         },
       }
     );
-    
+
+    dispatch(ScreenShot(data.data.imageUrl));
     console.log("✅ Upload response:", data);
-    return success
+    return data.success;
   } catch (error) {
     console.error("❌ Error while uploading screenshot:", error);
   }
 };
+
+export const asynsPaymentContinue =
+  (studentId, imageUrl) => async (dispatch) => {
+    try {
+      const { data } = await axios.post("student/save-payment-screenshot", {
+        studentId: studentId,
+        imageUrl: imageUrl,
+      });
+
+      console.log("✅ Payment Continue response:", data);
+    } catch (error) {
+      console.error("❌ Error while Payment Continue:", error);
+    }
+  };
 
 export const rehydrateStoreFromBackend = () => async (dispatch, getState) => {
   try {

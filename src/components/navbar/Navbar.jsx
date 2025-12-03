@@ -9,7 +9,7 @@ export default function Navbar() {
   const [aboutOpen, setAboutOpen] = useState(false);
 
   return (
-    <nav className=" fixed top-0 left-0 w-full z-50    border backdrop-blur-sm border-gray-200  ">
+    <nav className=" fixed top-0 left-0 w-full z-50    backdrop-blur-sm border-gray-200  ">
       {/* ==== RESPONSIVE GRID ==== */}
       <div
         className="
