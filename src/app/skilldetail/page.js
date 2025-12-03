@@ -3,7 +3,7 @@
 import { nanoid } from "nanoid";
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncTalentForm } from "../../store/actions/userAction";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,6 +30,7 @@ import {
 const TalentFormPage = () => {
 const dispatch = useDispatch();
 const router = useRouter();
+const pathname = usePathname();
 const { formFilled, id } = useSelector((s) => s.playerReducer);
 
 const {
@@ -51,19 +52,57 @@ const {
   //   if (!formFilled) router.push("/talenthunt");
   // }, [formFilled, router]);
 
-  const Submithandler = (data) => {
-    const newPlayer = { ...data, id: nanoid() };
-    // dispatch(asyncTalentForm(id, newPlayer));
+  // Add effect to handle browser back button/navigation
+  useEffect(() => {
+    // Push a new state to the history to prevent back button
+    window.history.pushState(null, '', window.location.href);
+    
+    const handlePopState = (e) => {
+      // Push a new state again to prevent back button
+      window.history.pushState(null, '', window.location.href);
+      // Completely prevent navigation without asking
+    };
+    
+    const handleBeforeUnload = (e) => {
+      // Cancel the event to prevent the browser from navigating away
+      e.preventDefault();
+      // Chrome requires returnValue to be set
+      e.returnValue = '';
+      // Return a string for browsers that still support it
+      return 'Navigation is disabled while filling out this form.';
+    };
 
-    const existingPlayers = JSON.parse(localStorage.getItem("players") || "[]");
-    localStorage.setItem(
-      "players",
-      JSON.stringify([...existingPlayers, newPlayer])
-    );
+    // Add event listeners
+    window.addEventListener('popstate', handlePopState);
+    window.addEventListener('beforeunload', handleBeforeUnload);
 
-    alert("✅ Form Submitted Successfully!");
-    reset();
-    router.push("/");
+    // Cleanup function
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
+  const Submithandler = async (data) => {
+    // Get the student ID from localStorage or Redux store
+    const studentId = localStorage.getItem("userId") || id;
+    
+    if (!studentId) {
+      alert("❌ User ID not found. Please complete the registration first.");
+      router.push("/talenthunt");
+      return;
+    }
+
+    // Dispatch the action to submit cricket details
+    const success = await dispatch(asyncTalentForm(studentId, data));
+
+    if (success) {
+      alert("✅ Form Submitted Successfully!");
+      reset();
+      router.push("/");
+    } else {
+      alert("❌ Failed to submit form. Please try again.");
+    }
   };
 
   return (
