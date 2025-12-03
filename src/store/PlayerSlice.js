@@ -8,7 +8,8 @@ id: null,
   videoWatched: false,
   quizAttemptId: null,
   quizCompleted: false,
-  StudentScore : 0
+  StudentScore : 0,
+  ScreenShot : null
   // talentForm: {}
 };
 
@@ -25,6 +26,8 @@ const playerSlice = createSlice({
       state.videoWatched = true
     },
 
+  
+
     saveUserID: (state, action) => {
       state.id = action.payload;
     },
@@ -40,6 +43,11 @@ const playerSlice = createSlice({
     markQuizCompleted: (state) => {
       state.quizCompleted = true;
     },
+
+ ScreenShot: (state, action) => {
+      state.ScreenShot = action.payload;
+    },
+
     resetAll: (state) => {
       return initialState;
     },
@@ -73,6 +81,6 @@ const playerSlice = createSlice({
   },
 });
 
-export const { saveStudentScore , saveFormData, markVideoWatched, quizAttemptId, markQuizCompleted, resetAll, restoreFormData, updateFormData ,saveUserID, talentForm, rehydrateState} =
+export const { ScreenShot,  saveStudentScore , saveFormData, markVideoWatched, quizAttemptId, markQuizCompleted, resetAll, restoreFormData, updateFormData ,saveUserID, talentForm, rehydrateState} =
   playerSlice.actions;
 export default playerSlice.reducer;

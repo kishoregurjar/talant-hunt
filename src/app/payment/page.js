@@ -1,13 +1,22 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import TermsModal from "../../components/modals/TermsModal.jsx";
+import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-
-import { ArrowRight, Copy, Upload, Download, Loader2, CheckCircle2 } from "lucide-react";
-
-import { useState } from "react";
-import { asynsQRScreeenShotUpload } from "@/src/store/actions/userAction.js";
+import {
+  ArrowRight,
+  Copy,
+  Upload,
+  Download,
+  Loader2,
+  CheckCircle2,
+} from "lucide-react";
+import { useState, useEffect } from "react";
+import {
+  asynsQRScreeenShotUpload,
+  asynsPaymentContinue,
+} from "@/src/store/actions/userAction.js";
 import {
   PaymentQR,
   downloadCanvasAsImage,
@@ -20,26 +29,49 @@ export default function PaymentForm() {
     getValues,
     watch,
     formState: { errors },
-
-    
   } = useForm();
 
   const dispatch = useDispatch();
   const router = useRouter();
 
- const [proofFile, setProofFile] = useState(null);
-const [copied, setCopied] = useState(false);
-const [isUploading, setIsUploading] = useState(false);
-const [isUploaded, setIsUploaded] = useState(false);
-
-
-
+  const [proofFile, setProofFile] = useState(null);
+  const [copied, setCopied] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [isUploaded, setIsUploaded] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
+  const {
+    formFilled,
+    videoWatched,
+    id,
+    quizAttemptId,
+    quizCompleted,
+    StudentScore,
+    ScreenShot,
+  } = useSelector((s) => s.playerReducer);
   const upiID = "indorecricketclub61537@sbi";
   const amount = "150";
   const canvasId = "talent-hunt-payment-QR";
   const upiURL = `upi://pay?pa=${upiID}&am=${amount}&cu=INR`;
-
   const transactionIdValue = watch("transactionId");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+      if (formFilled === false) {
+        router.push("/talenthunt");
+      } else if (formFilled === true && videoWatched === false) {
+        router.push("/video");
+      } else if (
+        formFilled === true &&
+        videoWatched === true &&
+        quizCompleted == false
+      ) {
+        router.push("/quiz");
+      }
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [formFilled, videoWatched]);
 
   const handleCopyUPI = () => {
     navigator.clipboard.writeText(upiID);
@@ -54,12 +86,12 @@ const [isUploaded, setIsUploaded] = useState(false);
     router.push("/skilldetail");
   };
 
- const handleFileChange = (e) => {
-  const file = e.target.files?.[0];
-  setProofFile(file || null);
-  setIsUploaded(false); // naya file
-};
-
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    setProofFile(file || null);
+    setIsUploaded(false); // naya file
+    localStorage.removeItem("screenshotUploaded");
+  };
 
   const openFileDialog = () => {
     const input = document.getElementById("payment-proof-input");
@@ -70,21 +102,37 @@ const [isUploaded, setIsUploaded] = useState(false);
     downloadCanvasAsImage(canvasId, "talent-hunt-payment-qr.png");
   };
 
- const uploadScreenshot = async () => {
-  if (!proofFile || isUploading) return;
+  const uploadScreenshot = async () => {
+    if (!proofFile || isUploading) return;
 
-  try {
-    setIsUploading(true);
-    await dispatch(asynsQRScreeenShotUpload(proofFile)); // wait for upload
-    setIsUploaded(true); // success → “Uploaded” dikhao
-  } catch (error) {
-    console.error("❌ Error while uploading screenshot:", error);
-    alert("Upload failed, please try again.");
-  } finally {
-    setIsUploading(false);
-  }
-};
+    try {
+      setIsUploading(true);
+      const ok = await dispatch(asynsQRScreeenShotUpload(proofFile)); // wait for upload
+      if (ok) {
+        localStorage.setItem("screenshotUploaded", "true");
+        setIsUploaded(true); // success → “Uploaded” dikhao
+      }
+    } catch (error) {
+      console.error("❌ Error while uploading screenshot:", error);
+      alert("Upload failed, please try again.");
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
+  useEffect(() => {
+    // sirf browser me chale
+    if (typeof window === "undefined") return;
+
+    const stored = localStorage.getItem("screenshotUploaded");
+    if (stored === "true") {
+      setIsUploaded(true);
+    }
+  }, []);
+
+  const PaymentContinueHandler = async () => {
+    dispatch(asynsPaymentContinue(id, ScreenShot));
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
@@ -99,7 +147,10 @@ const [isUploaded, setIsUploaded] = useState(false);
         </div>
 
         {/* FORM */}
-        <form onSubmit={handleSubmit(onSubmit)} className="p-4 md:p-6 space-y-6">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="p-4 md:p-6 space-y-6"
+        >
           {/* ---------- QR + UPLOAD RESPONSIVE GRID ---------- */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* LEFT: QR / PAYMENT BLOCK */}
@@ -136,7 +187,7 @@ const [isUploaded, setIsUploaded] = useState(false);
 
                   {/* Download QR + Amount (FULL WIDTH) */}
                   <div className="mt-4 space-y-3 w-full">
-                    <button 
+                    <button
                       type="button"
                       onClick={handleDownloadQR}
                       className="w-full flex justify-center items-center gap-1 px-3 py-2 bg-white border border-gray-200 rounded-md text-sm font-medium hover:bg-gray-50"
@@ -182,93 +233,74 @@ const [isUploaded, setIsUploaded] = useState(false);
                 {/* Drop Zone */}
                 <div className="border border-gray-300 rounded-xl p-6 text-center cursor-pointer hover:bg-blue-50/40 transition">
                   <div
-                    className="text-sm text-black mb-3 border-gray-300 border-2 border-dashed px-2 py-3 rounded-lg active:scale-98 hover:border-blue-400"
-                    onClick={openFileDialog}
+                    className={`text-sm mb-3 border-gray-300 border-2 px-2 py-3 rounded-lg active:scale-98 ${
+                      isUploaded
+                        ? "text-green-700 bg-green-50 border-green-200 cursor-default"
+                        : "text-black border-dashed hover:border-blue-400 cursor-pointer"
+                    }`}
+                    onClick={!isUploaded ? openFileDialog : undefined}
                   >
-                    Click to upload
+                    {isUploaded ? "✅ Screenshot uploaded" : "Click to upload"}
                   </div>
 
                   {/* If image selected → show preview */}
-                 {proofFile ? (
-  <div className="flex flex-col items-center gap-2">
-    <img
-      src={URL.createObjectURL(proofFile)}
-      alt="Preview"
-      className="h-20 w-auto rounded-md shadow border"
-    />
+                  {proofFile ? (
+                    <div className="flex flex-col items-center gap-2">
+                      <img
+                        src={URL.createObjectURL(proofFile)}
+                        alt="Preview"
+                        className="h-20 w-auto rounded-md shadow border"
+                      />
 
-    {/* YAHAN CONDITION LAGA DIYA */}
-    {!isUploaded ? (
-      <div className="flex gap-4">
-        <button
-          type="button"
-          onClick={uploadScreenshot}
-          disabled={isUploading}
-          className="px-4 py-2 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg inline-flex items-center gap-2"
-        >
-          {isUploading ? (
-            <>
-              <Loader2 size={16} className="animate-spin" />
-              Uploading...
-            </>
-          ) : (
-            "Upload"
-          )}
-        </button>
+                      {!isUploaded ? (
+                        <div className="flex gap-4">
+                          <button
+                            type="button"
+                            onClick={uploadScreenshot}
+                            disabled={isUploading}
+                            className="px-4 py-2 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg inline-flex items-center gap-2"
+                          >
+                            {isUploading ? (
+                              <>
+                                <Loader2 size={16} className="animate-spin" />
+                                Uploading...
+                              </>
+                            ) : (
+                              "Upload"
+                            )}
+                          </button>
 
-        <button
-          type="button"
-          onClick={() => {
-            setProofFile(null);
-            setIsUploaded(false);
-          }}
-          className="px-4 py-2 bg-red-400 hover:bg-red-400 text-white text-sm font-medium rounded-lg"
-        >
-          Clear
-        </button>
-      </div>
-    ) : (
-      <span className="px-4 py-2 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg inline-flex items-center gap-2">
-         Uploaded <CheckCircle2 size={14} />
-      
-      </span>
-    )}
-  </div>
-) : (
-  <p className="text-xs text-gray-500 mt-3">
-    Upload screenshot of your UPI transaction (PNG/JPG/WebP, max 3MB)
-  </p>
-)}
-                </div>
-
-                {/* <div className="mt-5">
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">
-                    Transaction ID / UTR / UPI Ref No{" "}
-                    <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    {...register("transactionId", {
-                      required: "Transaction / UTR / Ref No is required",
-                      pattern: {
-                        value: /^[0-9]{12}$/,
-                        message: "Transaction ID must be exactly 12 digits",
-                      },
-                    })}
-                    placeholder="Enter 12 digit Transaction/UTR/Ref No"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  />
-
-                  {errors.transactionId && (
-                    <p className="text-red-500 text-xs mt-1">
-                      {errors.transactionId.message}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setProofFile(null);
+                              setIsUploaded(false);
+                              localStorage.removeItem("screenshotUploaded");
+                            }}
+                            className="px-4 py-2 bg-red-400 hover:bg-red-400 text-white text-sm font-medium rounded-lg"
+                          >
+                            Clear
+                          </button>
+                        </div>
+                      ) : (
+                        <span className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded-lg inline-flex items-center gap-2">
+                          Uploaded <CheckCircle2 size={14} />
+                        </span>
+                      )}
+                    </div>
+                  ) : isUploaded ? (
+                    <p className="text-xs text-gray-500 mt-3">
+                      Your payment screenshot has been uploaded successfully
+                      earlier. You can directly continue without uploading
+                      again.
+                    </p>
+                  ) : (
+                    <p className="text-xs text-gray-500 mt-3">
+                      Upload screenshot of your UPI transaction (PNG/JPG/WebP,
+                      max 3MB)
                     </p>
                   )}
-
-                  <p className="text-[11px] text-gray-500 mt-2">
-                    Please enter the 12 digit number shown in your UPI payment
-                    receipt.
-                  </p>
-                </div> */}
+                </div>
               </div>
 
               {/* BUTTONS + TERMS pinned to bottom of right column */}
@@ -284,6 +316,7 @@ const [isUploaded, setIsUploaded] = useState(false);
 
                   <button
                     type="submit"
+                    onClick={() => PaymentContinueHandler()}
                     disabled={!isUploaded}
                     className={`w-full sm:w-2/3 inline-flex items-center justify-center gap-2 px-6 py-3 
                       font-medium rounded-lg text-sm sm:text-base transition-all shadow-sm
@@ -299,15 +332,21 @@ const [isUploaded, setIsUploaded] = useState(false);
 
                 <p className="text-center sm:text-left text-[11px] text-gray-500">
                   By proceeding, you agree to our{" "}
-                  <a href="#" className="text-blue-600 hover:underline">
+                  <button
+                    type="button"
+                    onClick={() => setShowTerms(true)}
+                    className="text-blue-600 hover:underline"
+                  >
                     Terms &amp; Conditions
-                  </a>
+                  </button>
                 </p>
               </div>
             </div>
           </div>
         </form>
       </div>
+      {/* Terms & Conditions modal (renders when `showTerms` is true) */}
+      <TermsModal open={showTerms} onClose={() => setShowTerms(false)} />
     </div>
   );
 }
