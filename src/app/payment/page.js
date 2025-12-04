@@ -146,8 +146,6 @@ export default function PaymentForm() {
     router.push("/skilldetail");
   };
 
- 
-
   const getFormattedDate = () => {
     return new Date().toLocaleDateString('en-IN', {
       day: '2-digit',
@@ -358,14 +356,8 @@ export default function PaymentForm() {
       {/* Terms & Conditions modal */}
       <TermsModal open={showTerms} onClose={() => setShowTerms(false)} />
       
-      {/* Shadcn Confirmation Dialog with Scroll Fixes */}
+      {/* Shadcn Confirmation Dialog */}
       <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
-        {/* 
-          SCROLL FIX: 
-          1. max-h-[90vh] limits the height
-          2. overflow-y-auto allows internal scrolling
-          3. onWheel stops event propagation to parent 
-        */}
         <DialogContent 
           className="sm:max-w-md max-h-[90vh] overflow-y-auto"
           onWheel={(e) => e.stopPropagation()}
@@ -379,19 +371,23 @@ export default function PaymentForm() {
             </DialogDescription>
           </DialogHeader>
 
-          {/* Success Banner */}
+          {/* Success Banner - IMPROVED VISIBILITY */}
           <div className="bg-green-50 border border-green-100 rounded-xl p-6 flex flex-col items-center text-center">
             <div className="h-16 w-16 rounded-full bg-green-100 flex items-center justify-center mb-4">
               <CheckCircle2 className="text-green-600 h-8 w-8" />
             </div>
             
-            <h3 className="text-lg font-bold text-gray-900 mb-2">
+            <h3 className="text-xl font-bold text-green-700 mb-4">
               Payment Successful!
             </h3>
             
-            <p className="text-sm text-gray-600 leading-relaxed">
-              Your payment has been processed successfully. You will receive a 
-              confirmation email shortly.
+            {/* Made this text much larger and darker for immediate visibility */}
+            <p className="text-lg sm:text-xl font-semibold text-gray-900 leading-snug mb-2">
+              Your payment has been processed successfully.
+            </p>
+            
+            <p className="text-sm sm:text-base text-gray-600 font-medium">
+               You will receive a confirmation email shortly.
             </p>
           </div>
 
@@ -430,7 +426,7 @@ export default function PaymentForm() {
                 Payment Details
               </h4>
               <div className="space-y-2 text-sm">
-               
+                
                 <div className="flex justify-between items-start">
                   <span className="text-gray-500">Date</span>
                   <span className="font-medium text-gray-900 text-right">
