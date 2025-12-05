@@ -1,8 +1,3 @@
-
-
-
-
-
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -62,7 +57,7 @@ const [isUploaded, setIsUploaded] = useState(false);
  const handleFileChange = (e) => {
   const file = e.target.files?.[0];
   setProofFile(file || null);
-  setIsUploaded(false); // naya file choose kare to “Uploaded” reset
+  setIsUploaded(false); // naya file
 };
 
 
@@ -90,10 +85,6 @@ const [isUploaded, setIsUploaded] = useState(false);
   }
 };
 
-  // const isPaymentReady =
-  //   proofFile &&
-  //   transactionIdValue &&
-  //   /^[0-9]{12}$/.test(transactionIdValue);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
@@ -145,7 +136,7 @@ const [isUploaded, setIsUploaded] = useState(false);
 
                   {/* Download QR + Amount (FULL WIDTH) */}
                   <div className="mt-4 space-y-3 w-full">
-                    <button
+                    <button 
                       type="button"
                       onClick={handleDownloadQR}
                       className="w-full flex justify-center items-center gap-1 px-3 py-2 bg-white border border-gray-200 rounded-md text-sm font-medium hover:bg-gray-50"

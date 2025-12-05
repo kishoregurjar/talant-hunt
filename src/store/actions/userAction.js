@@ -120,9 +120,9 @@ export const asynsQRScreeenShotUpload = (file) => async (dispatch) => {
         },
       }
     );
-    return success
-
+    
     console.log("✅ Upload response:", data);
+    return success
   } catch (error) {
     console.error("❌ Error while uploading screenshot:", error);
   }
