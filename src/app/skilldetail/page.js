@@ -1,5 +1,4 @@
 "use client";
-
 import { nanoid } from "nanoid";
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -20,7 +19,6 @@ import {
   Target,
   Trophy,
   Video,
-  
   CheckSquare,
   ArrowRight,
   ArrowLeft,
@@ -31,7 +29,7 @@ const TalentFormPage = () => {
 const dispatch = useDispatch();
 const router = useRouter();
 const pathname = usePathname();
-const { formFilled, id } = useSelector((s) => s.playerReducer);
+const { formFilled, id, videoWatched, quizCompleted, PaymentProcess } = useSelector((s) => s.playerReducer);
 
 const {
     register,
@@ -46,29 +44,42 @@ const {
     mode: "onChange",
   });
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+      if (formFilled === false) {
+        router.push("/talenthunt");
+      } else if (formFilled === true && videoWatched === false) {
+        router.push("/video");
+      } else if (
+        formFilled === true &&
+        videoWatched === true &&
+        quizCompleted == false
+      ) {
+        router.push("/quiz");
+      }else if (formFilled === true &&
+        videoWatched === true &&
+        quizCompleted == true && PaymentProcess=== false) {
+        router.push("/payment");
+      }
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [formFilled, videoWatched, quizCompleted, router]);
+
+
   const [step, setStep] = useState(1);
 
-  // useEffect(() => {
-  //   if (!formFilled) router.push("/talenthunt");
-  // }, [formFilled, router]);
-
-  // Add effect to handle browser back button/navigation
+  
   useEffect(() => {
-    // Push a new state to the history to prevent back button
     window.history.pushState(null, '', window.location.href);
     
     const handlePopState = (e) => {
-      // Push a new state again to prevent back button
       window.history.pushState(null, '', window.location.href);
-      // Completely prevent navigation without asking
     };
     
     const handleBeforeUnload = (e) => {
-      // Cancel the event to prevent the browser from navigating away
       e.preventDefault();
-      // Chrome requires returnValue to be set
       e.returnValue = '';
-      // Return a string for browsers that still support it
       return 'Navigation is disabled while filling out this form.';
     };
 

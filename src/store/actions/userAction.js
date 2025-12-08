@@ -1,5 +1,5 @@
 import { nanoid } from "@reduxjs/toolkit";
-import { ScreenShot, talentForm } from "../PlayerSlice.js";
+import { ScreenShot, talentForm  ,PaymentProcess} from "../PlayerSlice.js";
 import axios from "../utils/axiosConfig";
 import {
   saveFormData,
@@ -122,6 +122,9 @@ export const asynsQRScreeenShotUpload = (file) => async (dispatch) => {
     );
 
     dispatch(ScreenShot(data.data.imageUrl));
+  localStorage.setItem("screenShotUrl", JSON.stringify(data.data.imageUrl));
+
+    
     console.log("✅ Upload response:", data);
     return data.success;
   } catch (error) {
@@ -138,6 +141,7 @@ export const asynsPaymentContinue =
       });
 
       console.log("✅ Payment Continue response:", data);
+      dispatch(PaymentProcess(true));
     } catch (error) {
       console.error("❌ Error while Payment Continue:", error);
     }
@@ -147,12 +151,12 @@ export const asyncTalentForm = (studentId, cricketDetails) => async (dispatch) =
   try {
     const payload = {
       studentId,
-      "Playing Role": cricketDetails.role,
-      "Batting Style": cricketDetails.battingStyle,
-      "Bowling Style": cricketDetails.bowlingStyle,
-      "Playing Level": cricketDetails.level,
-      "Experience": cricketDetails.experience || "",
-      "Team / Club Name": cricketDetails.teamName || "",
+      "playingRole": cricketDetails.role,
+      "battingStyle": cricketDetails.battingStyle,
+      "bowlingStyle": cricketDetails.bowlingStyle,
+      "playingLevel": cricketDetails.level,
+      "experience": cricketDetails.experience || "",
+      "teamName": cricketDetails.teamName || "",
       "videoLink": cricketDetails.videoLink || "",
       "consent": cricketDetails.consent || false
     };
@@ -175,6 +179,8 @@ export const asyncTalentForm = (studentId, cricketDetails) => async (dispatch) =
 export const rehydrateStoreFromBackend = () => async (dispatch, getState) => {
   try {
     const storedUserId = localStorage.getItem("userId");
+    const screenShotUrl = localStorage.getItem("screenShotUrl");
+ 
 
     if (storedUserId) {
       const res = await axios.get(
@@ -199,6 +205,7 @@ export const rehydrateStoreFromBackend = () => async (dispatch, getState) => {
             formFilled: userData.formFilled,
             videoWatched: userData.videoWatched,
             quizCompleted: userData.quizCompleted,
+            ScreenShot: screenShotUrl
           })
         );
 
