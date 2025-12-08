@@ -1,4 +1,5 @@
 import { nanoid } from "@reduxjs/toolkit";
+import { ScreenShot, talentForm } from "../PlayerSlice.js";
 import axios from "../utils/axiosConfig";
 import {
   saveFormData,
@@ -6,7 +7,6 @@ import {
   markQuizCompleted,
   saveUserID,
   saveStudentScore,
-  talentForm,
   rehydrateState,
   quizAttemptId,
 } from "../PlayerSlice";
@@ -120,11 +120,55 @@ export const asynsQRScreeenShotUpload = (file) => async (dispatch) => {
         },
       }
     );
-    
+
+    dispatch(ScreenShot(data.data.imageUrl));
     console.log("✅ Upload response:", data);
-    return success
+    return data.success;
   } catch (error) {
     console.error("❌ Error while uploading screenshot:", error);
+  }
+};
+
+export const asynsPaymentContinue =
+  (studentId, imageUrl) => async (dispatch) => {
+    try {
+      const { data } = await axios.post("student/save-payment-screenshot", {
+        studentId: studentId,
+        imageUrl: imageUrl,
+      });
+
+      console.log("✅ Payment Continue response:", data);
+    } catch (error) {
+      console.error("❌ Error while Payment Continue:", error);
+    }
+  };
+
+export const asyncTalentForm = (studentId, cricketDetails) => async (dispatch) => {
+  try {
+    const payload = {
+      studentId,
+      "Playing Role": cricketDetails.role,
+      "Batting Style": cricketDetails.battingStyle,
+      "Bowling Style": cricketDetails.bowlingStyle,
+      "Playing Level": cricketDetails.level,
+      "Experience": cricketDetails.experience || "",
+      "Team / Club Name": cricketDetails.teamName || "",
+      "videoLink": cricketDetails.videoLink || "",
+      "consent": cricketDetails.consent || false
+    };
+
+    const res = await axios.post("/student/add-cricet-details", payload);
+    console.log("Cricket details submitted successfully:", res.data);
+    dispatch(talentForm(res.data.data));
+    return true;
+  } catch (error) {
+    console.error("Error submitting cricket details:", error);
+    if (error.response) {
+      console.log(`Error ${error.response.status}: ${error.response.data.message || "Something went wrong"}`);
+    } else {
+      alert("🚫 Network error. Please check your internet connection.");
+    }
+    return false;
   }
 };
 
