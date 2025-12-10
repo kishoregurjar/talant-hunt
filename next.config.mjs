@@ -4,6 +4,8 @@ const nextConfig = {
    images: {
     domains: ["images.unsplash.com"], // ✅ allow unsplash images
   },
+  swcMinify: false,
+
 };
 
 export default nextConfig;
