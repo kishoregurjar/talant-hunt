@@ -42,7 +42,7 @@ export default function CustomSelect({
         type="button"
         disabled={disabled}
         onClick={() => !disabled && setIsOpen(!isOpen)}
-        className={`w-full pl-10 pr-10 p-2 border border-gray-300 rounded-lg bg-gray-50 
+        className={`w-full pl-10 pr-10  p-2 border border-gray-300 rounded-lg bg-gray-50 
           focus:ring-2 focus:ring-purplee  outline-none text-left relative
           ${disabled ? "bg-gray-100 cursor-not-allowed" : "cursor-pointer hover:border-purplee"}
           ${className}`}

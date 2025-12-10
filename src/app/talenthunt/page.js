@@ -265,8 +265,8 @@ export default function talenthunt() {
             <label className="block mb-1 text-m font-medium text-gray-700">
               Date of Birth
             </label>
-            <div className="grid grid-cols-3 gap-3">
-              <div className="relative">
+            <div className="grid grid-cols-4 md:grid-cols-3 gap-3">
+              <div className="relative col-span-1">
                 <Calendar
                   className="absolute left-3 top-3 text-gray-400"
                   size={18}
@@ -279,8 +279,9 @@ export default function talenthunt() {
                   max="31"
                   className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee outline-none"
                 />
+                
               </div>
-              <div>
+              {/* <div>
                 <select
                   {...register("dob.month")}
                   className="w-full pl-3 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee outline-none"
@@ -305,12 +306,53 @@ export default function talenthunt() {
                     </option>
                   ))}
                 </select>
-              </div>
-              <div className="relative">
-                <Calendar
+              </div> */}
+              <div className="col-span-2 md:col-span-1">
+ 
+
+  <Controller
+    name="dob.month"
+    control={control}
+    defaultValue=""
+    render={({ field }) => (
+      <CustomSelect
+        options={[
+          { value: "January", label: "January" },
+          { value: "February", label: "February" },
+          { value: "March", label: "March" },
+          { value: "April", label: "April" },
+          { value: "May", label: "May" },
+          { value: "June", label: "June" },
+          { value: "July", label: "July" },
+          { value: "August", label: "August" },
+          { value: "September", label: "September" },
+          { value: "October", label: "October" },
+          { value: "November", label: "November" },
+          { value: "December", label: "December" },
+        ]}
+        value={field.value || ""}
+        onChange={field.onChange}
+        placeholder="Month"
+                    icon={Calendar}
+
+        error={errors?.dob?.month?.message}
+      />
+    )}
+  />
+
+  {errors?.dob?.month && (
+    <p className="text-red-500 text-sm">
+      {errors.dob.month.message}
+    </p>
+  )}
+</div>
+
+
+              <div className=" relative col-span-1">
+                {/* <Calendar
                   className="absolute left-3 top-3 text-gray-400"
                   size={18}
-                />
+                /> */}
                 <input
                   {...register("dob.year")}
                   type="number"
@@ -330,6 +372,8 @@ export default function talenthunt() {
               </p>
             )}
           </div>
+
+
 
           {/* Address */}
           <div className="md:col-span-2">
