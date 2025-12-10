@@ -43,8 +43,8 @@ export default function CustomSelect({
         disabled={disabled}
         onClick={() => !disabled && setIsOpen(!isOpen)}
         className={`w-full pl-10 pr-10 p-2 border border-gray-300 rounded-lg bg-gray-50 
-          focus:ring-2 focus:ring-blue-500 outline-none text-left relative
-          ${disabled ? "bg-gray-100 cursor-not-allowed" : "cursor-pointer hover:border-blue-400"}
+          focus:ring-2 focus:ring-purplee  outline-none text-left relative
+          ${disabled ? "bg-gray-100 cursor-not-allowed" : "cursor-pointer hover:border-purplee"}
           ${className}`}
       >
         {Icon && (
@@ -72,7 +72,7 @@ export default function CustomSelect({
               className={`px-4 py-2.5 cursor-pointer transition-colors
                 ${
                   value === option.value
-                    ? "bg-blue-50 text-blue-700 font-medium"
+                    ? "bg-blue-50 text-purplee font-medium"
                     : "text-gray-700 hover:bg-gray-100"
                 }
                 ${option.disabled ? "opacity-50 cursor-not-allowed" : ""}

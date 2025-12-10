@@ -160,7 +160,7 @@ export default function PaymentForm() {
         {/* HEADER */}
         <div className="flex items-start gap-4 p-4">
           <div className="flex-1">
-            <h1 className="text-3xl md:text-4xl font-bold text-center text-blue-700">
+            <h1 className="text-3xl md:text-4xl font-bold text-center text-purplee">
               Talent Hunt Payment
             </h1>
           </div>
@@ -267,7 +267,7 @@ export default function PaymentForm() {
                             type="button"
                             onClick={uploadScreenshot}
                             disabled={isUploading}
-                            className="px-4 py-2 bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg inline-flex items-center gap-2"
+                            className="px-4 py-2 bg-purplee cursor-pointer disabled:bg-blue-300 disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg inline-flex items-center gap-2"
                           >
                             {isUploading ? (
                               <>
@@ -292,7 +292,7 @@ export default function PaymentForm() {
                           </button>
                         </div>
                       ) : (
-                        <span className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded-lg inline-flex items-center gap-2">
+                        <span className="px-4 py-2 bg-purplee text-white text-sm font-medium rounded-lg inline-flex items-center gap-2">
                           Uploaded <CheckCircle2 size={14} />
                         </span>
                       )}
@@ -330,7 +330,7 @@ export default function PaymentForm() {
                       ${
                         !isUploaded
                           ? "bg-blue-300 cursor-not-allowed opacity-50 text-white"
-                          : "bg-blue-600 hover:bg-blue-700 text-white"
+                          : "bg-purplee  text-white"
                       }`}
                   >
                     Continue <ArrowRight size={16} />
@@ -342,7 +342,7 @@ export default function PaymentForm() {
                   <button
                     type="button"
                     onClick={() => setShowTerms(true)}
-                    className="text-blue-600 hover:underline"
+                    className="text-purplee hover:underline"
                   >
                     Terms &amp; Conditions
                   </button>
@@ -452,7 +452,7 @@ export default function PaymentForm() {
             <button
               type="button"
               onClick={handleConfirm}
-              className="w-full py-3.5 px-4 bg-blue-600 hover:bg-blue-700 text-white text-sm sm:text-base font-semibold rounded-xl shadow-md hover:shadow-lg transform transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+              className="w-full py-3.5 px-4 bg-purplee  text-white text-sm sm:text-base font-semibold rounded-xl shadow-md hover:shadow-lg transform transition-all active:scale-[0.98] flex items-center justify-center gap-2"
             >
               Confirm & Continue <ArrowRight size={18} />
             </button>

@@ -95,7 +95,7 @@ export default function VideoPage() {
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-3xl sm:text-4xl font-bold text-blue-700 mb-4 tracking-tight"
+          className="text-3xl sm:text-4xl font-bold text-purplee mb-4 tracking-tight"
         >
           Watch Trial Video
         </motion.h2>
@@ -158,7 +158,7 @@ export default function VideoPage() {
           whileTap={ended ? { scale: 0.95 } : {}}
           className={` inline-flex items-center gap-2 mt-8 px-6 py-3 rounded-lg font-semibold shadow-md transform transition-all duration-300 ease-in-out ${
             ended
-              ? "bg-blue-600 text-white hover:bg-blue-700 hover:shadow-lg active:scale-95 active:bg-blue-800"
+              ? "bg-purplee text-white hover:bg-purplee hover:shadow-lg active:scale-95 active:bg-purplee"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }`}
         >

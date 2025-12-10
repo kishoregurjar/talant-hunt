@@ -131,7 +131,7 @@ const {
                 progress: undefined,
       
                 icon: (
-                  <span className="text-blue-600 text-xl   font-bold">
+                  <span className="text-purplee text-xl   font-bold">
                     <CircleCheckBig />
                   </span>
                 ),
@@ -180,7 +180,7 @@ const {
             transition={{ duration: 0.4, delay: 0.2 }}
             className="text-center mb-8"
           >
-            <h1 className="text-3xl font-bold text-blue-600">
+            <h1 className="text-3xl font-bold text-purplee">
               Cricket Profile
             </h1>
             <motion.p
@@ -342,7 +342,7 @@ const {
                         {...register("experience")}
                         type="number"
                         placeholder="Years of Experience"
-                        className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
+                        className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee outline-none"
                       />
                     </div>
                   </div>
@@ -356,7 +356,7 @@ const {
                       <input
                         {...register("teamName")}
                         placeholder="Team / Club Name"
-                        className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
+                        className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee outline-none"
                       />
                     </div>
                   </div>
@@ -397,7 +397,7 @@ const {
 
                       setStep(2);
                     }}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-purplee  text-white font-medium rounded-lg transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                   >
                     Next <ArrowRight size={16} />
                   </motion.button>
@@ -423,14 +423,14 @@ const {
                     {...register("videoLink")}
 
                     placeholder="Video Link (YouTube / Drive)"
-                    className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
+                    className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee outline-none"
                   />
                   {errors.videoLink && <p className="text-red-500 text-xs mt-1">{errors.videoLink.message}</p>}
                 </div>
 
                 {/* Upload Help Section */}
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 text-center shadow-sm">
-                  <h3 className="text-lg font-semibold text-blue-700 mb-2">
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 text-center shadow-sm">
+                  <h3 className="text-lg font-semibold text-purplee mb-2">
                     How to Upload Your Cricket Video
                   </h3>
                   <p className="text-sm text-gray-600 mb-4">
@@ -443,7 +443,7 @@ const {
                     }
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium shadow-md hover:bg-blue-700 transition duration-200"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-purplee text-white rounded-lg font-medium shadow-md  transition duration-200"
                   >
                      Watch Tutorial
                   </motion.button>
@@ -474,9 +474,9 @@ const {
                   </motion.button>
                   <motion.button
                     type="submit"
-                    whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(59, 130, 246, 0.3)" }}
+                    whileHover={{ scale: 1.05,  }}
                     whileTap={{ scale: 0.95 }}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition focus:ring-2 focus:ring-blue-500"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-purplee text-white font-medium rounded-lg transition focus:ring-2 "
                   >
                     Submit Profile <ArrowRight size={16} />
                   </motion.button>
