@@ -79,7 +79,7 @@ export default function NotFound() {
           </button>
 
           <button
-            onClick={() => router.push("/")}
+            onClick={() => router.push("https://indorecricketclub.com/")}
             className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-lg font-semibold shadow-md hover:bg-blue-700 hover:shadow-lg active:scale-95 transition"
           >
             <Home size={16} />

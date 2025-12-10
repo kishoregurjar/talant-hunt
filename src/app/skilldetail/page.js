@@ -137,7 +137,7 @@ const {
                 ),
               });
       reset();
-      router.push("/");
+      router.push("https://indorecricketclub.com/");
     } else {
       toast.error(" Failed to submit form. Please try again." , {
                 autoClose: 3000,
@@ -439,10 +439,7 @@ const {
                   <motion.button
                     type="button"
                     onClick={() =>
-                      window.open(
-                        "https://www.youtube.com/results?search_query=how+to+upload+video+on+youtube",
-                        "_blank"
-                      )
+                     window.open(process.env.NEXT_PUBLIC_YT_SEARCH_URL, "_blank")
                     }
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
