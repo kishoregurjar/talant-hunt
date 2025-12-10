@@ -132,7 +132,7 @@ export default function QuizPage() {
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.2 }}
-          className="text-3xl font-bold text-center text-blue-700 mb-8"
+          className="text-3xl font-bold text-center text-purplee mb-8"
         >
           Cricket Knowledge Quiz
         </motion.h2>
@@ -202,7 +202,7 @@ export default function QuizPage() {
             className={`mt-8 w-full py-3 rounded-lg font-semibold text-white shadow-md transition-all ${
               Object.keys(selected).length < questions.length
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700"
+                : "bg-purplee hover:bg-purplee"
             }`}
           >
             Submit Answers
@@ -219,7 +219,7 @@ export default function QuizPage() {
             </h3>
             <p className="text-gray-700 mb-6 text-lg">
               You scored{" "}
-              <span className="font-bold text-blue-600">{StudentScore}</span>{" "}
+              <span className="font-bold text-purplee">{StudentScore}</span>{" "}
               out of <span className="font-bold">5</span>
             </p>
             <motion.button
@@ -229,7 +229,7 @@ export default function QuizPage() {
                 boxShadow: "0 10px 25px rgba(59, 130, 246, 0.3)",
               }}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-purplee  text-white font-medium rounded-lg transition focus:outline-none "
             >
               {quizCompleted ? (
                 <>
