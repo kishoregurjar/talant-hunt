@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
-   images: {
-    domains: ["images.unsplash.com"], // ✅ allow unsplash images
+  images:{
+    unoptimized: true
   },
-  swcMinify: false,
-
+  experimental: {
+    swcWorker:1
+  }
 };
 
 export default nextConfig;
