@@ -9,7 +9,8 @@ id: null,
   quizAttemptId: null,
   quizCompleted: false,
   StudentScore : 0,
-  ScreenShot : null
+  ScreenShot : null,
+  PaymentProcess :false
   // talentForm: {}
 };
 
@@ -48,6 +49,10 @@ const playerSlice = createSlice({
       state.ScreenShot = action.payload;
     },
 
+     PaymentProcess: (state, action) => {
+      state.PaymentProcess =  action.payload;
+    },
+
     resetAll: (state) => {
       return initialState;
     },
@@ -70,17 +75,20 @@ const playerSlice = createSlice({
     },
 
     rehydrateState: (state, action) => {
-      const { id, formData, formFilled, videoWatched, quizCompleted, } = action.payload;
+      const { id, formData, formFilled, videoWatched, quizCompleted, ScreenShot,PaymentProcess} = action.payload;
       state.id = id || state.id;
       state.formData = formData || state.formData;
       state.formFilled = formFilled !== undefined ? formFilled : state.formFilled;
       state.videoWatched = videoWatched !== undefined ? videoWatched : state.videoWatched;
       state.quizCompleted = quizCompleted !== undefined ? quizCompleted : state.quizCompleted;
+      state.ScreenShot = ScreenShot !== undefined ? ScreenShot : state.ScreenShot;
+      state.PaymentProcess = PaymentProcess !== undefined ? PaymentProcess : state.PaymentProcess;
+
       // state.talentForm = talentForm || state.talentForm;
     }
   },
 });
 
-export const { ScreenShot,  saveStudentScore , saveFormData, markVideoWatched, quizAttemptId, markQuizCompleted, resetAll, restoreFormData, updateFormData ,saveUserID, talentForm, rehydrateState} =
+export const { ScreenShot,  saveStudentScore , saveFormData, markVideoWatched, quizAttemptId, markQuizCompleted, resetAll, restoreFormData, updateFormData ,saveUserID, talentForm, rehydrateState , PaymentProcess} =
   playerSlice.actions;
 export default playerSlice.reducer;

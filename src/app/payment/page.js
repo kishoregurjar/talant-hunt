@@ -357,9 +357,10 @@ export default function PaymentForm() {
       <TermsModal open={showTerms} onClose={() => setShowTerms(false)} />
       
       {/* Shadcn Confirmation Dialog */}
-      <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+      <Dialog  open={showConfirmation} onOpenChange={setShowConfirmation}>
         <DialogContent 
-          className="sm:max-w-md max-h-[90vh] overflow-y-auto"
+          // className="sm:max-w-md max-h-[90vh] overflow-y-auto"
+            className="sm:max-w-md max-h-[90vh] overflow-y-auto no-scrollbar"
           onWheel={(e) => e.stopPropagation()}
         >
           <DialogHeader>

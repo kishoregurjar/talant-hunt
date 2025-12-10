@@ -1,5 +1,4 @@
 "use client";
-
 import { nanoid } from "nanoid";
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -20,7 +19,7 @@ import {
   Target,
   Trophy,
   Video,
-  
+  CircleCheckBig,
   CheckSquare,
   ArrowRight,
   ArrowLeft,
@@ -30,8 +29,8 @@ import {
 const TalentFormPage = () => {
 const dispatch = useDispatch();
 const router = useRouter();
-const pathname = usePathname();
-const { formFilled, id } = useSelector((s) => s.playerReducer);
+const { formFilled, id, videoWatched, quizCompleted, PaymentProcess } = useSelector((s) => s.playerReducer);
+  const [loading, setLoading] = useState(true);
 
 const {
     register,
@@ -46,29 +45,42 @@ const {
     mode: "onChange",
   });
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+      if (formFilled === false) {
+        router.push("/talenthunt");
+      } else if (formFilled === true && videoWatched === false) {
+        router.push("/video");
+      } else if (
+        formFilled === true &&
+        videoWatched === true &&
+        quizCompleted == false
+      ) {
+        router.push("/quiz");
+      }else if (formFilled === true &&
+        videoWatched === true &&
+        quizCompleted == true && PaymentProcess === false) {
+        router.push("/payment");
+      }
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [formFilled, videoWatched, quizCompleted, PaymentProcess, router]);
+
+
   const [step, setStep] = useState(1);
 
-  // useEffect(() => {
-  //   if (!formFilled) router.push("/talenthunt");
-  // }, [formFilled, router]);
-
-  // Add effect to handle browser back button/navigation
+  
   useEffect(() => {
-    // Push a new state to the history to prevent back button
     window.history.pushState(null, '', window.location.href);
     
     const handlePopState = (e) => {
-      // Push a new state again to prevent back button
       window.history.pushState(null, '', window.location.href);
-      // Completely prevent navigation without asking
     };
     
     const handleBeforeUnload = (e) => {
-      // Cancel the event to prevent the browser from navigating away
       e.preventDefault();
-      // Chrome requires returnValue to be set
       e.returnValue = '';
-      // Return a string for browsers that still support it
       return 'Navigation is disabled while filling out this form.';
     };
 
@@ -88,7 +100,20 @@ const {
     const studentId = localStorage.getItem("userId") || id;
     
     if (!studentId) {
-      toast.error("❌ User ID not found. Please complete the registration first.");
+      toast.error("❌ User ID not found. Please complete the registration first.", {
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+      
+                icon: (
+                  <span className="text-red-500 text-xl   font-bold">
+                    <ShieldX />
+                  </span>
+                ),
+              });
       router.push("/talenthunt");
       return;
     }
@@ -97,11 +122,37 @@ const {
     const success = await dispatch(asyncTalentForm(studentId, data));
 
     if (success) {
-      toast.success(" Form Submitted Successfully!");
+      toast.success(" Form Submitted Successfully!", {
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+      
+                icon: (
+                  <span className="text-blue-600 text-xl   font-bold">
+                    <CircleCheckBig />
+                  </span>
+                ),
+              });
       reset();
       router.push("/");
     } else {
-      toast.error(" Failed to submit form. Please try again.");
+      toast.error(" Failed to submit form. Please try again." , {
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+      
+                icon: (
+                  <span className="text-red-500 text-xl   font-bold">
+                    <ShieldX />
+                  </span>
+                ),
+              });
     }
   };
 

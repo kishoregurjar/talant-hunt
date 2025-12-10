@@ -17,6 +17,7 @@ import {
   Calendar,
   VenusAndMars,
   Home,
+  ShieldX,
   ArrowRight,
   Navigation,
   ChevronDown,
@@ -117,7 +118,7 @@ export default function talenthunt() {
       console.log("Result:", result);
       if (result) {
         toast.success("Personal information saved successfully!", {
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: false,
