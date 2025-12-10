@@ -162,7 +162,8 @@ export default function talenthunt() {
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.2 }}
-          className="text-3xl md:text-4xl font-bold mb-8 text-center text-blue-700 "
+          // className="text-3xl md:text-4xl font-bold mb-8 text-center text-blue-700 "
+          className="text-3xl md:text-4xl font-bold mb-8 text-center text-[#352E74] "
         >
           Player Registration Form
         </motion.h1>
@@ -182,7 +183,7 @@ export default function talenthunt() {
                 {...register("name")}
                 type="text"
                 placeholder="Virat Kohli"
-                className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee outline-none"
               />
             </div>
             {errors.name && (
@@ -200,7 +201,7 @@ export default function talenthunt() {
               <input
                 {...register("email")}
                 placeholder="virat.kohli18@example.com"
-                className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee  outline-none"
               />
             </div>
             {errors.email && (
@@ -222,7 +223,7 @@ export default function talenthunt() {
                 {...register("phone")}
                 type="number"
                 placeholder="9876543210"
-                className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee  outline-none"
               />
             </div>
             {errors.phone && (
@@ -276,13 +277,13 @@ export default function talenthunt() {
                   placeholder="Day"
                   min="1"
                   max="31"
-                  className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee outline-none"
                 />
               </div>
               <div>
                 <select
                   {...register("dob.month")}
-                  className="w-full pl-3 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full pl-3 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee outline-none"
                 >
                   <option value="">Month</option>
                   {[
@@ -316,7 +317,7 @@ export default function talenthunt() {
                   placeholder="Year"
                   min="1900"
                   max={new Date().getFullYear()}
-                  className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee outline-none"
                 />
               </div>
             </div>
@@ -340,7 +341,7 @@ export default function talenthunt() {
               <input
                 {...register("address.address")}
                 placeholder="House no., street, locality"
-                className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee outline-none"
               />
             </div>
             {errors.address?.address && (
@@ -360,7 +361,7 @@ export default function talenthunt() {
               <input
                 {...register("address.city")}
                 placeholder="City"
-                className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee outline-none"
               />
               {errors.address?.city && (
                 <p className="text-red-500 text-sm">
@@ -411,7 +412,7 @@ export default function talenthunt() {
               <input
                 {...register("address.zip")}
                 placeholder="Zip code"
-                className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee outline-none"
               />
               {errors.address?.zip && (
                 <p className="text-red-500 text-sm">
@@ -445,7 +446,7 @@ export default function talenthunt() {
                 {...register("terms", {
                   required: "You must agree to the Terms & Conditions",
                 })}
-                className="mt-1 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="mt-1 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-purplee"
               />
               <label className="ml-2 text-sm text-gray-700">
                 I have read and agree to the Terms & Conditions.
@@ -468,11 +469,11 @@ export default function talenthunt() {
             <motion.button
               type="submit"
               disabled={submitting}
-              className={`inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold shadow-md active:scale-95 transition-transform duration-200 ease-in-out
+              className={`inline-flex items-center gap-2 px-6 py-3 bg-purplee cursor-pointer text-white rounded-lg font-semibold shadow-md active:scale-95 transition-transform duration-200 ease-in-out
                 ${
                   submitting
-                    ? "opacity-60 cursor-not-allowed hover:bg-blue-600"
-                    : "hover:bg-blue-700 hover:shadow-lg active:scale-95"
+                    ? "opacity-60 cursor-not-allowed "
+                    : " hover:shadow-lg active:scale-95"
                 }`}
             >
               {submitting ? (
