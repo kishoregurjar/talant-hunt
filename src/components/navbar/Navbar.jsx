@@ -39,13 +39,12 @@ export default function Navbar() {
         <div className="hidden xl:flex justify-center items-center gap-8 text-black whitespace-nowrap ">
           <Link
             href="https://indorecricketclub.com/"
-            className="hover:text-blue-200   "
+            className="hover:text-gray-700 font-bold  "
           >
             Home
           </Link>
-
+{/* 
           <div className="relative group">
-            {/* FIXED: About Us + Arrow same flex container */}
             <div className="flex items-center gap-1 cursor-pointer">
               <Link href="https://indorecricketclub.com/about/">About Us</Link>
 
@@ -78,21 +77,36 @@ export default function Navbar() {
                 Achievements
               </Link>
             </div>
-          </div>
+          </div> */}
 
-          <Link href="https://indorecricketclub.com/services/">
+           <Link href="https://indorecricketclub.com/about/"
+        className="hover:text-gray-700 font-bold  "
+           >
+            About Us
+          </Link>
+
+          <Link href="https://indorecricketclub.com/services/"
+           className="hover:text-gray-700 font-bold  ">
             Ground for Hire
           </Link>
-          <Link href="https://indorecricketclub.com/summer-camp/">
+
+
+
+          <Link href="https://indorecricketclub.com/events/"  className="hover:text-gray-700 font-bold  "
+          >Events and News</Link>
+          <Link href="https://indorecricketclub.com/summer-camp/"  className="hover:text-gray-700 font-bold  "
+           >
             Summer Camp
           </Link>
-          <Link href="https://indorecricketclub.com/course-fee/">
+
+
+          <Link href="https://indorecricketclub.com/course-fee/"  className="hover:text-gray-700 font-bold  ">
             Course & Fee
           </Link>
-          <Link href="https://indorecricketclub.com/projects/">Gallery</Link>
-          <Link href="https://indorecricketclub.com/events/">Events</Link>
-          <Link href="https://indorecricketclub.com/contact/">Contact Us</Link>
-          <Link href="/talenthunt">Talent Hunt</Link>
+          <Link href="https://indorecricketclub.com/projects/"  className="hover:text-gray-700 font-bold  ">Gallery</Link>
+          
+          <Link href="https://indorecricketclub.com/contact/"  className="hover:text-gray-700 font-bold  ">Contact Us</Link>
+          <Link href="/talenthunt"  className="hover:text-gray-700 font-bold  ">Talent Hunt</Link>
         </div>
 
         <button
@@ -117,7 +131,60 @@ export default function Navbar() {
               Home
             </Link>
             <Link href="https://indorecricketclub.com/about/">About Us</Link>
-            <Link href="https://indorecricketclub.com/the-icc-academy/">
+              <Link
+              href="https://indorecricketclub.com/contact/"
+              onClick={() => setIsOpen(false)}
+            >
+              Contact Us
+            </Link>
+            <Link
+              href="https://indorecricketclub.com/course-fee/"
+              onClick={() => setIsOpen(false)}
+            >
+              Course & Fee
+            </Link>
+           
+             <Link
+              href="https://indorecricketclub.com/events/"
+              onClick={() => setIsOpen(false)}
+            >
+              Events
+            </Link>
+
+             <Link
+              href="https://indorecricketclub.com/projects/"
+              onClick={() => setIsOpen(false)}
+            >
+              Gallery
+            </Link>
+
+             <Link
+              href="https://indorecricketclub.com/projects/"
+              onClick={() => setIsOpen(false)}
+            >
+              Ground for Hire
+            </Link>
+
+
+            <Link
+              href="https://indorecricketclub.com/summer-camp/"
+              onClick={() => setIsOpen(false)}
+            >
+              Summer Camp
+            </Link>
+<Link href="/talenthunt" onClick={() => setIsOpen(false)}>
+              Talent Hunt
+            </Link>
+             <Link
+              href="https://indorecricketclub.com/terms-and-policy/"
+              onClick={() => setIsOpen(false)}
+            >
+             Terms and Policy
+            </Link>
+
+
+
+            {/* <Link href="https://indorecricketclub.com/the-icc-academy/">
               The ICC Academy
             </Link>
             <Link href="https://indorecricketclub.com/coches/">Coaches</Link>
@@ -126,48 +193,14 @@ export default function Navbar() {
             </Link>
             <Link href="https://indorecricketclub.com/acheivments/">
               Achievements
-            </Link>
+            </Link> */}
 
-            <Link
-              href="https://indorecricketclub.com/projects/"
-              onClick={() => setIsOpen(false)}
-            >
-              Ground for Hire
-            </Link>
-            <Link
-              href="https://indorecricketclub.com/summer-camp/"
-              onClick={() => setIsOpen(false)}
-            >
-              Summer Camp
-            </Link>
-            <Link
-              href="https://indorecricketclub.com/course-fee/"
-              onClick={() => setIsOpen(false)}
-            >
-              Course & Fee
-            </Link>
-            <Link
-              href="https://indorecricketclub.com/projects/"
-              onClick={() => setIsOpen(false)}
-            >
-              Gallery
-            </Link>
-            <Link
-              href="https://indorecricketclub.com/events/"
-              onClick={() => setIsOpen(false)}
-            >
-              Events
-            </Link>
-            <Link
-              href="https://indorecricketclub.com/contact/"
-              onClick={() => setIsOpen(false)}
-            >
-              Contact Us
-            </Link>
+           
+            
+           
+          
 
-            <Link href="/talenthunt" onClick={() => setIsOpen(false)}>
-              Talent Hunt
-            </Link>
+            
           </div>
         </div>
       )}
