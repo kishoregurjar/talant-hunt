@@ -132,7 +132,10 @@ export default function talenthunt() {
         });
 
         setLoading(false);
-        router.push("/video");
+        router.push("/video");  
+
+
+        
       }
     } catch (err) {
       console.error("Save failed:", err);

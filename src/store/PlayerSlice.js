@@ -51,6 +51,7 @@ const playerSlice = createSlice({
 
      PaymentProcess: (state, action) => {
       state.ScreenShot =  action.payload;
+      
     },
 
     resetAll: (state) => {
