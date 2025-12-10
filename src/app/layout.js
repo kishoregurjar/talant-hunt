@@ -5,7 +5,7 @@ import ScrollToTop from "../components/ScrollToTop";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export const metadata = {
-  title: "Cricket Club",
+  title: "Talent Hunt",
   description: "Official Cricket Club website built with Next.js",
 };
 

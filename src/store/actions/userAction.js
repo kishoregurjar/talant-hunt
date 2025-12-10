@@ -2,6 +2,10 @@ import { nanoid } from "@reduxjs/toolkit";
 import { ScreenShot, talentForm  ,PaymentProcess} from "../PlayerSlice.js";
 import axios from "../utils/axiosConfig";
 import {
+  ShieldX,
+} from "lucide-react";
+import { toast } from "react-toastify";
+import {
   saveFormData,
   markVideoWatched,
   markQuizCompleted,
@@ -24,9 +28,28 @@ export const asyncUserPersonalInfo = (user) => async (dispatch, getState) => {
       const status = error.response.status;
 
       if (status === 400) {
-        alert(
-          " This user already exists. Please try with a different email or phone number."
-        );
+
+
+toast.error("This user already exists. Please try with a different email or phone number.",  {
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+
+          icon: (
+            <span className="text-red-500 text-xl   font-bold">
+              <ShieldX />
+            </span>
+          ),
+        });
+
+
+        // alert(
+        //   " This user already exists. Please try with a different email or phone number."
+        // );
+        
       } else {
         console.log(
           `Error ${status}: ${
@@ -141,7 +164,7 @@ export const asynsPaymentContinue =
       });
 
       console.log("✅ Payment Continue response:", data);
-      dispatch(PaymentProcess(true));
+      dispatch(PaymentProcess(data.data.payment));
     } catch (error) {
       console.error("❌ Error while Payment Continue:", error);
     }
@@ -205,6 +228,7 @@ export const rehydrateStoreFromBackend = () => async (dispatch, getState) => {
             formFilled: userData.formFilled,
             videoWatched: userData.videoWatched,
             quizCompleted: userData.quizCompleted,
+            PaymentProcess: userData.payment,
             ScreenShot: screenShotUrl
           })
         );
