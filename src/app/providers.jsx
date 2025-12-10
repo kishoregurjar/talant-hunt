@@ -4,7 +4,7 @@ import { store } from "../store/store";
 import LenisWrapper from "../components/lenis/leniswrapper";
 import { useEffect, useState } from "react";
 import { rehydrateStoreFromBackend } from "../store/actions/userAction";
-
+import Loader from "../components/loader/Loader";
 
 
 export default function Providers({ children }) {
@@ -24,14 +24,20 @@ export default function Providers({ children }) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-5  border-dotted border-[#352E74] mx-auto"></div>
+          <p className="mt-4 text-gray-600 uppercase font-bold">Loading...</p>
         </div>
       </div>
     );
   }
 
-  return (
+
+  //   if (!rehydrated) {
+  //   return <Loader/>
+    
+  // }
+
+  return (  
     <Provider store={store}>
       <LenisWrapper>{children}</LenisWrapper>
     </Provider>
