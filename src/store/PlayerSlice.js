@@ -50,7 +50,7 @@ const playerSlice = createSlice({
     },
 
      PaymentProcess: (state, action) => {
-      state.ScreenShot =  action.payload;
+      state.PaymentProcess =  action.payload;
     },
 
     resetAll: (state) => {
@@ -75,13 +75,14 @@ const playerSlice = createSlice({
     },
 
     rehydrateState: (state, action) => {
-      const { id, formData, formFilled, videoWatched, quizCompleted, ScreenShot} = action.payload;
+      const { id, formData, formFilled, videoWatched, quizCompleted, ScreenShot,PaymentProcess} = action.payload;
       state.id = id || state.id;
       state.formData = formData || state.formData;
       state.formFilled = formFilled !== undefined ? formFilled : state.formFilled;
       state.videoWatched = videoWatched !== undefined ? videoWatched : state.videoWatched;
       state.quizCompleted = quizCompleted !== undefined ? quizCompleted : state.quizCompleted;
       state.ScreenShot = ScreenShot !== undefined ? ScreenShot : state.ScreenShot;
+      state.PaymentProcess = PaymentProcess !== undefined ? PaymentProcess : state.PaymentProcess;
 
       // state.talentForm = talentForm || state.talentForm;
     }

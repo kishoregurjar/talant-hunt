@@ -19,6 +19,7 @@ import {
   Target,
   Trophy,
   Video,
+  CircleCheckBig,
   CheckSquare,
   ArrowRight,
   ArrowLeft,
@@ -28,8 +29,8 @@ import {
 const TalentFormPage = () => {
 const dispatch = useDispatch();
 const router = useRouter();
-const pathname = usePathname();
 const { formFilled, id, videoWatched, quizCompleted, PaymentProcess } = useSelector((s) => s.playerReducer);
+  const [loading, setLoading] = useState(true);
 
 const {
     register,
@@ -59,12 +60,12 @@ const {
         router.push("/quiz");
       }else if (formFilled === true &&
         videoWatched === true &&
-        quizCompleted == true && PaymentProcess=== false) {
+        quizCompleted == true && PaymentProcess === false) {
         router.push("/payment");
       }
     }, 100);
     return () => clearTimeout(timer);
-  }, [formFilled, videoWatched, quizCompleted, router]);
+  }, [formFilled, videoWatched, quizCompleted, PaymentProcess, router]);
 
 
   const [step, setStep] = useState(1);
@@ -99,7 +100,20 @@ const {
     const studentId = localStorage.getItem("userId") || id;
     
     if (!studentId) {
-      toast.error("❌ User ID not found. Please complete the registration first.");
+      toast.error("❌ User ID not found. Please complete the registration first.", {
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+      
+                icon: (
+                  <span className="text-red-500 text-xl   font-bold">
+                    <ShieldX />
+                  </span>
+                ),
+              });
       router.push("/talenthunt");
       return;
     }
@@ -108,11 +122,37 @@ const {
     const success = await dispatch(asyncTalentForm(studentId, data));
 
     if (success) {
-      toast.success(" Form Submitted Successfully!");
+      toast.success(" Form Submitted Successfully!", {
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+      
+                icon: (
+                  <span className="text-blue-600 text-xl   font-bold">
+                    <CircleCheckBig />
+                  </span>
+                ),
+              });
       reset();
       router.push("/");
     } else {
-      toast.error(" Failed to submit form. Please try again.");
+      toast.error(" Failed to submit form. Please try again." , {
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+      
+                icon: (
+                  <span className="text-red-500 text-xl   font-bold">
+                    <ShieldX />
+                  </span>
+                ),
+              });
     }
   };
 

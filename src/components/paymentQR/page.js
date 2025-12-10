@@ -1,4 +1,4 @@
-
+'use client';
 import { QRCodeCanvas } from "qrcode.react";
 
 /* ---------- 1. QR GENERATE COMPONENT  ---------- */
