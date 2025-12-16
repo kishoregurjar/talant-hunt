@@ -85,7 +85,7 @@ export default function CustomSelect({
       )}
 
       {/* Error Message */}
-      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+      {error && <p className="text-red-500 md:text-center text-xs mt-1">{error}</p>}
     </div>
   );
 }
