@@ -11,6 +11,7 @@ import {
   Download,
   Loader2,
   CheckCircle2,
+FileCheck 
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import {
@@ -50,15 +51,9 @@ export default function PaymentForm() {
   const [isUploaded, setIsUploaded] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  
-  const {
-    formFilled,
-    videoWatched,
-    id,
-    quizCompleted,
-    ScreenShot,
-    formData,
-  } = useSelector((s) => s.playerReducer);
+
+  const { formFilled, videoWatched, id, quizCompleted, ScreenShot, formData } =
+    useSelector((s) => s.playerReducer);
 
   const upiID = "indorecricketclub61537@sbi";
   const amount = "150";
@@ -147,10 +142,10 @@ export default function PaymentForm() {
   };
 
   const getFormattedDate = () => {
-    return new Date().toLocaleDateString('en-IN', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric'
+    return new Date().toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
     });
   };
 
@@ -194,7 +189,7 @@ export default function PaymentForm() {
                     >
                       <Copy className="text-gray-400" size={18} />
                       {copied && (
-                        <span className="absolute -top-6 right-0 bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-md shadow-md animate-fade">
+                        <span className="absolute -top-6 right-0 bg-purplee text-white text-[10px] px-2 py-0.5 rounded-md shadow-md animate-fade">
                           Copied!
                         </span>
                       )}
@@ -207,11 +202,14 @@ export default function PaymentForm() {
                       onClick={handleDownloadQR}
                       className="w-full flex justify-center items-center gap-1 px-3 py-2 bg-white border border-gray-200 rounded-md text-sm font-medium hover:bg-gray-50"
                     >
-                      <Download className="text-gray-400" size={18} /> Download QR
+                      <Download className="text-gray-400" size={18} /> Download
+                      QR
                     </button>
 
                     <div className="w-full rounded-lg bg-green-50 border border-green-200 py-3 text-center">
-                      <div className="text-xs text-gray-600">Payment Amount</div>
+                      <div className="text-xs text-gray-600">
+                        Payment Amount
+                      </div>
                       <div className="text-xl font-semibold text-green-600">
                         ₹{amount}
                       </div>
@@ -229,7 +227,8 @@ export default function PaymentForm() {
             <div className="rounded-lg border border-gray-200 p-4 flex flex-col h-full">
               <div>
                 <h3 className="text-sm font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                  <Upload className="text-gray-400" size={18} /> Upload Payment Proof
+                  <Upload className="text-gray-400" size={18} /> Upload Payment
+                  Proof
                 </h3>
 
                 <input
@@ -243,14 +242,24 @@ export default function PaymentForm() {
 
                 <div className="border border-gray-300 rounded-xl p-6 text-center cursor-pointer hover:bg-blue-50/40 transition">
                   <div
-                    className={`text-sm mb-3 border-gray-300 border-2 px-2 py-3 rounded-lg active:scale-98 ${
+                    className={`text-sm mb-3 flex items-center justify-center border-gray-300 border-2 px-2 py-3 rounded-lg active:scale-98 ${
                       isUploaded
                         ? "text-green-700 bg-green-50 border-green-200 cursor-default"
-                        : "text-black border-dashed hover:border-blue-400 cursor-pointer"
+                        : "text-black border-dashed hover:border-purplee cursor-pointer"
                     }`}
                     onClick={!isUploaded ? openFileDialog : undefined}
                   >
-                    {isUploaded ? "✅ Screenshot uploaded" : "Click to upload"}
+                    {isUploaded ? (
+                      <span className="flex items-center text-center gap-2">
+                        <FileCheck
+                          size={22}                                      
+                          className="text-green-600"
+                        />
+                        Screenshot uploaded
+                      </span>
+                    ) : (
+                      "Click to upload"
+                    )}
                   </div>
 
                   {proofFile ? (
@@ -267,7 +276,7 @@ export default function PaymentForm() {
                             type="button"
                             onClick={uploadScreenshot}
                             disabled={isUploading}
-                            className="px-4 py-2 bg-purplee cursor-pointer disabled:bg-blue-300 disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg inline-flex items-center gap-2"
+                            className="px-4 py-2 bg-purplee cursor-pointer disabled:bg-purplee disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg inline-flex items-center gap-2"
                           >
                             {isUploading ? (
                               <>
@@ -299,12 +308,14 @@ export default function PaymentForm() {
                     </div>
                   ) : isUploaded ? (
                     <p className="text-xs text-gray-500 mt-3">
-                      Your payment screenshot has been uploaded successfully earlier. 
-                      You can directly continue without uploading again.
+                      Your payment screenshot has been uploaded successfully
+                      earlier. You can directly continue without uploading
+                      again.
                     </p>
                   ) : (
                     <p className="text-xs text-gray-500 mt-3">
-                      Upload screenshot of your UPI transaction (PNG/JPG/WebP, max 3MB)
+                      Upload screenshot of your UPI transaction (PNG/JPG/WebP,
+                      max 3MB)
                     </p>
                   )}
                 </div>
@@ -322,14 +333,14 @@ export default function PaymentForm() {
 
                   {/* FIXED: type="button" prevents form blocking */}
                   <button
-                    type="button" 
+                    type="button"
                     onClick={PaymentContinueHandler}
                     disabled={!isUploaded}
                     className={`w-full sm:w-2/3 inline-flex items-center justify-center gap-2 px-6 py-3 
                       font-medium rounded-lg text-sm sm:text-base transition-all shadow-sm
                       ${
                         !isUploaded
-                          ? "bg-blue-300 cursor-not-allowed opacity-50 text-white"
+                          ? "bg-purplee cursor-not-allowed opacity-50 text-white"
                           : "bg-purplee  text-white"
                       }`}
                   >
@@ -352,15 +363,15 @@ export default function PaymentForm() {
           </div>
         </form>
       </div>
-      
+
       {/* Terms & Conditions modal */}
       <TermsModal open={showTerms} onClose={() => setShowTerms(false)} />
-      
+
       {/* Shadcn Confirmation Dialog */}
-      <Dialog  open={showConfirmation} onOpenChange={setShowConfirmation}>
-        <DialogContent 
+      <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+        <DialogContent
           // className="sm:max-w-md max-h-[90vh] overflow-y-auto"
-            className="sm:max-w-md max-h-[90vh] overflow-y-auto no-scrollbar"
+          className="sm:max-w-md max-h-[90vh] overflow-y-auto no-scrollbar"
           onWheel={(e) => e.stopPropagation()}
         >
           <DialogHeader>
@@ -377,18 +388,18 @@ export default function PaymentForm() {
             <div className="h-16 w-16 rounded-full bg-green-100 flex items-center justify-center mb-4">
               <CheckCircle2 className="text-green-600 h-8 w-8" />
             </div>
-            
+
             <h3 className="text-xl font-bold text-green-700 mb-4">
               Payment Successful!
             </h3>
-            
+
             {/* Made this text much larger and darker for immediate visibility */}
             <p className="text-lg sm:text-xl font-semibold text-gray-900 leading-snug mb-2">
               Your payment has been processed successfully.
             </p>
-            
+
             <p className="text-sm sm:text-base text-gray-600 font-medium">
-               You will receive a confirmation email shortly.
+              You will receive a confirmation email shortly.
             </p>
           </div>
 
@@ -403,19 +414,19 @@ export default function PaymentForm() {
                 <div className="flex justify-between items-start">
                   <span className="text-gray-500">Name</span>
                   <span className="font-medium text-gray-900 text-right max-w-[60%] break-words">
-                    {formData?.name || 'N/A'}
+                    {formData?.name || "N/A"}
                   </span>
                 </div>
                 <div className="flex justify-between items-start">
                   <span className="text-gray-500">Email</span>
                   <span className="font-medium text-gray-900 text-right max-w-[60%] break-all">
-                    {formData?.email || 'N/A'}
+                    {formData?.email || "N/A"}
                   </span>
                 </div>
                 <div className="flex justify-between items-start">
                   <span className="text-gray-500">Phone</span>
                   <span className="font-medium text-gray-900 text-right">
-                    {formData?.phone || 'N/A'}
+                    {formData?.phone || "N/A"}
                   </span>
                 </div>
               </div>
@@ -427,7 +438,6 @@ export default function PaymentForm() {
                 Payment Details
               </h4>
               <div className="space-y-2 text-sm">
-                
                 <div className="flex justify-between items-start">
                   <span className="text-gray-500">Date</span>
                   <span className="font-medium text-gray-900 text-right">

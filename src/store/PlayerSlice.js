@@ -10,7 +10,9 @@ id: null,
   quizCompleted: false,
   StudentScore : 0,
   ScreenShot : null,
-  PaymentProcess :false
+  PaymentProcess :false,
+  TalentHuntVideo : null,
+
   // talentForm: {}
 };
 
@@ -32,6 +34,13 @@ const playerSlice = createSlice({
     saveUserID: (state, action) => {
       state.id = action.payload;
     },
+
+
+
+      TalentHuntVideo: (state, action) => {
+      state.TalentHuntVideo = action.payload;
+    },
+
 
     quizAttemptId: (state, action) => {
       state.quizAttemptId = action.payload;
@@ -75,7 +84,7 @@ const playerSlice = createSlice({
     },
 
     rehydrateState: (state, action) => {
-      const { id, formData, formFilled, videoWatched, quizCompleted, ScreenShot,PaymentProcess} = action.payload;
+      const { id, formData, formFilled, videoWatched, quizCompleted, ScreenShot,PaymentProcess, TalentHuntVideo } = action.payload;
       state.id = id || state.id;
       state.formData = formData || state.formData;
       state.formFilled = formFilled !== undefined ? formFilled : state.formFilled;
@@ -83,12 +92,14 @@ const playerSlice = createSlice({
       state.quizCompleted = quizCompleted !== undefined ? quizCompleted : state.quizCompleted;
       state.ScreenShot = ScreenShot !== undefined ? ScreenShot : state.ScreenShot;
       state.PaymentProcess = PaymentProcess !== undefined ? PaymentProcess : state.PaymentProcess;
+      state.TalentHuntVideo = TalentHuntVideo !== undefined ? TalentHuntVideo : state.TalentHuntVideo;
 
       // state.talentForm = talentForm || state.talentForm;
     }
   },
 });
 
-export const { ScreenShot,  saveStudentScore , saveFormData, markVideoWatched, quizAttemptId, markQuizCompleted, resetAll, restoreFormData, updateFormData ,saveUserID, talentForm, rehydrateState , PaymentProcess} =
+  // talentForm: {}
+export const { ScreenShot,  saveStudentScore , saveFormData, markVideoWatched, quizAttemptId, markQuizCompleted, resetAll, restoreFormData, updateFormData ,saveUserID, talentForm, rehydrateState , PaymentProcess , TalentHuntVideo } =
   playerSlice.actions;
 export default playerSlice.reducer;
