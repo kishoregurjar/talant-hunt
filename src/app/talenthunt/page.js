@@ -318,7 +318,7 @@ useEffect(() => {
         placeholder="Month"
                     icon={Calendar}
 
-        error={errors?.dob?.month?.message}
+        // error={errors?.dob?.month?.message}
       />
     )}
   />
@@ -409,6 +409,7 @@ useEffect(() => {
 
               <Controller
                 name="address.state"
+                defaultValue=""
                 control={control}
                 render={({ field }) => (
                   <CustomSelect
@@ -420,7 +421,7 @@ useEffect(() => {
                     onChange={field.onChange}
                     placeholder="Select State"
                     icon={Navigation}
-                    error={errors.address?.state?.message}
+                    // error={errors.address?.state?.message}
                   />
                 )}
               />
