@@ -13,6 +13,7 @@ import { Volume2, VolumeX, ArrowRight } from "lucide-react";
 export default function VideoPage() {
   const dispatch = useDispatch();
   const router = useRouter();
+  const {TalentHuntVideo} = useSelector((state) => state.playerReducer);
   const { formFilled, formData, id, videoWatched } = useSelector(
     (state) => state.playerReducer
   );
@@ -20,6 +21,7 @@ export default function VideoPage() {
   const [loading, setLoading] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef(null);
+  
 
   console.log("Form Filled Status:", formFilled);
 
@@ -34,20 +36,7 @@ export default function VideoPage() {
     return () => clearTimeout(timer);
   }, [formFilled]);
 
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      if (!ended) {
-        e.preventDefault();
-        e.returnValue = "";
-        return "";
-      }
-    };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [ended]);
 
   const onEnded = () => {
     setEnded(true);
@@ -81,14 +70,14 @@ export default function VideoPage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br bg-gray-100 p-4 md:p-6"
+      className="min-h-screen flex flex-col items-center justify-center  bg-gray-100 p-0 md:p-6"
     >
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 0.1 }}
-        className="relative bg-white rounded-2xl p-8 sm:p-10 w-full max-w-4xl text-center 
-        border border-gray-100  mt-30 shadow-xl "
+        className="relative bg-gray-100 md:rounded-2xl px-1 py-5 md:p-8 w-full max-w-4xl text-center 
+        border border-gray-100 mt-0 md:mt-30 md:shadow-xl "
       >
         {/* Title */}
         <motion.h2
@@ -115,11 +104,12 @@ export default function VideoPage() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="relative overflow-hidden rounded-2xl shadow-lg border border-gray-200 bg-gray-50"
+          className="relative overflow-hidden rounded-1xl  border border-gray-200 bg-gray-50"
         >
           <video
             ref={videoRef}
-            src="/video/video.mp4"
+            // src="/video/video.mp4"
+            src={TalentHuntVideo}
             autoPlay
             muted
             playsInline
@@ -156,7 +146,7 @@ export default function VideoPage() {
               : {}
           }
           whileTap={ended ? { scale: 0.95 } : {}}
-          className={` inline-flex items-center gap-2 mt-8 px-6 py-3 rounded-lg font-semibold shadow-md transform transition-all duration-300 ease-in-out ${
+          className={` inline-flex items-center gap-2 mt-8 px-3 py-1.5 md:px-6 md:py-3 rounded-lg font-semibold shadow-md transform transition-all duration-300 ease-in-out ${
             ended
               ? "bg-purplee text-white hover:bg-purplee hover:shadow-lg active:scale-95 active:bg-purplee"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
@@ -179,7 +169,7 @@ export default function VideoPage() {
           transition={{ delay: 0.6 }}
           className="text-xs text-gray-500 mt-6 italic"
         >
-          Powered by <span className="text-blue-600 font-medium">ICC</span> •
+          Powered by <span className="text-purplee font-medium">ICC</span> •
           Learn. Play. Excel.
         </motion.p>
       </motion.div>

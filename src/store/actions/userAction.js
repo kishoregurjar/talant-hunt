@@ -1,5 +1,5 @@
 import { nanoid } from "@reduxjs/toolkit";
-import { ScreenShot, talentForm  ,PaymentProcess} from "../PlayerSlice.js";
+import { ScreenShot, talentForm  ,PaymentProcess , TalentHuntVideo} from "../PlayerSlice.js";
 import axios from "../utils/axiosConfig";
 import {
   ShieldX,
@@ -22,6 +22,11 @@ export const asyncUserPersonalInfo = (user) => async (dispatch, getState) => {
     localStorage.setItem("userId", res.data.data._id);
     dispatch(saveFormData(res.data.data));
     dispatch(saveUserID(res.data.data._id));
+    dispatch(TalentHuntVideo(res.data.data.talentHuntVideo));
+    console.log("TalentHuntVideo stored in Redux:", res.data.data.talentHuntVideo);
+  localStorage.setItem("TalentHuntVideo", res.data.data.talentHuntVideo);
+
+
     return true;
   } catch (error) {
     if (error.response) {
@@ -164,7 +169,9 @@ export const asynsPaymentContinue =
       });
 
       console.log("✅ Payment Continue response:", data);
-      dispatch(PaymentProcess(data.data.payment));
+      // dispatch(PaymentProcess(data.data.payment));
+      dispatch(PaymentProcess(true));
+
     } catch (error) {
       console.error("❌ Error while Payment Continue:", error);
     }
@@ -187,6 +194,7 @@ export const asyncTalentForm = (studentId, cricketDetails) => async (dispatch) =
     const res = await axios.post("/student/add-cricet-details", payload);
     console.log("Cricket details submitted successfully:", res.data);
     dispatch(talentForm(res.data.data));
+    localStorage.setItem("talentFormfilled", JSON.stringify(true));
     return true;
   } catch (error) {
     console.error("Error submitting cricket details:", error);
@@ -203,6 +211,7 @@ export const rehydrateStoreFromBackend = () => async (dispatch, getState) => {
   try {
     const storedUserId = localStorage.getItem("userId");
     const screenShotUrl = localStorage.getItem("screenShotUrl");
+    const TalentHuntVideo = localStorage.getItem("TalentHuntVideo");
  
 
     if (storedUserId) {
@@ -229,7 +238,8 @@ export const rehydrateStoreFromBackend = () => async (dispatch, getState) => {
             videoWatched: userData.videoWatched,
             quizCompleted: userData.quizCompleted,
             PaymentProcess: userData.payment,
-            ScreenShot: screenShotUrl
+            ScreenShot: screenShotUrl,
+            TalentHuntVideo: TalentHuntVideo
           })
         );
 

@@ -57,17 +57,7 @@ export default function QuizPage() {
     fetchQuestions();
   }, [formFilled, videoWatched, dispatch, id]);
 
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      if (Object.keys(selected).length > 0 && !submitted) {
-        e.preventDefault();
-        e.returnValue = "";
-        return "";
-      }
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, [selected, submitted]);
+ ;
 
   const handleOptionChange = (index, selectedOption) => {
     if (submitted) return;
@@ -158,7 +148,7 @@ export default function QuizPage() {
                       className={`p-3 text-sm rounded-lg cursor-pointer border transition-all 
         ${
           selected[i] === opt
-            ? "bg-blue-50 border-blue-600 text-blue-700 font-medium" // selected state
+            ? "bg-blue-50 border-purplee text-purplee font-medium" // selected state
             : "bg-white border-gray-300 hover:border-blue-400 hover:bg-gray-100"
         }`}
                     >
@@ -168,7 +158,7 @@ export default function QuizPage() {
                         checked={selected[i] === opt}
                         onChange={() => handleOptionChange(i, opt)}
                         disabled={submitted} // disables input after submit
-                        className="mr-2 accent-blue-600"
+                        className="mr-2 accent-purplee"
                       />
                       {opt}
                     </label>
@@ -190,10 +180,10 @@ export default function QuizPage() {
         {questions && questions.length > 0 && !submitted ? (
           <motion.button
             onClick={handleSubmit}
-            // disabled={Object.keys(selected).length < questions.length}
+            disabled={Object.keys(selected).length < questions.length}
             whileHover={{
               scale: 1.05,
-              boxShadow: "0 10px 25px rgba(59, 130, 246, 0.3)",
+           
             }}
             whileTap={{ scale: 0.95 }}
             initial={{ opacity: 0, y: 20 }}
@@ -226,7 +216,7 @@ export default function QuizPage() {
               onClick={() => router.push("/payment")}
               whileHover={{
                 scale: 1.05,
-                boxShadow: "0 10px 25px rgba(59, 130, 246, 0.3)",
+                
               }}
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center gap-2 px-6 py-3 bg-purplee  text-white font-medium rounded-lg transition focus:outline-none "

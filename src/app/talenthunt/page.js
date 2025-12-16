@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { asyncUserPersonalInfo } from "../../store/actions/userAction";
 import { motion } from "framer-motion";
 import CustomSelect from "../../components/CustomSelect";
+import FormSubmittedModal from "../../components/modals/formSubmittedModal";
 
 import {
   Camera,
@@ -34,8 +35,10 @@ export default function talenthunt() {
   const { formData, formFilled, videoWatched, quizCompleted } = useSelector(
     (state) => state.playerReducer
   );
+  const talentFormfilled = localStorage.getItem("talentFormfilled");
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const statesList = State.getStatesOfCountry("IN");
 
   const {
@@ -59,6 +62,21 @@ export default function talenthunt() {
     return () => clearTimeout(timer);
   }, []);
 
+
+
+useEffect(() => {
+  const talentFormfilled = localStorage.getItem("talentFormfilled");
+
+  if (
+    formFilled &&
+    videoWatched &&
+    quizCompleted &&  
+    talentFormfilled
+  ) {
+    setShowModal(true);
+  }
+}, [formFilled, videoWatched, quizCompleted, talentFormfilled]);
+
   useEffect(() => {
     if (formData && Object.keys(formData).length > 0) {
       const formValues = { ...formData };
@@ -71,20 +89,10 @@ export default function talenthunt() {
     }
   }, [formData, reset]);
 
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      const hasData = Object.values(formWatchData).some(
-        (value) => value !== undefined && value !== ""
-      );
-      if (hasData) {
-        e.preventDefault();
-        e.returnValue = "";
-        return "";
-      }
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, [formWatchData]);
+
+
+
+
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -126,7 +134,7 @@ export default function talenthunt() {
           progress: undefined,
 
           icon: (
-            <span className="text-blue-600 text-xl   font-bold">
+            <span className="text-purplee text-xl   font-bold">
               <CircleCheckBig />
             </span>
           ),
@@ -265,7 +273,7 @@ export default function talenthunt() {
             <label className="block mb-1 text-m font-medium text-gray-700">
               Date of Birth
             </label>
-            <div className="grid grid-cols-4 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-3  gap-3">
               <div className="relative col-span-1">
                 <Calendar
                   className="absolute left-3 top-3 text-gray-400"
@@ -281,33 +289,8 @@ export default function talenthunt() {
                 />
                 
               </div>
-              {/* <div>
-                <select
-                  {...register("dob.month")}
-                  className="w-full pl-3 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee outline-none"
-                >
-                  <option value="">Month</option>
-                  {[
-                    "January",
-                    "February",
-                    "March",
-                    "April",
-                    "May",
-                    "June",
-                    "July",
-                    "August",
-                    "September",
-                    "October",
-                    "November",
-                    "December",
-                  ].map((m) => (
-                    <option key={m} value={m}>
-                      {m}
-                    </option>
-                  ))}
-                </select>
-              </div> */}
-              <div className="col-span-2 md:col-span-1">
+             
+              <div>
  
 
   <Controller
@@ -348,11 +331,11 @@ export default function talenthunt() {
 </div>
 
 
-              <div className=" relative col-span-1">
-                {/* <Calendar
+              <div className=" relative">
+                <Calendar
                   className="absolute left-3 top-3 text-gray-400"
                   size={18}
-                /> */}
+                />
                 <input
                   {...register("dob.year")}
                   type="number"
@@ -363,14 +346,14 @@ export default function talenthunt() {
                 />
               </div>
             </div>
-            {errors.dob && (
+            {/* {errors.dob && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.dob.message ||
                   errors.dob?.day?.message ||
                   errors.dob?.month?.message ||
                   errors.dob?.year?.message}
               </p>
-            )}
+            )} */}
           </div>
 
 
@@ -536,6 +519,12 @@ export default function talenthunt() {
           </motion.div>
         </form>
       </motion.div>
+
+      <FormSubmittedModal
+  open={showModal}
+  onClose={() => setShowModal(false)}
+  onBack={() => router.push("https://indorecricketclub.com/about/")}
+/>
     </motion.main>
   );
 }

@@ -10,6 +10,7 @@ import { skillInfoValidator } from "../../components/validation/skillInfoValidat
 import { motion, AnimatePresence } from "framer-motion";
 import CustomSelect from "../../components/CustomSelect";
 import { toast } from "react-toastify";
+import FormSubmittedModal from "../../components/modals/formSubmittedModal";
 
 import {
   Medal,
@@ -27,12 +28,14 @@ import {
 } from "lucide-react";
 
 const TalentFormPage = () => {
-const dispatch = useDispatch();
-const router = useRouter();
-const { formFilled, id, videoWatched, quizCompleted, PaymentProcess } = useSelector((s) => s.playerReducer);
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const { formFilled, id, videoWatched, quizCompleted, PaymentProcess } =
+    useSelector((s) => s.playerReducer);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
-const {
+  const {
     register,
     handleSubmit,
     formState: { errors },
@@ -58,101 +61,87 @@ const {
         quizCompleted == false
       ) {
         router.push("/quiz");
-      }else if (formFilled === true &&
+      } else if (
+        formFilled === true &&
         videoWatched === true &&
-        quizCompleted == true && PaymentProcess === false) {
+        quizCompleted == true &&
+        PaymentProcess === false
+      ) {
         router.push("/payment");
       }
     }, 100);
     return () => clearTimeout(timer);
   }, [formFilled, videoWatched, quizCompleted, PaymentProcess, router]);
 
-
   const [step, setStep] = useState(1);
 
-  
   useEffect(() => {
-    window.history.pushState(null, '', window.location.href);
-    
-    const handlePopState = (e) => {
-      window.history.pushState(null, '', window.location.href);
-    };
-    
-    const handleBeforeUnload = (e) => {
-      e.preventDefault();
-      e.returnValue = '';
-      return 'Navigation is disabled while filling out this form.';
-    };
+    const talentFormfilled = localStorage.getItem("talentFormfilled");
 
-    // Add event listeners
-    window.addEventListener('popstate', handlePopState);
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    // Cleanup function
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, []);
+    if (formFilled && videoWatched && quizCompleted && talentFormfilled) {
+      setShowModal(true);
+    }
+  }, [formFilled, videoWatched, quizCompleted]);
 
   const Submithandler = async (data) => {
-    // Get the student ID from localStorage or Redux store
     const studentId = localStorage.getItem("userId") || id;
-    
+
     if (!studentId) {
-      toast.error("❌ User ID not found. Please complete the registration first.", {
-                autoClose: 3000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-      
-                icon: (
-                  <span className="text-red-500 text-xl   font-bold">
-                    <ShieldX />
-                  </span>
-                ),
-              });
+      toast.error(
+        "❌ User ID not found. Please complete the registration first.",
+        {
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+
+          icon: (
+            <span className="text-red-500 text-xl   font-bold">
+              <ShieldX />
+            </span>
+          ),
+        }
+      );
       router.push("/talenthunt");
       return;
     }
 
-    // Dispatch the action to submit cricket details
     const success = await dispatch(asyncTalentForm(studentId, data));
 
     if (success) {
       toast.success(" Form Submitted Successfully!", {
-                autoClose: 3000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-      
-                icon: (
-                  <span className="text-purplee text-xl   font-bold">
-                    <CircleCheckBig />
-                  </span>
-                ),
-              });
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+
+        icon: (
+          <span className="text-purplee text-xl   font-bold">
+            <CircleCheckBig />
+          </span>
+        ),
+      });
       reset();
       router.push("https://indorecricketclub.com/");
     } else {
-      toast.error(" Failed to submit form. Please try again." , {
-                autoClose: 3000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-      
-                icon: (
-                  <span className="text-red-500 text-xl   font-bold">
-                    <ShieldX />
-                  </span>
-                ),
-              });
+      toast.error(" Failed to submit form. Please try again.", {
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+
+        icon: (
+          <span className="text-red-500 text-xl   font-bold">
+            <ShieldX />
+          </span>
+        ),
+      });
     }
   };
 
@@ -180,9 +169,7 @@ const {
             transition={{ duration: 0.4, delay: 0.2 }}
             className="text-center mb-8"
           >
-            <h1 className="text-3xl font-bold text-purplee">
-              Cricket Profile
-            </h1>
+            <h1 className="text-3xl font-bold text-purplee">Cricket Profile</h1>
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -204,8 +191,6 @@ const {
                 transition={{ duration: 0.2 }}
                 className="space-y-6"
               >
-
-
                 {/* Role + Batting Style */}
                 <div className="grid md:grid-cols-2 gap-5">
                   {/* Role */}
@@ -222,7 +207,7 @@ const {
                           options={[
                             { value: "Batsman", label: "Batsman" },
                             { value: "Bowler", label: "Bowler" },
-                            { value: "All-Rounder", label: "All-Rounder" },
+                            { value: "All Rounder", label: "All Rounder" },
                             { value: "Wicket Keeper", label: "Wicket Keeper" },
                           ]}
                           value={field.value || ""}
@@ -247,7 +232,10 @@ const {
                       render={({ field }) => (
                         <CustomSelect
                           options={[
-                            { value: "Right-hand Bat", label: "Right-hand Bat" },
+                            {
+                              value: "Right-hand Bat",
+                              label: "Right-hand Bat",
+                            },
                             { value: "Left-hand Bat", label: "Left-hand Bat" },
                           ]}
                           value={field.value || ""}
@@ -268,12 +256,16 @@ const {
                     <label className="block text-gray-700 text-m font-medium mb-1">
                       Bowling Style{" "}
                       {watch("role") === "Wicket Keeper" ? (
-                        <span className="text-gray-400 text-xs">(Disabled)</span>
+                        <span className="text-gray-400 text-xs">
+                          (Disabled)
+                        </span>
                       ) : (
                         <span className="text-red-500 text-xs font-medium"></span>
                       )}
                       {watch("role") === "Batsman" ? (
-                        <span className="text-gray-400 text-xs">(Optional)</span>
+                        <span className="text-gray-400 text-xs">
+                          (Optional)
+                        </span>
                       ) : (
                         <span className="text-red-500 text-xs font-medium"></span>
                       )}
@@ -285,9 +277,15 @@ const {
                       render={({ field }) => (
                         <CustomSelect
                           options={[
-                            { value: "Right Arm Fast", label: "Right Arm Fast" },
+                            {
+                              value: "Right Arm Fast",
+                              label: "Right Arm Fast",
+                            },
                             { value: "Left Arm Fast", label: "Left Arm Fast" },
-                            { value: "Right Arm Spin", label: "Right Arm Spin" },
+                            {
+                              value: "Right Arm Spin",
+                              label: "Right Arm Spin",
+                            },
                             { value: "Left Arm Spin", label: "Left Arm Spin" },
                           ]}
                           value={field.value || ""}
@@ -334,10 +332,14 @@ const {
                 <div className="grid md:grid-cols-2 gap-5">
                   <div>
                     <label className="block text-gray-700 text-m font-medium mb-1">
-                      Experience <span className="text-gray-400 text-xs">(Optional)</span>
+                      Experience{" "}
+                      <span className="text-gray-400 text-xs">(Optional)</span>
                     </label>
                     <div className="relative">
-                      <Clock className="absolute left-3 top-3 text-gray-400" size={18} />
+                      <Clock
+                        className="absolute left-3 top-3 text-gray-400"
+                        size={18}
+                      />
                       <input
                         {...register("experience")}
                         type="number"
@@ -349,10 +351,14 @@ const {
 
                   <div>
                     <label className="block text-gray-700 text-m font-medium mb-1">
-                      Team / Club Name <span className="text-gray-400 text-xs">(Optional)</span>
+                      Team / Club Name{" "}
+                      <span className="text-gray-400 text-xs">(Optional)</span>
                     </label>
                     <div className="relative">
-                      <Users className="absolute left-3 top-3 text-gray-400" size={18} />
+                      <Users
+                        className="absolute left-3 top-3 text-gray-400"
+                        size={18}
+                      />
                       <input
                         {...register("teamName")}
                         placeholder="Team / Club Name"
@@ -371,7 +377,7 @@ const {
                 >
                   <motion.button
                     type="button"
-                    whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(59, 130, 246, 0.3)" }}
+                    whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={async () => {
                       const role = watch("role");
@@ -388,7 +394,8 @@ const {
                         return;
                       }
 
-                      if (role === "Batsman" && !battingStyle) await trigger("battingStyle");
+                      if (role === "Batsman" && !battingStyle)
+                        await trigger("battingStyle");
                       else if (role === "Bowler" || role === "All-Rounder") {
                         if (!battingStyle) await trigger("battingStyle");
                         if (!bowlingStyle) await trigger("bowlingStyle");
@@ -397,7 +404,7 @@ const {
 
                       setStep(2);
                     }}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-purplee  text-white font-medium rounded-lg transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-purplee  text-white font-medium rounded-lg transition focus:outline-none focus:ring-2  focus:ring-offset-2"
                   >
                     Next <ArrowRight size={16} />
                   </motion.button>
@@ -415,17 +422,21 @@ const {
                 transition={{ duration: 0.2 }}
                 className="space-y-6"
               >
-
-
                 <div className="relative">
-                  <Video className="absolute left-3 top-3 text-gray-400" size={18} />
+                  <Video
+                    className="absolute left-3 top-3 text-gray-400"
+                    size={18}
+                  />
                   <input
                     {...register("videoLink")}
-
                     placeholder="Video Link (YouTube / Drive)"
                     className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee outline-none"
                   />
-                  {errors.videoLink && <p className="text-red-500 text-xs mt-1">{errors.videoLink.message}</p>}
+                  {errors.videoLink && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.videoLink.message}
+                    </p>
+                  )}
                 </div>
 
                 {/* Upload Help Section */}
@@ -434,18 +445,22 @@ const {
                     How to Upload Your Cricket Video
                   </h3>
                   <p className="text-sm text-gray-600 mb-4">
-                    Not sure how to upload your cricket video? Watch this quick YouTube guide.
+                    Not sure how to upload your cricket video? Watch this quick
+                    YouTube guide.
                   </p>
                   <motion.button
                     type="button"
                     onClick={() =>
-                     window.open(process.env.NEXT_PUBLIC_YT_SEARCH_URL, "_blank")
+                      window.open(
+                        process.env.NEXT_PUBLIC_YT_SEARCH_URL,
+                        "_blank"
+                      )
                     }
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-purplee text-white rounded-lg font-medium shadow-md  transition duration-200"
                   >
-                     Watch Tutorial
+                    Watch Tutorial
                   </motion.button>
                 </div>
 
@@ -458,7 +473,9 @@ const {
                   </span>
                 </div>
                 {errors.consent && (
-                  <p className="text-red-500 text-xs mt-1">{errors.consent.message}</p>
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.consent.message}
+                  </p>
                 )}
 
                 {/* Buttons */}
@@ -474,7 +491,7 @@ const {
                   </motion.button>
                   <motion.button
                     type="submit"
-                    whileHover={{ scale: 1.05,  }}
+                    whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="inline-flex items-center gap-2 px-6 py-3 bg-purplee text-white font-medium rounded-lg transition focus:ring-2 "
                   >
@@ -486,8 +503,13 @@ const {
           </AnimatePresence>
         </form>
       </motion.div>
-    </motion.main>
 
+      <FormSubmittedModal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+        onBack={() => router.push("https://indorecricketclub.com/about/")}
+      />
+    </motion.main>
   );
 };
 
