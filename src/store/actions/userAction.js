@@ -150,7 +150,7 @@ export const asynsQRScreeenShotUpload = (file) => async (dispatch) => {
     );
 
     dispatch(ScreenShot(data.data.imageUrl));
-  localStorage.setItem("screenShotUrl", JSON.stringify(data.data.imageUrl));
+  // localStorage.setItem("screenShotUrl", JSON.stringify(data.data.imageUrl));
 
     
     console.log("✅ Upload response:", data);
@@ -238,7 +238,7 @@ export const rehydrateStoreFromBackend = () => async (dispatch, getState) => {
             videoWatched: userData.videoWatched,
             quizCompleted: userData.quizCompleted,
             PaymentProcess: userData.payment,
-            ScreenShot: screenShotUrl,
+            // ScreenShot: screenShotUrl,
             TalentHuntVideo: TalentHuntVideo
           })
         );
@@ -249,6 +249,19 @@ export const rehydrateStoreFromBackend = () => async (dispatch, getState) => {
     }
   } catch (error) {
     console.error("Error rehydrating store from backend:", error);
-    return { success: false, error: error.message, rehydrated: true };
+    return { success: false, rehydrated: false };
+  }
+};
+
+
+
+export const asyncGetStudentById = (studentId) => async (dispatch, getState) => {
+  try {
+    const res = await axios.get(`/student/get-talent-hunt-student-by-id?studentId=${studentId}`);
+    console.log("Student data:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching student:", error);
+    return null;
   }
 };

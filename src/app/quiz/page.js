@@ -213,7 +213,7 @@ export default function QuizPage() {
               out of <span className="font-bold">5</span>
             </p>
             <motion.button
-              onClick={() => router.push("/payment")}
+              onClick={() => router.push("/payment/" + id)}
               whileHover={{
                 scale: 1.05,
                 

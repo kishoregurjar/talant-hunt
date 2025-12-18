@@ -1,9 +1,9 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import TermsModal from "../../components/modals/TermsModal.jsx";
+import TermsModal from "../../../components/modals/TermsModal.jsx";
 import { useSelector, useDispatch } from "react-redux";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import {
   ArrowRight,
   Copy,
@@ -17,11 +17,13 @@ import { useState, useEffect } from "react";
 import {
   asynsQRScreeenShotUpload,
   asynsPaymentContinue,
+  rehydrateStoreFromBackend,
+  asyncGetStudentById,
 } from "@/src/store/actions/userAction.js";
 import {
   PaymentQR,
   downloadCanvasAsImage,
-} from "../../components/paymentQR/page.js";
+} from "../../../components/paymentQR/page.js";
 
 // Import Shadcn Dialog components
 import {
@@ -34,6 +36,8 @@ import {
 } from "@/components/ui/dialog";
 
 export default function PaymentForm() {
+  const { studentid } = useParams();
+
   const {
     register,
     handleSubmit,
@@ -51,6 +55,7 @@ export default function PaymentForm() {
   const [isUploaded, setIsUploaded] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [validStudent, setValidStudent] = useState(false);
 
   const { formFilled, videoWatched, id, quizCompleted, ScreenShot, formData } =
     useSelector((s) => s.playerReducer);
@@ -61,22 +66,19 @@ export default function PaymentForm() {
   const upiURL = `upi://pay?pa=${upiID}&am=${amount}&cu=INR`;
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-      if (formFilled === false) {
-        router.push("/talenthunt");
-      } else if (formFilled === true && videoWatched === false) {
-        router.push("/video");
-      } else if (
-        formFilled === true &&
-        videoWatched === true &&
-        quizCompleted == false
-      ) {
-        router.push("/quiz");
+    const loadData = async () => {
+      const student = await dispatch(asyncGetStudentById(studentid));
+      if (student) {
+        setValidStudent(true);
+        localStorage.setItem("userId", studentid);
+        await dispatch(rehydrateStoreFromBackend());
+      } else {
+        setValidStudent(false);
       }
-    }, 100);
-    return () => clearTimeout(timer);
-  }, [formFilled, videoWatched, quizCompleted, router]);
+      setLoading(false);
+    };
+    loadData();
+  }, [dispatch, studentid]);
 
   const handleCopyUPI = () => {
     navigator.clipboard.writeText(upiID);
@@ -93,7 +95,7 @@ export default function PaymentForm() {
     const file = e.target.files?.[0];
     setProofFile(file || null);
     setIsUploaded(false);
-    // localStorage.removeItem("screenshotUploaded");
+    localStorage.removeItem("screenshotUploaded");
   };
 
   const openFileDialog = () => {
@@ -109,11 +111,11 @@ export default function PaymentForm() {
     if (!proofFile || isUploading) return;
 
     try {
-      setIsUploading(true);
+      // setIsUploading(true);
       const ok = await dispatch(asynsQRScreeenShotUpload(proofFile));
       if (ok) {
-        // localStorage.setItem("screenshotUploaded", "true");
-        // setIsUploaded(true);
+        localStorage.setItem("screenshotUploaded", "true");
+        setIsUploaded(true);
       }
     } catch (error) {
       console.error("❌ Error while uploading screenshot:", error);
@@ -123,16 +125,16 @@ export default function PaymentForm() {
     }
   };
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const stored = localStorage.getItem("screenshotUploaded");
-    if (stored === "true") {
-      setIsUploaded(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window === "undefined") return;
+  //   const stored = localStorage.getItem("screenshotUploaded");
+  //   if (stored === "true") {
+  //     setIsUploaded(true);
+  //   }
+  // }, []);
 
   const PaymentContinueHandler = async () => {
-    dispatch(asynsPaymentContinue(id, ScreenShot));
+    dispatch(asynsPaymentContinue(studentid, ScreenShot));
     setShowConfirmation(true);
   };
 
@@ -148,6 +150,27 @@ export default function PaymentForm() {
       year: "numeric",
     });
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-5 border-dotted border-[#352E74] mx-auto"></div>
+          <p className="mt-4 text-gray-600 uppercase font-bold">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!validStudent) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600 text-xl font-bold">Invalid Student ID</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
