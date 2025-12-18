@@ -90,7 +90,7 @@ const playerSlice = createSlice({
       state.formFilled = formFilled !== undefined ? formFilled : state.formFilled;
       state.videoWatched = videoWatched !== undefined ? videoWatched : state.videoWatched;
       state.quizCompleted = quizCompleted !== undefined ? quizCompleted : state.quizCompleted;
-      state.ScreenShot = ScreenShot !== undefined ? ScreenShot : state.ScreenShot;
+      // state.ScreenShot = ScreenShot !== undefined ? ScreenShot : state.ScreenShot;
       state.PaymentProcess = PaymentProcess !== undefined ? PaymentProcess : state.PaymentProcess;
       state.TalentHuntVideo = TalentHuntVideo !== undefined ? TalentHuntVideo : state.TalentHuntVideo;
 
@@ -100,6 +100,6 @@ const playerSlice = createSlice({
 });
 
   // talentForm: {}
-export const { ScreenShot,  saveStudentScore , saveFormData, markVideoWatched, quizAttemptId, markQuizCompleted, resetAll, restoreFormData, updateFormData ,saveUserID, talentForm, rehydrateState , PaymentProcess , TalentHuntVideo } =
+export const { ScreenShot, saveStudentScore , saveFormData, markVideoWatched, quizAttemptId, markQuizCompleted, resetAll, restoreFormData, updateFormData ,saveUserID, talentForm, rehydrateState , PaymentProcess , TalentHuntVideo } =
   playerSlice.actions;
 export default playerSlice.reducer;

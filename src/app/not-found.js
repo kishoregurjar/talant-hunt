@@ -37,7 +37,7 @@ export default function NotFound() {
             }}
             className="h-14 w-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center shadow-sm"
           >
-            <SearchX className="text-blue-600" size={30} />
+            <SearchX className="text-purplee" size={30} />
           </motion.div>
         </motion.div>
 
@@ -46,7 +46,7 @@ export default function NotFound() {
           initial={{ y: -10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.25 }}
-          className="text-3xl md:text-4xl font-bold mb-3 text-center text-blue-700"
+          className="text-3xl md:text-4xl font-bold mb-3 text-center text-purplee"
         >
           Page Not Found
         </motion.h1>
@@ -80,7 +80,7 @@ export default function NotFound() {
 
           <button
             onClick={() => router.push("https://indorecricketclub.com/")}
-            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-lg font-semibold shadow-md hover:bg-blue-700 hover:shadow-lg active:scale-95 transition"
+            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-purplee text-white rounded-lg font-semibold shadow-md hover:bg-purplee hover:shadow-lg active:scale-95 transition"
           >
             <Home size={16} />
             Go to Home

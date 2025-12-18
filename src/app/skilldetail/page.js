@@ -507,7 +507,7 @@ const TalentFormPage = () => {
       <FormSubmittedModal
         open={showModal}
         onClose={() => setShowModal(false)}
-        onBack={() => router.push("https://indorecricketclub.com/about/")}
+        onBack={() => router.push("https://indorecricketclub.com/")}
       />
     </motion.main>
   );
