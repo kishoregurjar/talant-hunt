@@ -12,6 +12,7 @@ id: null,
   ScreenShot : null,
   PaymentProcess :false,
   TalentHuntVideo : null,
+  IDproof: null,
 
   // talentForm: {}
 };
@@ -58,6 +59,11 @@ const playerSlice = createSlice({
       state.ScreenShot = action.payload;
     },
 
+
+     IDproof: (state, action) => {
+      state.IDproof = action.payload;
+    },
+
      PaymentProcess: (state, action) => {
       state.PaymentProcess =  action.payload;
     },
@@ -100,6 +106,6 @@ const playerSlice = createSlice({
 });
 
   // talentForm: {}
-export const { ScreenShot, saveStudentScore , saveFormData, markVideoWatched, quizAttemptId, markQuizCompleted, resetAll, restoreFormData, updateFormData ,saveUserID, talentForm, rehydrateState , PaymentProcess , TalentHuntVideo } =
+export const { ScreenShot, saveStudentScore , saveFormData, markVideoWatched, quizAttemptId, markQuizCompleted, resetAll, restoreFormData, updateFormData ,saveUserID, talentForm, rehydrateState , PaymentProcess , TalentHuntVideo ,IDproof } =
   playerSlice.actions;
 export default playerSlice.reducer;

@@ -61,7 +61,7 @@ export default function PaymentForm() {
     useSelector((s) => s.playerReducer);
 
   const upiID = "indorecricketclub61537@sbi";
-  const amount = "150";
+  const amount = "149";
   const canvasId = "talent-hunt-payment-QR";
   const upiURL = `upi://pay?pa=${upiID}&am=${amount}&cu=INR`;
 
