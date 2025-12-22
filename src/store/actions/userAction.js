@@ -1,5 +1,5 @@
 import { nanoid } from "@reduxjs/toolkit";
-import { ScreenShot, talentForm  ,PaymentProcess , TalentHuntVideo} from "../PlayerSlice.js";
+import { ScreenShot, talentForm  ,PaymentProcess , TalentHuntVideo ,IDproof} from "../PlayerSlice.js";
 import axios from "../utils/axiosConfig";
 import {
   ShieldX,
@@ -157,6 +157,33 @@ export const asynsQRScreeenShotUpload = (file) => async (dispatch) => {
     return data.success;
   } catch (error) {
     console.error("❌ Error while uploading screenshot:", error);
+  }
+};
+
+export const asynsIdProofUpload = (file) => async (dispatch) => {
+  try {
+    const formData = new FormData();
+
+    formData.append("image", file);
+
+    const { data } = await axios.post(
+     `/student/upload-payment-scereenshot`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    // Assuming we store it in redux or localStorage
+    dispatch(IDproof(data.data.imageUrl));
+    // localStorage.setItem("idProofUrl", data.data.imageUrl);
+    
+    console.log("✅ ID Proof Upload response:", data);
+    return data.success;
+  } catch (error) {
+    console.error("❌ Error while uploading ID proof:", error);
   }
 };
 
