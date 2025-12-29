@@ -12,6 +12,7 @@ id: null,
   ScreenShot : null,
   PaymentProcess :false,
   TalentHuntVideo : null,
+  TalentHuntVideoTwo : null,
   IDproof: null,
 
   // talentForm: {}
@@ -39,6 +40,10 @@ const playerSlice = createSlice({
 
 
       TalentHuntVideo: (state, action) => {
+      state.TalentHuntVideo = action.payload;
+    },
+
+          TalentHuntVideoTwo: (state, action) => {
       state.TalentHuntVideo = action.payload;
     },
 
@@ -90,7 +95,7 @@ const playerSlice = createSlice({
     },
 
     rehydrateState: (state, action) => {
-      const { id, formData, formFilled, videoWatched, quizCompleted, ScreenShot,PaymentProcess, TalentHuntVideo } = action.payload;
+      const { id, formData, formFilled, videoWatched, quizCompleted, ScreenShot,PaymentProcess, TalentHuntVideo , TalentHuntVideoTwo } = action.payload;
       state.id = id || state.id;
       state.formData = formData || state.formData;
       state.formFilled = formFilled !== undefined ? formFilled : state.formFilled;
@@ -99,6 +104,7 @@ const playerSlice = createSlice({
       // state.ScreenShot = ScreenShot !== undefined ? ScreenShot : state.ScreenShot;
       state.PaymentProcess = PaymentProcess !== undefined ? PaymentProcess : state.PaymentProcess;
       state.TalentHuntVideo = TalentHuntVideo !== undefined ? TalentHuntVideo : state.TalentHuntVideo;
+      state.TalentHuntVideoTwo = TalentHuntVideoTwo !== undefined ? TalentHuntVideoTwo : state.TalentHuntVideoTwo;
 
       // state.talentForm = talentForm || state.talentForm;
     }
@@ -106,6 +112,6 @@ const playerSlice = createSlice({
 });
 
   // talentForm: {}
-export const { ScreenShot, saveStudentScore , saveFormData, markVideoWatched, quizAttemptId, markQuizCompleted, resetAll, restoreFormData, updateFormData ,saveUserID, talentForm, rehydrateState , PaymentProcess , TalentHuntVideo ,IDproof } =
+export const { ScreenShot, saveStudentScore , saveFormData, markVideoWatched, quizAttemptId, markQuizCompleted, resetAll, restoreFormData, updateFormData ,saveUserID, talentForm, rehydrateState , PaymentProcess , TalentHuntVideo ,IDproof ,TalentHuntVideoTwo } =
   playerSlice.actions;
 export default playerSlice.reducer;

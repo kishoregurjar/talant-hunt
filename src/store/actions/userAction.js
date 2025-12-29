@@ -1,5 +1,5 @@
 import { nanoid } from "@reduxjs/toolkit";
-import { ScreenShot, talentForm  ,PaymentProcess , TalentHuntVideo ,IDproof} from "../PlayerSlice.js";
+import { ScreenShot, talentForm  ,PaymentProcess , TalentHuntVideo ,IDproof ,TalentHuntVideoTwo} from "../PlayerSlice.js";
 import axios from "../utils/axiosConfig";
 import {
   ShieldX,
@@ -111,9 +111,10 @@ export const asyncSubmitQuiz =
         answers: answers,
       });
 
-      console.log(" Quiz submitted successfully:", res.data);
+      console.log(" Quiz submitted successfully:", res.data.talentHuntVideo_two);
       dispatch(saveStudentScore(res.data.score));
-
+       dispatch(TalentHuntVideoTwo(res.data.talentHuntVideo_two));
+      localStorage.setItem("TalentHuntVideoTwo", res.data.talentHuntVideo_two);
       dispatch(markQuizCompleted());
       return res.data.score;
     } catch (error) {
@@ -239,6 +240,7 @@ export const rehydrateStoreFromBackend = () => async (dispatch, getState) => {
     const storedUserId = localStorage.getItem("userId");
     const screenShotUrl = localStorage.getItem("screenShotUrl");
     const TalentHuntVideo = localStorage.getItem("TalentHuntVideo");
+ const TalentHuntVideoTwo = localStorage.getItem("TalentHuntVideoTwo");   
  
 
     if (storedUserId) {
@@ -266,7 +268,8 @@ export const rehydrateStoreFromBackend = () => async (dispatch, getState) => {
             quizCompleted: userData.quizCompleted,
             PaymentProcess: userData.payment,
             // ScreenShot: screenShotUrl,
-            TalentHuntVideo: TalentHuntVideo
+            TalentHuntVideo: TalentHuntVideo,
+            TalentHuntVideoTwo: TalentHuntVideoTwo
           })
         );
 
@@ -292,3 +295,8 @@ export const asyncGetStudentById = (studentId) => async (dispatch, getState) => 
     return null;
   }
 };
+
+
+
+
+

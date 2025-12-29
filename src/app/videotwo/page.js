@@ -13,8 +13,8 @@ import { Volume2, VolumeX, ArrowRight } from "lucide-react";
 export default function VideoPage() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const {TalentHuntVideo} = useSelector((state) => state.playerReducer);
-  const { formFilled, formData, id, videoWatched } = useSelector(
+  const { } = useSelector((state) => state.playerReducer);
+  const { formFilled, formData, id, videoWatched ,quizCompleted } = useSelector(
     (state) => state.playerReducer
   );
   const [ended, setEnded] = useState(false);
@@ -25,28 +25,26 @@ export default function VideoPage() {
 
   console.log("Form Filled Status:", formFilled);
 
-
-  
-
-  useEffect(() => {
+   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
       if (formFilled === false) {
         router.push("/talenthunt");
+      } else if (formFilled === true && videoWatched === false) {
+        router.push("/video");
+      }else if(formFilled === true && videoWatched === true && quizCompleted === false){
+        router.push("/quiz");
       }
     }, 100);
-
-
-
-
     return () => clearTimeout(timer);
-  }, [formFilled]);
+  }, [formFilled, videoWatched,quizCompleted ]);
 
 
 
   const onEnded = () => {
     setEnded(true);
-    dispatch(asyncUserVideoWatched(id));
+    localStorage.setItem("videoWatched2", "true");
+    // dispatch(asyncUserVideoWatched(id));
   };
 
   const toggleMute = () => {
@@ -68,7 +66,9 @@ export default function VideoPage() {
   }
 
   const onSubmit = () => {
-    router.push("/quiz");
+    // router.push("/quiz");
+     router.push("/payment/" + id)
+      // onClick={() => router.push("/payment/" + id)}
   };
 
   return (
@@ -92,7 +92,7 @@ export default function VideoPage() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-3xl sm:text-4xl font-bold text-purplee mb-4 tracking-tight"
         >
-          Watch Trial Video
+       About Talent Hunt
         </motion.h2>
 
         <motion.p
@@ -101,8 +101,7 @@ export default function VideoPage() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-gray-600 text-sm sm:text-base mb-6 leading-relaxed"
         >
-          Watch the full video carefully to unlock your quiz. Stay focused till
-          the end
+      Watch the complete video carefully to understand the full Talent Hunt registration process. Stay attentive till the end to proceed further.
         </motion.p>
 
         {/* Video Section */}
@@ -115,7 +114,7 @@ export default function VideoPage() {
           <video
             ref={videoRef}
             // src="/video/video.mp4"
-            src={TalentHuntVideo}
+            src={TalentHuntVideoTwo}
             autoPlay
             muted
             playsInline
