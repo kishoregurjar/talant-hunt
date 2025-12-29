@@ -13,7 +13,7 @@ import { Volume2, VolumeX, ArrowRight } from "lucide-react";
 export default function VideoPage() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { } = useSelector((state) => state.playerReducer);
+  const { TalentHuntVideoTwo } = useSelector((state) => state.playerReducer);
   const { formFilled, formData, id, videoWatched ,quizCompleted } = useSelector(
     (state) => state.playerReducer
   );
