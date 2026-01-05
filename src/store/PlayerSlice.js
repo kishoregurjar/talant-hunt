@@ -44,7 +44,7 @@ const playerSlice = createSlice({
     },
 
           TalentHuntVideoTwo: (state, action) => {
-      state.TalentHuntVideo = action.payload;
+      state.TalentHuntVideoTwo = action.payload;
     },
 
 
