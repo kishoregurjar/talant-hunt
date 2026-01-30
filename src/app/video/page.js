@@ -74,7 +74,7 @@ export default function VideoPage() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 0.1 }}
         className="relative bg-gray-100 md:rounded-2xl px-1 py-5 md:p-8 w-full max-w-4xl text-center 
-        border border-gray-100 mt-25 md:mt-25 lg:mt-23 bg-red-500 md:shadow-xl "
+        border border-gray-100 mt-25 md:mt-25 lg:mt-23  md:shadow-xl "
       >
         {/* Title */}
         <motion.h2
@@ -83,7 +83,7 @@ export default function VideoPage() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-3xl sm:text-4xl font-bold text-purplee mb-4 tracking-tight"
         >
-          Watch Trial Video
+          About ICC
         </motion.h2>
 
         <motion.p
@@ -92,8 +92,7 @@ export default function VideoPage() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-gray-600 text-sm sm:text-base mb-6 leading-relaxed"
         >
-          Watch the full video carefully to unlock your quiz. Stay focused till
-          the end
+          Please watch the club-related video carefully to understand the training environment, facilities, and guidelines / कृपया क्लब से संबंधित वीडियो ध्यान से देखें, ताकि ट्रेनिंग माहौल, सुविधाओं और नियमों की जानकारी मिल सके 
         </motion.p>
 
         {/* Video Section */}
@@ -127,14 +126,14 @@ export default function VideoPage() {
           </motion.button>
         </motion.div> */}
 
-        <motion.div
+        {/* <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="relative overflow-hidden rounded-2xl border border-gray-200 bg-gray-50 w-full max-w-md sm:max-w-lg lg:max-w-2xl mx-auto"
+          className="relative overflow-hidden rounded-2xl border border-gray-200 bg-red-500 w-full max-w-md sm:max-w-lg lg:max-w-2xl mx-auto"
         >
-          {/* Responsive Video Container */}
-          <div className="w-full pt-[75%] sm:pt-[56.25%] lg:pt-[min(56.25%,75%)] relative">
+          
+          <div className="w-full flex items-center justify-center">
             <video
               ref={videoRef}
               src={TalentHuntVideo}
@@ -143,11 +142,11 @@ export default function VideoPage() {
               playsInline
               controls={false}
               onEnded={onEnded}
-              className="absolute inset-0 w-full h-full object-contain rounded-2xl"
+              className="w-full h-auto max-h-[80vh] object-contain rounded-2xl"
             />
           </div>
 
-          {/* Responsive Mute Button */}
+         
           <motion.button
             onClick={toggleMute}
             whileHover={{ scale: 1.1 }}
@@ -161,6 +160,45 @@ export default function VideoPage() {
               <Volume2 size={16} className="sm:w-5 sm:h-5" />
             )}
           </motion.button>
+        </motion.div> */}
+
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="relative overflow-hidden rounded-2xl border border-gray-200 bg-red-500 w-full max-w-md sm:max-w-lg lg:max-w-2xl mx-auto"
+        >
+          {/* Responsive Video Container */}
+          <div className="w-full flex justify-center">
+            {/* 🔥 Video Wrapper (matches video size) */}
+            <div className="relative inline-block">
+              <video
+                ref={videoRef}
+                src={TalentHuntVideo}
+                autoPlay
+                muted
+                playsInline
+                controls={false}
+                onEnded={onEnded}
+                className="max-w-full h-auto max-h-[80vh] object-contain rounded-2xl"
+              />
+
+              {/* ✅ Mute Button — ALWAYS on video */}
+              <motion.button
+                onClick={toggleMute}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-1.5 sm:p-2 rounded-full shadow-lg transition-all duration-200"
+                aria-label={isMuted ? "Unmute" : "Mute"}
+              >
+                {isMuted ? (
+                  <VolumeX size={16} className="sm:w-5 sm:h-5" />
+                ) : (
+                  <Volume2 size={16} className="sm:w-5 sm:h-5" />
+                )}
+              </motion.button>
+            </div>
+          </div>
         </motion.div>
 
         {/* Action Button */}

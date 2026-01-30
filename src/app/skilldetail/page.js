@@ -10,7 +10,7 @@ import { skillInfoValidator } from "../../components/validation/skillInfoValidat
 import { motion, AnimatePresence } from "framer-motion";
 import CustomSelect from "../../components/CustomSelect";
 import { toast } from "react-toastify";
-import FormSubmittedModal from "../../components/modals/formSubmittedModal";
+// import FormSubmittedModal from "../../components/modals/formSubmittedModal";
 
 import {
   Medal,
@@ -504,11 +504,11 @@ const TalentFormPage = () => {
         </form>
       </motion.div>
 
-      <FormSubmittedModal
+      {/* <FormSubmittedModal
         open={showModal}
         onClose={() => setShowModal(false)}
         onBack={() => router.push("https://indorecricketclub.com/")}
-      />
+      /> */}
     </motion.main>
   );
 };
