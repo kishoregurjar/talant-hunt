@@ -565,7 +565,7 @@ export default function talenthunt() {
   const [showModal, setShowModal] = useState(false);
   const [idProofFile, setIdProofFile] = useState(null);
   const [isIdUploading, setIsIdUploading] = useState(false);
-  const [isIdUploaded, setIsIdUploaded] = useState(false);
+  // const [isIdUploaded, setIsIdUploaded] = useState(false);
   const statesList = State.getStatesOfCountry("IN");
 
   const {
@@ -609,45 +609,45 @@ export default function talenthunt() {
     }
   }, [formData, reset]);
 
-  const handleIdFileChange = (e) => {
-    const file = e.target.files?.[0];
-    setIdProofFile(file || null);
-    setIsIdUploaded(false);
-  };
+  // const handleIdFileChange = (e) => {
+  //   const file = e.target.files?.[0];
+  //   setIdProofFile(file || null);
+  //   setIsIdUploaded(false);
+  // };
 
   const openIdFileDialog = () => {
     const input = document.getElementById("id-proof-input");
     if (input) input.click();
   };
 
-  const uploadIdProof = async () => {
-    if (!idProofFile || isIdUploading) return;
+  // const uploadIdProof = async () => {
+  //   if (!idProofFile || isIdUploading) return;
 
-    try {
-      setIsIdUploading(true);
-      const ok = await dispatch(asynsIdProofUpload(idProofFile));
-      if (ok) {
-        setIsIdUploaded(true);
-      }
-    } catch (error) {
-      console.error("❌ Error while uploading ID proof:", error);
-      alert("Upload failed, please try again.");
-    } finally {
-      setIsIdUploading(false);
-    }
-  };
+  //   try {
+  //     setIsIdUploading(true);
+  //     const ok = await dispatch(asynsIdProofUpload(idProofFile));
+  //     if (ok) {
+  //       setIsIdUploaded(true);
+  //     }
+  //   } catch (error) {
+  //     console.error("❌ Error while uploading ID proof:", error);
+  //     alert("Upload failed, please try again.");
+  //   } finally {
+  //     setIsIdUploading(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const stored = localStorage.getItem("idProofUrl");
-    if (stored) {
-      setIsIdUploaded(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window === "undefined") return;
+  //   const stored = localStorage.getItem("idProofUrl");
+  //   if (stored) {
+  //     setIsIdUploaded(true);
+  //   }
+  // }, []);
 
   const onSubmit = async (data) => {
     console.log(data);
-    data.IDProof = IDproof;
+    // data.IDProof = IDproof;
     if (
       formFilled === true &&
       videoWatched === false &&
@@ -992,7 +992,7 @@ export default function talenthunt() {
           </div>
 
           {/* ID Proof Upload */}
-          <div className="md:col-span-2 bg-white border border-gray-200 p-4 rounded-lg mt-2">
+          {/* <div className="md:col-span-2 bg-white border border-gray-200 p-4 rounded-lg mt-2">
             <h3 className="text-sm font-semibold text-gray-800 mb-3 flex items-center gap-2">
               <Upload className="text-gray-400" size={18} /> Upload Your Current
               Photo / अपनी वर्तमान फोटो अपलोड करें
@@ -1079,7 +1079,7 @@ export default function talenthunt() {
                 </p>
               )}
             </div>
-          </div>
+          </div> */}
 
           {/* Terms & Conditions */}
           <div className="md:col-span-2 bg-gray-50 border border-gray-200 p-4 rounded-lg mt-2">
@@ -1105,7 +1105,7 @@ export default function talenthunt() {
               <li>
                 Submission of this form does not guarantee selection or
                 admission / इस फ़ॉर्म को जमा करना चयन या प्रवेश की गारंटी नहीं
-                है।
+               देता है।
               </li>
               <li>
                 I grant permission to use my photograph and training visuals for
@@ -1125,7 +1125,7 @@ export default function talenthunt() {
               </li>
               <li>
                 I agree to follow the academy’s rules and code of conduct / मैं
-                अकादमी के सभी नियमों और आचार संहिता का पालन करने के लिए सहमत
+                अकैडमी के सभी नियमों और आचार संहिता का पालन करने के लिए सहमत
                 हूँ।
               </li>
             </ul>
@@ -1137,10 +1137,10 @@ export default function talenthunt() {
               </h2>
               <ul className="list-disc list-inside text-gray-700 space-y-1 text-sm mb-3">
                 <li>
-                  The Talent Hunt Scholarship covers free cricket training for one year only. Food, accommodation, travel, and cricket kit/equipment are not included and must be arranged by the applicant and/or parents. The academy will not be responsible for these expenses.
+                 The Talent Hunt Scholarship covers free cricket training for one year only. Food, accommodation, travel, and cricket kit/equipment are not included and must be arranged by the applicant and/or parents. The academy will not be responsible for these expenses.
                 </li>
                 <li>
-                 टैलेंट हंट स्कॉलरशिप में केवल एक साल की मुफ्त क्रिकेट ट्रेनिंग दी जाएगी। इसमें खाना, रहने की व्यवस्था, यात्रा और क्रिकेट किट/सामान शामिल नहीं हैं। इन सभी खर्चों की व्यवस्था आवेदक या उनके माता-पिता को खुद करनी होगी। इन खर्चों के लिए अकादमी जिम्मेदार नहीं होगी।
+                टैलेंट हंट स्कॉलरशिप में केवल एक वर्ष के लिए मुफ्त क्रिकेट प्रशिक्षण शामिल है। भोजन, आवास, यात्रा, और क्रिकेट किट/उपकरण शामिल नहीं हैं और इनकी व्यवस्था आवेदक और/या माता-पिता द्वारा की जानी चाहिए। अकैडमी इन खर्चों के लिए जिम्मेदार नहीं होगी।
                 </li>
               </ul>
             </div>
@@ -1173,10 +1173,12 @@ export default function talenthunt() {
           >
             <motion.button
               type="submit"
-              disabled={submitting || !isIdUploaded}
+              // disabled={submitting || !isIdUploaded}
+              disabled={submitting}
               className={`inline-flex items-center gap-2 px-6 py-3 bg-purplee cursor-pointer text-white rounded-lg font-semibold shadow-md active:scale-95 transition-transform duration-200 ease-in-out
                 ${
-                  submitting || !isIdUploaded
+                  submitting 
+                  // submitting || !isIdUploaded
                     ? "opacity-60 cursor-not-allowed "
                     : " hover:shadow-lg active:scale-95"
                 }`}
