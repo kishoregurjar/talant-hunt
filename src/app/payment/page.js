@@ -315,7 +315,7 @@ export default function PaymentForm() {
                   ) : (
                     <p className="text-xs text-gray-500 mt-3">
                       Upload screenshot of your UPI transaction (PNG/JPG/WebP,
-                      max 3MB)
+                      max 3MB) / अपनी UPI पेमेंट का स्क्रीनशॉट अपलोड करें (PNG/JPG/WebP, अधिकतम 3MB)
                     </p>
                   )}
                 </div>
