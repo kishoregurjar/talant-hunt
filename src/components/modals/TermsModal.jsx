@@ -77,8 +77,7 @@ export default function TermsModal({ open, onClose }) {
               <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 md:p-5">
                 <ul className="list-disc list-inside text-sm md:text-[15px] text-gray-800 space-y-3">
                   <li>
-                    A payment of <strong>₹149</strong> is mandatory to complete
-                    the registration process.
+                    A payment of <strong>₹149</strong> is mandatory to complete the registration process.
                     <br />
                     <span className="text-gray-600">
                       (रजिस्ट्रेशन प्रक्रिया पूरी करने के लिए ₹149 का भुगतान
@@ -92,13 +91,13 @@ export default function TermsModal({ open, onClose }) {
                     <br />
                     <span className="text-gray-600">
                       (यह शुल्क केवल रजिस्ट्रेशन/प्रोसेसिंग के लिए है, इससे चयन या
-                      प्रवेश की कोई गारंटी नहीं मिलती।)
+                      प्रवेश की कोई गारंटी नहीं देता है।)
                     </span>
                   </li>
 
                   <li>
-                    Once paid, the amount is{" "}
-                    <strong>non-refundable and non-transferable</strong>.
+                    Once paid, the amount is <strong>non-refundable and non-transferable</strong>. in any case.{" "}
+                    
                     <br />
                     <span className="text-gray-600">
                       (एक बार भुगतान करने के बाद यह राशि किसी भी स्थिति में वापस
@@ -107,8 +106,8 @@ export default function TermsModal({ open, onClose }) {
                   </li>
 
                   <li>
-                    Payments must be made only through the official{" "}
-                    <strong>QR code, UPI ID, or account details</strong>.
+                    Payments must be made only through the official <strong>QR code, UPI ID, or account details</strong>.provided here.{" "}
+
                     <br />
                     <span className="text-gray-600">
                       (भुगतान केवल यहाँ दिए गए आधिकारिक QR कोड, UPI ID या अकाउंट
@@ -117,30 +116,36 @@ export default function TermsModal({ open, onClose }) {
                   </li>
 
                   <li>
-                    Please ensure correct payment details while paying.
+                   Please ensure correct payment details while paying. The academy is not responsible for wrong or failed transfers due to user error.
                     <br />
                     <span className="text-gray-600">
-                      (उपयोगकर्ता की गलती से हुए गलत या असफल ट्रांजैक्शन के लिए
-                      अकादमी जिम्मेदार नहीं होगी।)
+                      (कृपया भुगतान करते समय सही भुगतान विवरण सुनिश्चित करें। उपयोगकर्ता की त्रुटि के कारण गलत या असफल स्थानांतरण के लिए अकैडमी जिम्मेदार नहीं है।)
                     </span>
                   </li>
 
                   <li>
-                    In case of technical issues or duplicate payment, report
-                    within <strong>48 hours</strong>.
+                    In case of technical issues or duplicate payment, the matter must be reported within <strong>48 hours </strong> with valid transaction proof.
+                  
                     <br />
                     <span className="text-gray-600">
-                      (48 घंटे के भीतर वैध ट्रांजैक्शन प्रमाण देना आवश्यक है।)
+                      (तकनीकी समस्याओं या डुप्लिकेट भुगतान के मामले में, मामले को वैध लेनदेन प्रमाण के साथ 48 घंटे के भीतर रिपोर्ट किया जाना चाहिए।)
                     </span>
                   </li>
 
                   <li>
-                    Academy can cancel incorrect registrations{" "}
+                    The academy reserves the right to cancel or reject any registration found to be incorrect or against academy rules{" "}
                     <strong>without refund</strong>.
+                      <span className="text-gray-600">
+                      (अकैडमी किसी भी पंजीकरण को गलत या अकैडमी नियमों के विरुद्ध पाए जाने पर बिना रिफंड के रद्द या अस्वीकार करने का अधिकार सुरक्षित रखती है।)
+                    </span>
+
                   </li>
 
                   <li>
-                    Successful payment confirmation is required.
+                    Successful payment confirmation is required to proceed further
+                       <span className="text-gray-600">
+                      (आगे बढ़ने के लिए सफल भुगतान की पुष्टि आवश्यक है।)
+                    </span>
                   </li>
                 </ul>
               </div>
