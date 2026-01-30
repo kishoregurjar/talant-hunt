@@ -14,32 +14,33 @@ export default function VideoPage() {
   const dispatch = useDispatch();
   const router = useRouter();
   const { TalentHuntVideoTwo } = useSelector((state) => state.playerReducer);
-  const { formFilled, formData, id, videoWatched ,quizCompleted } = useSelector(
-    (state) => state.playerReducer
+  const { formFilled, formData, id, videoWatched, quizCompleted } = useSelector(
+    (state) => state.playerReducer,
   );
   const [ended, setEnded] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef(null);
-  
 
   console.log("Form Filled Status:", formFilled);
 
-   useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
       if (formFilled === false) {
         router.push("/talenthunt");
       } else if (formFilled === true && videoWatched === false) {
         router.push("/video");
-      }else if(formFilled === true && videoWatched === true && quizCompleted === false){
+      } else if (
+        formFilled === true &&
+        videoWatched === true &&
+        quizCompleted === false
+      ) {
         router.push("/quiz");
       }
     }, 100);
     return () => clearTimeout(timer);
-  }, [formFilled, videoWatched,quizCompleted ]);
-
-
+  }, [formFilled, videoWatched, quizCompleted]);
 
   const onEnded = () => {
     setEnded(true);
@@ -56,7 +57,7 @@ export default function VideoPage() {
 
   if (loading) {
     return (
-    <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-t-5  border-dotted border-[#352E74] mx-auto"></div>
           <p className="mt-4 text-gray-600 uppercase font-bold">Loading...</p>
@@ -67,8 +68,8 @@ export default function VideoPage() {
 
   const onSubmit = () => {
     // router.push("/quiz");
-     router.push("/payment/" + id)
-      // onClick={() => router.push("/payment/" + id)}
+    router.push("/payment/" + id);
+    // onClick={() => router.push("/payment/" + id)}
   };
 
   return (
@@ -76,14 +77,14 @@ export default function VideoPage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="min-h-screen flex flex-col items-center justify-center  bg-gray-100 p-0 md:p-6"
+      className="min-h-screen  flex flex-col items-center justify-center  bg-gray-100 p-0 md:p-6"
     >
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 0.1 }}
         className="relative bg-gray-100 md:rounded-2xl px-1 py-5 md:p-8 w-full max-w-4xl text-center 
-        border border-gray-100 mt-0 md:mt-30 md:shadow-xl "
+        border border-gray-100 mt-25 md:mt-25 lg:mt-23 md:shadow-xl "
       >
         {/* Title */}
         <motion.h2
@@ -92,7 +93,7 @@ export default function VideoPage() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-3xl sm:text-4xl font-bold text-purplee mb-4 tracking-tight"
         >
-       About Talent Hunt
+          About Talent Hunt
         </motion.h2>
 
         <motion.p
@@ -101,11 +102,13 @@ export default function VideoPage() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-gray-600 text-sm sm:text-base mb-6 leading-relaxed"
         >
-      Watch the complete video carefully to understand the full Talent Hunt registration process. Stay attentive till the end to proceed further.
+          Watch the complete video carefully to understand the full Talent Hunt
+          registration process / टैलेंट हंट रजिस्ट्रेशन समझने के लिए वीडियो को
+          अंत तक ध्यान से देखें।
         </motion.p>
 
         {/* Video Section */}
-        <motion.div
+        {/* <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.4 }}
@@ -123,7 +126,7 @@ export default function VideoPage() {
             className="w-full h-auto rounded-2xl object-cover"
           />
 
-          {/* Custom Mute/Unmute Button */}
+         
           <motion.button
             onClick={toggleMute}
             whileHover={{ scale: 1.1 }}
@@ -132,6 +135,78 @@ export default function VideoPage() {
             aria-label={isMuted ? "Unmute" : "Mute"}
           >
             {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+          </motion.button>
+        </motion.div> */}
+
+        {/* <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="relative  overflow-hidden rounded-2xl border border-gray-200 bg-gray-50 w-full max-w-md sm:max-w-lg lg:max-w-2xl mx-auto"
+        >
+          
+          <div className="w-full pt-[75%] sm:pt-[56.25%] lg:pt-[min(56.25%,75%)] relative">
+            <video
+              ref={videoRef}
+              src={TalentHuntVideoTwo}
+              autoPlay
+              muted
+              playsInline
+              controls={false}
+              onEnded={onEnded}
+              className="absolute inset-0 w-full h-full object-contain rounded-2xl"
+            />
+          </div>
+
+         
+          <motion.button
+            onClick={toggleMute}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-1.5 sm:p-2 rounded-full shadow-lg transition-all duration-200"
+            aria-label={isMuted ? "Unmute" : "Mute"}
+          >
+            {isMuted ? (
+              <VolumeX size={16} className="sm:w-5 sm:h-5" />
+            ) : (
+              <Volume2 size={16} className="sm:w-5 sm:h-5" />
+            )}
+          </motion.button>
+        </motion.div> */}
+
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="relative overflow-hidden rounded-2xl border border-gray-200 bg-gray-50 w-full max-w-md sm:max-w-lg lg:max-w-2xl mx-auto"
+        >
+          {/* Responsive Video Container */}
+          <div className="w-full pt-[133%] sm:pt-[56.25%] lg:pt-[min(56.25%,75%)] relative">
+            <video
+              ref={videoRef}
+              src={TalentHuntVideoTwo}
+              autoPlay
+              muted
+              playsInline
+              controls={false}
+              onEnded={onEnded}
+              className="absolute inset-0 w-full h-full rounded-2xl object-cover sm:object-contain"
+            />
+          </div>
+
+          {/* Responsive Mute Button */}
+          <motion.button
+            onClick={toggleMute}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-1.5 sm:p-2 rounded-full shadow-lg transition-all duration-200"
+            aria-label={isMuted ? "Unmute" : "Mute"}
+          >
+            {isMuted ? (
+              <VolumeX size={16} className="sm:w-5 sm:h-5" />
+            ) : (
+              <Volume2 size={16} className="sm:w-5 sm:h-5" />
+            )}
           </motion.button>
         </motion.div>
 
@@ -157,10 +232,9 @@ export default function VideoPage() {
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }`}
         >
-      
           {ended ? (
             <>
-              Proceed to Quiz <ArrowRight size={14} />
+              Next <ArrowRight size={14} />
             </>
           ) : (
             "Watch Complete Video"

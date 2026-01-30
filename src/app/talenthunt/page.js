@@ -62,15 +62,13 @@
 //     return () => clearTimeout(timer);
 //   }, []);
 
-
-
 // useEffect(() => {
 //   const talentFormfilled = localStorage.getItem("talentFormfilled");
 
 //   if (
 //     formFilled &&
 //     videoWatched &&
-//     quizCompleted &&  
+//     quizCompleted &&
 //     talentFormfilled
 //   ) {
 //     setShowModal(true);
@@ -88,11 +86,6 @@
 //       if (hasFormValues) reset(formValues, { keepDefaultValues: false });
 //     }
 //   }, [formData, reset]);
-
-
-
-
-
 
 //   const onSubmit = async (data) => {
 //     console.log(data);
@@ -141,10 +134,8 @@
 //         });
 
 //         setLoading(false);
-//         router.push("/video");  
+//         router.push("/video");
 
-
-        
 //       }
 //     } catch (err) {
 //       console.error("Save failed:", err);
@@ -287,11 +278,10 @@
 //                   max="31"
 //                   className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee outline-none"
 //                 />
-                
+
 //               </div>
-             
+
 //               <div>
- 
 
 //   <Controller
 //     name="dob.month"
@@ -330,7 +320,6 @@
 //   )}
 // </div>
 
-
 //               <div className=" relative">
 //                 <Calendar
 //                   className="absolute left-3 top-3 text-gray-400"
@@ -355,8 +344,6 @@
 //               </p>
 //             )} */}
 //           </div>
-
-
 
 //           {/* Address */}
 //           <div className="md:col-span-2">
@@ -534,7 +521,10 @@ import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { asyncUserPersonalInfo, asynsIdProofUpload } from "../../store/actions/userAction";
+import {
+  asyncUserPersonalInfo,
+  asynsIdProofUpload,
+} from "../../store/actions/userAction";
 import { motion } from "framer-motion";
 import CustomSelect from "../../components/CustomSelect";
 import FormSubmittedModal from "../../components/modals/formSubmittedModal";
@@ -567,9 +557,8 @@ import { toast } from "react-toastify";
 export default function talenthunt() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { formData, formFilled, videoWatched, quizCompleted  , IDproof} = useSelector(
-    (state) => state.playerReducer
-  );
+  const { formData, formFilled, videoWatched, quizCompleted, IDproof } =
+    useSelector((state) => state.playerReducer);
   const talentFormfilled = localStorage.getItem("talentFormfilled");
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -600,20 +589,13 @@ export default function talenthunt() {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    const talentFormfilled = localStorage.getItem("talentFormfilled");
 
-
-useEffect(() => {
-  const talentFormfilled = localStorage.getItem("talentFormfilled");
-
-  if (
-    formFilled &&
-    videoWatched &&
-    quizCompleted &&  
-    talentFormfilled
-  ) {
-    setShowModal(true);
-  }
-}, [formFilled, videoWatched, quizCompleted, talentFormfilled]);
+    if (formFilled && videoWatched && quizCompleted && talentFormfilled) {
+      setShowModal(true);
+    }
+  }, [formFilled, videoWatched, quizCompleted, talentFormfilled]);
 
   useEffect(() => {
     if (formData && Object.keys(formData).length > 0) {
@@ -621,7 +603,7 @@ useEffect(() => {
       if (formValues.id) delete formValues.id;
 
       const hasFormValues = Object.values(formValues).some(
-        (value) => value !== null && value !== undefined && value !== ""
+        (value) => value !== null && value !== undefined && value !== "",
       );
       if (hasFormValues) reset(formValues, { keepDefaultValues: false });
     }
@@ -663,12 +645,9 @@ useEffect(() => {
     }
   }, []);
 
-
-
-
   const onSubmit = async (data) => {
     console.log(data);
-     data.IDProof = IDproof
+    data.IDProof = IDproof;
     if (
       formFilled === true &&
       videoWatched === false &&
@@ -713,10 +692,7 @@ useEffect(() => {
         });
 
         setLoading(false);
-        router.push("/video");  
-
-
-        
+        router.push("/video");
       }
     } catch (err) {
       console.error("Save failed:", err);
@@ -859,49 +835,45 @@ useEffect(() => {
                   max="31"
                   className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee outline-none"
                 />
-                
               </div>
-             
+
               <div>
- 
+                <Controller
+                  name="dob.month"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <CustomSelect
+                      options={[
+                        { value: "January", label: "January" },
+                        { value: "February", label: "February" },
+                        { value: "March", label: "March" },
+                        { value: "April", label: "April" },
+                        { value: "May", label: "May" },
+                        { value: "June", label: "June" },
+                        { value: "July", label: "July" },
+                        { value: "August", label: "August" },
+                        { value: "September", label: "September" },
+                        { value: "October", label: "October" },
+                        { value: "November", label: "November" },
+                        { value: "December", label: "December" },
+                      ]}
+                      value={field.value || ""}
+                      onChange={field.onChange}
+                      placeholder="Month"
+                      icon={Calendar}
 
-  <Controller
-    name="dob.month"
-    control={control}
-    defaultValue=""
-    render={({ field }) => (
-      <CustomSelect
-        options={[
-          { value: "January", label: "January" },
-          { value: "February", label: "February" },
-          { value: "March", label: "March" },
-          { value: "April", label: "April" },
-          { value: "May", label: "May" },
-          { value: "June", label: "June" },
-          { value: "July", label: "July" },
-          { value: "August", label: "August" },
-          { value: "September", label: "September" },
-          { value: "October", label: "October" },
-          { value: "November", label: "November" },
-          { value: "December", label: "December" },
-        ]}
-        value={field.value || ""}
-        onChange={field.onChange}
-        placeholder="Month"
-                    icon={Calendar}
+                      // error={errors?.dob?.month?.message}
+                    />
+                  )}
+                />
 
-        // error={errors?.dob?.month?.message}
-      />
-    )}
-  />
-
-  {errors?.dob?.month && (
-    <p className="text-red-500 text-sm">
-      {errors.dob.month.message}
-    </p>
-  )}
-</div>
-
+                {errors?.dob?.month && (
+                  <p className="text-red-500 text-sm">
+                    {errors.dob.month.message}
+                  </p>
+                )}
+              </div>
 
               <div className=" relative">
                 <Calendar
@@ -918,17 +890,13 @@ useEffect(() => {
                 />
               </div>
             </div>
-            {/* {errors.dob && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.dob.message ||
-                  errors.dob?.day?.message ||
-                  errors.dob?.month?.message ||
-                  errors.dob?.year?.message}
+            <div className="p-3">
+              <p className="text-xs text-gray-700 font-bold">
+                <strong className ="text-red-400 ">Note :</strong> Only candidates born after 2001 can apply ( 2001 के बाद जन्मे ही आवेदन कर सकते हैं )
+                
               </p>
-            )} */}
+            </div>
           </div>
-
-
 
           {/* Address */}
           <div className="md:col-span-2">
@@ -1101,11 +1069,13 @@ useEffect(() => {
                 </div>
               ) : isIdUploaded ? (
                 <p className="text-xs text-gray-500 mt-3">
-                  Your ID proof has been uploaded successfully earlier. You can directly continue without uploading again.
+                  Your ID proof has been uploaded successfully earlier. You can
+                  directly continue without uploading again.
                 </p>
               ) : (
                 <p className="text-xs text-gray-500 mt-3">
-                  Upload a photo of your ID proof (Aadhaar, PAN, etc.) (JPG/WebP, max 3MB)
+                  Upload a photo of your ID proof (Aadhaar, PAN, etc.)
+                  (JPG/WebP, max 3MB)
                 </p>
               )}
             </div>
@@ -1183,10 +1153,10 @@ useEffect(() => {
       </motion.div>
 
       <FormSubmittedModal
-  open={showModal}
-  onClose={() => setShowModal(false)}
-  onBack={() => router.push("https://indorecricketclub.com/")}
-/>
+        open={showModal}
+        onClose={() => setShowModal(false)}
+        onBack={() => router.push("https://indorecricketclub.com/")}
+      />
     </motion.main>
   );
 }
