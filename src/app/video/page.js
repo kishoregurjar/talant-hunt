@@ -166,7 +166,7 @@ export default function VideoPage() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="relative overflow-hidden rounded-2xl border border-gray-200 bg-red-500 w-full max-w-md sm:max-w-lg lg:max-w-2xl mx-auto"
+          className="relative overflow-hidden rounded-2xl border border-gray-200  w-full max-w-md sm:max-w-lg lg:max-w-2xl mx-auto"
         >
           {/* Responsive Video Container */}
           <div className="w-full flex justify-center">

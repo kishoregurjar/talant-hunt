@@ -731,7 +731,7 @@ export default function talenthunt() {
           {/* Full Name */}
           <div>
             <label className="block mb-1 text-m font-medium text-gray-700">
-              Full Name / पूरा नाम
+              Full Name 
             </label>
             <div className="relative">
               <User className="absolute left-3 top-3 text-gray-400" size={18} />
@@ -750,7 +750,7 @@ export default function talenthunt() {
           {/* Email */}
           <div>
             <label className="block mb-1 text-m font-medium text-gray-700">
-              Email / ईमेल
+              Email 
             </label>
             <div className="relative">
               <Mail className="absolute left-3 top-3 text-gray-400" size={18} />
@@ -768,7 +768,7 @@ export default function talenthunt() {
           {/* Phone */}
           <div>
             <label className="block mb-1 text-m font-medium text-gray-700">
-              Phone Number / फोन नंबर
+              Phone Number 
             </label>
             <div className="relative">
               <Phone
@@ -790,7 +790,7 @@ export default function talenthunt() {
           {/* Gender */}
           <div>
             <label className="block mb-1 text-m font-medium text-gray-700">
-              Gender / लिंग
+              Gender 
             </label>
             <Controller
               name="gender"
@@ -819,7 +819,7 @@ export default function talenthunt() {
           {/* Date of Birth */}
           <div className="md:col-span-2">
             <label className="block mb-1 text-m font-medium text-gray-700">
-              Date of Birth / जन्म तिथि
+              Date of Birth 
             </label>
             <div className="grid grid-cols-1 md:grid-cols-3  gap-3">
               <div className="relative col-span-1">
@@ -902,7 +902,7 @@ export default function talenthunt() {
           {/* Address */}
           <div className="md:col-span-2">
             <label className="block mb-1 text-m font-medium text-gray-700">
-              Permanent Address / स्थायी पता
+              Permanent Address 
             </label>
             <div className="relative">
               <Home className="absolute left-3 top-3 text-gray-400" size={18} />

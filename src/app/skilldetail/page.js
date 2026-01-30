@@ -442,11 +442,11 @@ const TalentFormPage = () => {
                 {/* Upload Help Section */}
                 <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 text-center shadow-sm">
                   <h3 className="text-lg font-semibold text-purplee mb-2">
-                    How to Upload Your Cricket Video
+                    How to Upload Your Cricket Video / अपना क्रिकेट वीडियो कैसे अपलोड करें
                   </h3>
                   <p className="text-sm text-gray-600 mb-4">
                     Not sure how to upload your cricket video? Watch this quick
-                    YouTube guide.
+                    YouTube guide / क्रिकेट वीडियो अपलोड करने की जानकारी के लिए यह छोटा यूट्यूब गाइड देखें।
                   </p>
                   <motion.button
                     type="button"
