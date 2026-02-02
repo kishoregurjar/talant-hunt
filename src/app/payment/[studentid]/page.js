@@ -673,7 +673,7 @@ export default function PaymentForm() {
         <div className="flex items-start gap-4 p-4">
           <div className="flex-1">
             <h1 className="text-3xl md:text-4xl font-bold text-center text-purplee">
-              Talent Hunt Payment
+              Talent Hunt 1.0 Registration Fee
             </h1>
           </div>
         </div>
