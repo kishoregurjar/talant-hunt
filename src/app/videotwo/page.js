@@ -190,6 +190,7 @@ export default function VideoPage() {
                 autoPlay
                 muted
                 playsInline
+                preload="metadata"
                 controls={false}
                 onEnded={onEnded}
                 className="max-w-full h-auto max-h-[80vh] rounded-2xl object-contain"
