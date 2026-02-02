@@ -189,11 +189,12 @@ export const asynsIdProofUpload = (file) => async (dispatch) => {
 };
 
 export const asynsPaymentContinue =
-  (studentId, imageUrl) => async (dispatch) => {
+  (studentId, imageUrl ,transactionId ) => async (dispatch) => {
     try {
       const { data } = await axios.post("student/save-payment-screenshot", {
         studentId: studentId,
         imageUrl: imageUrl,
+        transactionId: transactionId,
       });
 
       console.log("✅ Payment Continue response:", data);
