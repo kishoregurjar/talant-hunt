@@ -47,6 +47,15 @@ export default function VideoPage() {
     }
   };
 
+  // Better buffering - preload more data
+  useEffect(() => {
+    if (videoRef.current) {
+      // Optimize video buffering
+      videoRef.current.setAttribute('preload', 'auto');
+      videoRef.current.setAttribute('x-webkit-airplay', 'allow');
+    }
+  }, []);
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -178,10 +187,11 @@ export default function VideoPage() {
                 autoPlay
                 muted
                 playsInline
-                preload="metadata"
+                preload="auto"
                 controls={false}
                 onEnded={onEnded}
                 className="max-w-full h-auto max-h-[80vh] object-contain rounded-2xl"
+                style={{ backgroundColor: '#000' }}
               />
 
               {/* ✅ Mute Button — ALWAYS on video */}
