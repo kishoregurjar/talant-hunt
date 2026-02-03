@@ -102,7 +102,7 @@ const TalentFormPage = () => {
               <ShieldX />
             </span>
           ),
-        }
+        },
       );
       router.push("/talenthunt");
       return;
@@ -422,6 +422,23 @@ const TalentFormPage = () => {
                 transition={{ duration: 0.2 }}
                 className="space-y-6"
               >
+                {/* <div className="relative">
+                  <Video
+                    className="absolute left-3 top-3 text-gray-400"
+                    size={18}
+                  />
+                  <input
+                    {...register("videoLink")}
+                    placeholder="Video Link (YouTube / Drive)"
+                    className="w-full pl-10 p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-purplee outline-none"
+                  />
+                  {errors.videoLink && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.videoLink.message}
+                    </p>
+                  )}
+                </div> */}
+
                 <div className="relative">
                   <Video
                     className="absolute left-3 top-3 text-gray-400"
@@ -437,30 +454,38 @@ const TalentFormPage = () => {
                       {errors.videoLink.message}
                     </p>
                   )}
+
+                  {/* Video Note - Hindi + English */}
+                  <div className=" p-2 ">
+                    <p className="text-gray-700 text-xs font-bold">
+                      <strong className = "text-red-400">Note :</strong> Upload your performance video link, video should not be more than 1 minute / अपना प्रदर्शन वीडियो लिंक अपलोड करें, वीडियो 1 मिनट से अधिक का नहीं होना चाहिए
+                    </p>
+                  </div>
                 </div>
 
                 {/* Upload Help Section */}
                 <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 text-center shadow-sm">
                   <h3 className="text-lg font-semibold text-purplee mb-2">
-                    How to Upload Your Cricket Video / अपना क्रिकेट वीडियो कैसे अपलोड करें
+                    Talent Hunt Registration Guide 
+                    
                   </h3>
                   <p className="text-sm text-gray-600 mb-4">
-                    Not sure how to upload your cricket video? Watch this quick
-                    YouTube guide / क्रिकेट वीडियो अपलोड करने की जानकारी के लिए यह छोटा यूट्यूब गाइड देखें।
+                   To understand the complete Talent Hunt registration process, please watch this video. It explains the full process from start to end and helps clear all your doubts. / टैलेंट हंट रजिस्ट्रेशन की पूरी प्रक्रिया समझने के लिए कृपया यह वीडियो देखें। इसमें शुरू से अंत तक की पूरी प्रक्रिया समझाई गई है और आपके सभी संदेह दूर हो जाएंगे।
+                    यह छोटा यूट्यूब गाइड देखें।
                   </p>
                   <motion.button
                     type="button"
                     onClick={() =>
                       window.open(
                         process.env.NEXT_PUBLIC_YT_SEARCH_URL,
-                        "_blank"
+                        "_blank",
                       )
                     }
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-purplee text-white rounded-lg font-medium shadow-md  transition duration-200"
                   >
-                    Watch Tutorial
+                    Watch Video
                   </motion.button>
                 </div>
 
