@@ -34,6 +34,7 @@ const TalentFormPage = () => {
     useSelector((s) => s.playerReducer);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  console.log("student ki id",id)
 
   const {
     register,
@@ -67,9 +68,12 @@ const TalentFormPage = () => {
         quizCompleted == true &&
         PaymentProcess === false
       ) {
-        router.push("/payment");
+        router.push("/payment/" + id);
+
       }
     }, 100);
+
+
     return () => clearTimeout(timer);
   }, [formFilled, videoWatched, quizCompleted, PaymentProcess, router]);
 
