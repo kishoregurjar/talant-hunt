@@ -557,7 +557,7 @@ import { toast } from "react-toastify";
 export default function talenthunt() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { formData, formFilled, videoWatched, quizCompleted, IDproof } =
+  const { formData, id, formFilled, videoWatched, quizCompleted, IDproof } =
     useSelector((state) => state.playerReducer);
   const talentFormfilled = localStorage.getItem("talentFormfilled");
   const [loading, setLoading] = useState(true);
@@ -667,7 +667,8 @@ export default function talenthunt() {
       videoWatched === true &&
       quizCompleted === true
     ) {
-      router.push("/payment");
+             router.push("/payment/" + id);
+
       return;
     }
 
