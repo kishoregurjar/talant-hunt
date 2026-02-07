@@ -3,6 +3,7 @@ import Navbar from "../components/navbar/Navbar";
 import Providers from "./providers";
 import ScrollToTop from "../components/ScrollToTop";
 import { ToastContainer } from "react-toastify";
+import RazorpayScript from "../components/RazorpayScript";
 import "react-toastify/dist/ReactToastify.css";
 export const metadata = {
   title: "Talent Hunt",
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           <main className="min-h-screen">{children}</main>
         </Providers>
+        <RazorpayScript />
         <ToastContainer/>
         </>
       </body>

@@ -50,32 +50,65 @@ const TalentFormPage = () => {
   });
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-      if (formFilled === false) {
-        router.push("/talenthunt");
-      } else if (formFilled === true && videoWatched === false) {
-        router.push("/video");
-      } else if (
-        formFilled === true &&
-        videoWatched === true &&
-        quizCompleted == false
-      ) {
-        router.push("/quiz");
-      } else if (
-        formFilled === true &&
-        videoWatched === true &&
-        quizCompleted == true &&
-        PaymentProcess === false
-      ) {
-        router.push("/payment/" + id);
-
+    const checkPaymentStatus = async () => {
+      try {
+        setLoading(false);
+        if (formFilled === false) {
+          router.push("/talenthunt");
+        } else if (formFilled === true && videoWatched === false) {
+          router.push("/video");
+        } else if (
+          formFilled === true &&
+          videoWatched === true &&
+          quizCompleted == false
+        ) {
+          router.push("/quiz");
+        } else {
+          // Check payment status from backend API
+          const studentId = localStorage.getItem("userId") || id;
+          if (studentId) {
+            const paymentStatusResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/payment/payment-status/${studentId}`);
+            const paymentStatusData = await paymentStatusResponse.json();
+            
+            if (paymentStatusData.success && !paymentStatusData.data?.paymentDone) {
+              // If payment is not done, redirect to payment page
+              router.push("/payment/" + studentId);
+              return;
+            }
+          }
+          
+          // If all checks pass, user can stay on skilldetail page
+        }
+      } catch (error) {
+        console.error('Error checking payment status:', error);
+        // Fallback to existing logic if API fails
+        if (formFilled === false) {
+          router.push("/talenthunt");
+        } else if (formFilled === true && videoWatched === false) {
+          router.push("/video");
+        } else if (
+          formFilled === true &&
+          videoWatched === true &&
+          quizCompleted == false
+        ) {
+          router.push("/quiz");
+        } else if (
+          formFilled === true &&
+          videoWatched === true &&
+          quizCompleted == true &&
+          PaymentProcess === false
+        ) {
+          router.push("/payment/" + id);
+        }
       }
+    };
+    
+    const timer = setTimeout(() => {
+      checkPaymentStatus();
     }, 100);
 
-
     return () => clearTimeout(timer);
-  }, [formFilled, videoWatched, quizCompleted, PaymentProcess, router]);
+  }, [formFilled, videoWatched, quizCompleted, PaymentProcess, id, router]);
 
   const [step, setStep] = useState(1);
 
