@@ -189,16 +189,17 @@ export const asynsIdProofUpload = (file) => async (dispatch) => {
 };
 
 export const asynsPaymentContinue =
-  (studentId, imageUrl ,transactionId ) => async (dispatch) => {
+  (studentId, paymentId, transactionId) => async (dispatch) => {
     try {
       const { data } = await axios.post("student/save-payment-screenshot", {
         studentId: studentId,
-        imageUrl: imageUrl,
+        imageUrl: paymentId, // Using paymentId as imageUrl for now
         transactionId: transactionId,
+        paymentMethod: "razorpay", // Indicate payment method
+        razorpayPaymentId: paymentId // Store the Razorpay payment ID
       });
 
       console.log("✅ Payment Continue response:", data);
-      // dispatch(PaymentProcess(data.data.payment));
       dispatch(PaymentProcess(true));
 
     } catch (error) {
