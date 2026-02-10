@@ -198,7 +198,7 @@ const TalentFormPage = () => {
 
   const handleFinalDialogClose = () => {
     setShowFinalPaymentDialog(false);
-    router.push("https://indorecricketclub.com/");
+    router.push("https://www.instagram.com/indorecricketclub?igsh=MXZqa2J3d2VuN2U0dQ%3D%3D");
   };
 
   return (
@@ -588,7 +588,7 @@ const TalentFormPage = () => {
       {/* Payment status modal shown when user comes after payment */}
       {showPaymentModal && paymentStatus && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 border border-gray-100">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 border border-gray-100 max-h-[90vh] overflow-y-auto">
             {paymentStatus.success && paymentStatus.data?.paymentDone ? (
               <div className="flex flex-col items-center text-center space-y-3">
                 <div className="h-14 w-14 rounded-full bg-green-100 flex items-center justify-center mb-2">
@@ -650,7 +650,7 @@ const TalentFormPage = () => {
 
       {/* Final confirmation dialog after last step submit */}
       <Dialog open={showFinalPaymentDialog} onOpenChange={handleFinalDialogClose}>
-        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto no-scrollbar">
+        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-gray-900">
               Registration Completed
@@ -674,6 +674,20 @@ const TalentFormPage = () => {
               आपका पेमेंट और क्रिकेट प्रोफ़ाइल सफलतापूर्वक सबमिट हो चुका है।
               टैलेंट हंट टीम जल्द ही आपसे संपर्क करेगी।
             </p>
+            <div className="mt-2 text-xs sm:text-sm text-gray-700 space-y-1">
+              <p>
+                If you are <span className="font-semibold">selected</span>, you will receive an acceptance email from the Talent Hunt team and your trial schedule will be shared on that email.
+              </p>
+              <p>
+                If you are <span className="font-semibold">not selected</span>, you will also get a notification email from the Talent Hunt team.
+              </p>
+              <p className="text-[11px] sm:text-xs text-gray-600">
+                यदि आप <span className="font-semibold">सेलेक्ट होते हैं</span> तो आपको टैलेंट हंट टीम की ओर से एक <span className="font-semibold">एक्सेप्टेंस ई‑मेल</span> आएगा, जिसमें आपके ट्रायल की पूरी डिटेल और शेड्यूल होगा।
+              </p>
+              <p className="text-[11px] sm:text-xs text-gray-600">
+                और यदि आप <span className="font-semibold">सेलेक्ट नहीं होते</span> हैं तो उसके लिए भी आपको टैलेंट हंट टीम की तरफ से ई‑मेल द्वारा सूचना दी जाएगी।
+              </p>
+            </div>
           </div>
 
           <p className="text-xs text-gray-400 text-center mt-4">
@@ -684,7 +698,7 @@ const TalentFormPage = () => {
             <button
               type="button"
               onClick={handleFinalDialogClose}
-              className="w-full py-3.5 px-4 bg-purplee text-white text-sm sm:text-base font-semibold rounded-xl shadow-md hover:shadow-lg transform transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+              className="w-full cursor-pointer py-3.5 px-4 bg-purplee text-white text-sm sm:text-base font-semibold rounded-xl shadow-md hover:shadow-lg transform transition-all active:scale-[0.98] flex items-center justify-center gap-2"
             >
               Done & Go to Website <ArrowRight size={18} />
             </button>
