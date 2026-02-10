@@ -26,6 +26,14 @@ import {
   ArrowLeft,
   ChevronDown,
 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const TalentFormPage = () => {
   const dispatch = useDispatch();
@@ -34,7 +42,11 @@ const TalentFormPage = () => {
     useSelector((s) => s.playerReducer);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  console.log("student ki id",id)
+  const [paymentStatus, setPaymentStatus] = useState(null);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [currentStudentId, setCurrentStudentId] = useState(null);
+  const [showFinalPaymentDialog, setShowFinalPaymentDialog] = useState(false);
+  console.log("student ki id", id);
 
   const {
     register,
@@ -64,23 +76,24 @@ const TalentFormPage = () => {
         ) {
           router.push("/quiz");
         } else {
-          // Check payment status from backend API
+          // Check payment status from backend API and show informative modal
           const studentId = localStorage.getItem("userId") || id;
           if (studentId) {
-            const paymentStatusResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/payment/payment-status/${studentId}`);
+            setCurrentStudentId(studentId);
+
+            const paymentStatusResponse = await fetch(
+              `${process.env.NEXT_PUBLIC_API_BASE_URL}/payment/payment-status/${studentId}`,
+            );
             const paymentStatusData = await paymentStatusResponse.json();
-            
-            if (paymentStatusData.success && !paymentStatusData.data?.paymentDone) {
-              // If payment is not done, redirect to payment page
-              router.push("/payment/" + studentId);
-              return;
-            }
+
+            setPaymentStatus(paymentStatusData);
+            setShowPaymentModal(true);
           }
-          
+
           // If all checks pass, user can stay on skilldetail page
         }
       } catch (error) {
-        console.error('Error checking payment status:', error);
+        console.error("Error checking payment status:", error);
         // Fallback to existing logic if API fails
         if (formFilled === false) {
           router.push("/talenthunt");
@@ -163,7 +176,8 @@ const TalentFormPage = () => {
         ),
       });
       reset();
-      router.push("https://indorecricketclub.com/");
+      // Last step complete: show final payment + registration confirmation
+      setShowFinalPaymentDialog(true);
     } else {
       toast.error(" Failed to submit form. Please try again.", {
         autoClose: 3000,
@@ -180,6 +194,11 @@ const TalentFormPage = () => {
         ),
       });
     }
+  };
+
+  const handleFinalDialogClose = () => {
+    setShowFinalPaymentDialog(false);
+    router.push("https://indorecricketclub.com/");
   };
 
   return (
@@ -565,6 +584,113 @@ const TalentFormPage = () => {
           </AnimatePresence>
         </form>
       </motion.div>
+
+      {/* Payment status modal shown when user comes after payment */}
+      {showPaymentModal && paymentStatus && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 border border-gray-100">
+            {paymentStatus.success && paymentStatus.data?.paymentDone ? (
+              <div className="flex flex-col items-center text-center space-y-3">
+                <div className="h-14 w-14 rounded-full bg-green-100 flex items-center justify-center mb-2">
+                  <CircleCheckBig className="text-green-600" size={32} />
+                </div>
+                <h2 className="text-xl font-semibold text-gray-900">
+                  Payment Successful 🎉
+                </h2>
+                <p className="text-sm text-gray-800 font-medium">
+                  Your payment has been completed successfully.
+                </p>
+                <p className="text-sm text-gray-700">
+                  आपका पेमेंट सफलतापूर्वक पूरा हो चुका है। अब आप अपना{" "}
+                  <span className="font-semibold text-purplee">
+                    Cricket Profile
+                  </span>{" "}
+                  फॉर्म भरें।
+                </p>
+
+                <button
+                  type="button"
+                  onClick={() => setShowPaymentModal(false)}
+                  className="mt-4 inline-flex items-center justify-center rounded-lg bg-purplee px-5 py-2.5 text-sm font-medium text-white shadow-md hover:bg-purplee/90 focus:outline-none focus:ring-2 focus:ring-purplee focus:ring-offset-1"
+                >
+                  Continue to Cricket Profile
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center text-center space-y-3">
+                <div className="h-14 w-14 rounded-full bg-red-100 flex items-center justify-center mb-2">
+                  <Shield className="text-red-500" size={28} />
+                </div>
+                <h2 className="text-xl font-semibold text-gray-900">
+                  Payment Not Completed
+                </h2>
+                <p className="text-sm text-gray-600">
+                  Abhi hamko aapka payment confirm nahi mila hai.
+                  Kripya pehle payment complete karke phir Cricket Profile bharein.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowPaymentModal(false);
+                    if (currentStudentId) {
+                      router.push(`/payment/${currentStudentId}`);
+                    } else {
+                      router.push("/payment");
+                    }
+                  }}
+                  className="mt-4 inline-flex items-center justify-center rounded-lg bg-purplee px-5 py-2.5 text-sm font-medium text-white shadow-md hover:bg-purplee/90 focus:outline-none focus:ring-2 focus:ring-purplee focus:ring-offset-1"
+                >
+                  Go to Payment Page
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Final confirmation dialog after last step submit */}
+      <Dialog open={showFinalPaymentDialog} onOpenChange={handleFinalDialogClose}>
+        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto no-scrollbar">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold text-gray-900">
+              Registration Completed
+            </DialogTitle>
+            <DialogDescription className="sr-only">
+              Your payment and profile have been submitted successfully
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="bg-green-50 border border-green-100 rounded-xl p-6 flex flex-col items-center text-center space-y-2">
+            <div className="h-16 w-16 rounded-full bg-green-100 flex items-center justify-center mb-2">
+              <CircleCheckBig className="text-green-600 h-8 w-8" />
+            </div>
+            <h3 className="text-xl font-bold text-green-700">
+              Payment & Profile Submitted 🎉
+            </h3>
+            <p className="text-sm sm:text-base text-gray-800 font-medium">
+              Your payment and Cricket Profile have been submitted successfully.
+            </p>
+            <p className="text-sm sm:text-base text-gray-700">
+              आपका पेमेंट और क्रिकेट प्रोफ़ाइल सफलतापूर्वक सबमिट हो चुका है।
+              टैलेंट हंट टीम जल्द ही आपसे संपर्क करेगी।
+            </p>
+          </div>
+
+          <p className="text-xs text-gray-400 text-center mt-4">
+            You can now close this window or go back to the Indore Cricket Club website.
+          </p>
+
+          <DialogFooter className="mt-4">
+            <button
+              type="button"
+              onClick={handleFinalDialogClose}
+              className="w-full py-3.5 px-4 bg-purplee text-white text-sm sm:text-base font-semibold rounded-xl shadow-md hover:shadow-lg transform transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+            >
+              Done & Go to Website <ArrowRight size={18} />
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* <FormSubmittedModal
         open={showModal}
