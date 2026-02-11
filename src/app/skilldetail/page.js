@@ -46,8 +46,7 @@ const TalentFormPage = () => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [currentStudentId, setCurrentStudentId] = useState(null);
   const [showFinalPaymentDialog, setShowFinalPaymentDialog] = useState(false);
-  console.log("student ki id", id);
-
+ 
   const {
     register,
     handleSubmit,
@@ -572,6 +571,7 @@ const TalentFormPage = () => {
                   </motion.button>
                   <motion.button
                     type="submit"
+                    disabled={loading}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="inline-flex items-center gap-2 px-6 py-3 bg-purplee text-white font-medium rounded-lg transition focus:ring-2 "
@@ -700,7 +700,7 @@ const TalentFormPage = () => {
               onClick={handleFinalDialogClose}
               className="w-full cursor-pointer py-3.5 px-4 bg-purplee text-white text-sm sm:text-base font-semibold rounded-xl shadow-md hover:shadow-lg transform transition-all active:scale-[0.98] flex items-center justify-center gap-2"
             >
-              Done & Go to Website <ArrowRight size={18} />
+              Done & Go to ICC Page <ArrowRight size={18} />
             </button>
           </DialogFooter>
         </DialogContent>
